@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Guitar Learning Hub</title>
+  <meta name="description" content="Bộ ứng dụng học Guitar: thư viện hợp âm, cấu tạo hợp âm, âm giai, quãng và nhịp phách." />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Guitar Hub" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="assets/icon-192.png" />
+  <style>
+    :root{--bg:#0f172a;--panel:#fff;--ink:#111827;--muted:#64748b;--line:#e5e7eb;--brand:#f59e0b;--brand2:#22c55e;--blue:#2563eb;--danger:#ef4444;--safe-top:env(safe-area-inset-top);--safe-bottom:env(safe-area-inset-bottom)}
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{height:100%;margin:0}body{font-family:Arial,Helvetica,sans-serif;color:white;background:radial-gradient(circle at top left,rgba(245,158,11,.34),transparent 30%),radial-gradient(circle at top right,rgba(37,99,235,.3),transparent 30%),linear-gradient(135deg,#020617,#0f172a 52%,#1e293b);overflow:hidden}.app{height:100dvh;display:grid;grid-template-rows:auto 1fr auto;padding-top:var(--safe-top);padding-bottom:var(--safe-bottom)}.top{padding:12px 14px 10px;border-bottom:1px solid rgba(255,255,255,.12);background:rgba(2,6,23,.62);backdrop-filter:blur(14px)}.top-row{display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{min-width:0}.eyebrow{display:inline-flex;gap:7px;align-items:center;font-size:12px;color:#fde68a;font-weight:900}.title{margin:4px 0 0;font-size:clamp(20px,5vw,30px);line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.install{display:none;border:0;border-radius:999px;background:linear-gradient(135deg,var(--brand),#fb923c);color:#1f1303;padding:10px 12px;font-weight:900;box-shadow:0 12px 28px rgba(245,158,11,.22);cursor:pointer;white-space:nowrap}.install.show{display:inline-flex}.status{margin-top:8px;display:flex;gap:8px;align-items:center;color:#cbd5e1;font-size:12px}.dot{width:8px;height:8px;border-radius:999px;background:var(--brand2);box-shadow:0 0 0 4px rgba(34,197,94,.14)}.dot.off{background:var(--danger);box-shadow:0 0 0 4px rgba(239,68,68,.14)}.viewer{min-height:0;padding:10px;background:rgba(15,23,42,.1)}.card{height:100%;display:grid;grid-template-rows:auto 1fr;overflow:hidden;background:var(--panel);border:1px solid rgba(255,255,255,.18);border-radius:20px;box-shadow:0 18px 60px rgba(2,6,23,.35)}.bar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 10px;border-bottom:1px solid var(--line);background:#fff;color:var(--ink)}.bar-title{font-size:14px;font-weight:900;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.actions{display:flex;gap:6px}.icon-btn{border:1px solid var(--line);background:#f8fafc;color:#0f172a;border-radius:999px;padding:8px 10px;text-decoration:none;font-size:12px;font-weight:900;cursor:pointer}.frame-box{position:relative;min-height:0;background:#f8fafc}.loader{position:absolute;inset:0;z-index:1;display:grid;place-items:center;color:#334155;background:#f8fafc;font-weight:900}.loader.hide{display:none}iframe{position:relative;z-index:2;width:100%;height:100%;border:0;background:white}.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;padding:7px 8px calc(7px + var(--safe-bottom));background:rgba(2,6,23,.78);border-top:1px solid rgba(255,255,255,.12);backdrop-filter:blur(14px)}.tab{border:0;background:transparent;color:#cbd5e1;border-radius:16px;padding:8px 4px 7px;font-size:11px;font-weight:900;cursor:pointer;display:grid;gap:3px;justify-items:center;min-width:0}.tab span:first-child{font-size:20px;line-height:1}.tab.active{background:rgba(245,158,11,.16);color:#fde68a}.tab.active span:first-child{filter:drop-shadow(0 6px 8px rgba(245,158,11,.25))}@media(min-width:860px){.app{grid-template-rows:auto auto 1fr}.top{padding:18px 24px}.title{font-size:36px}.status{font-size:14px}.tabs{order:2;display:flex;justify-content:center;gap:8px;padding:10px 16px;background:rgba(2,6,23,.5)}.tab{display:flex;align-items:center;gap:7px;padding:10px 14px;font-size:14px;border:1px solid rgba(255,255,255,.12)}.viewer{order:3;padding:14px 22px 18px}.card{max-width:1440px;margin:0 auto;border-radius:24px}.bar-title{font-size:16px}}@media(max-width:480px){.top{padding-left:12px;padding-right:12px}.viewer{padding:8px}.card{border-radius:16px}.bar{padding:8px}.icon-btn{padding:7px 9px}.title{font-size:21px}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <div class="top-row">
+        <div class="brand">
+          <div class="eyebrow">🎸 Guitar Learning Hub</div>
+          <h1 class="title">Bộ ứng dụng học Guitar</h1>
+        </div>
+        <button class="install" id="installBtn" type="button">Cài app</button>
+      </div>
+      <div class="status"><span class="dot" id="netDot"></span><span id="statusText">Có thể dùng như app trên điện thoại</span></div>
+    </header>
+
+    <main class="viewer">
+      <section class="card">
+        <div class="bar">
+          <div class="bar-title" id="barTitle">Thư viện hợp âm</div>
+          <div class="actions">
+            <button class="icon-btn" type="button" id="reloadBtn">Tải lại</button>
+            <a class="icon-btn" id="openLink" href="pages/thu-vien-hop-am.html" target="_blank" rel="noopener">Mở</a>
+          </div>
+        </div>
+        <div class="frame-box">
+          <div class="loader" id="loader">Đang tải...</div>
+          <iframe id="appFrame" src="pages/thu-vien-hop-am.html" title="Guitar app" loading="eager"></iframe>
+        </div>
+      </section>
+    </main>
+
+    <nav class="tabs" aria-label="Chọn ứng dụng">
+      <button class="tab active" data-file="pages/thu-vien-hop-am.html" data-title="Thư viện hợp âm"><span>🎼</span><span>Thư viện</span></button>
+      <button class="tab" data-file="pages/hop-am.html" data-title="Cấu tạo hợp âm"><span>🎸</span><span>Hợp âm</span></button>
+      <button class="tab" data-file="pages/am-giai.html" data-title="Âm giai"><span>🎹</span><span>Âm giai</span></button>
+      <button class="tab" data-file="pages/quang.html" data-title="Quãng"><span>↔️</span><span>Quãng</span></button>
+      <button class="tab" data-file="pages/nhip-phach.html" data-title="Nhịp phách"><span>🥁</span><span>Nhịp</span></button>
+    </nav>
+  </div>
+
+  <script>
+    const tabs=[...document.querySelectorAll('.tab')],frame=document.getElementById('appFrame'),loader=document.getElementById('loader'),barTitle=document.getElementById('barTitle'),openLink=document.getElementById('openLink'),reloadBtn=document.getElementById('reloadBtn'),installBtn=document.getElementById('installBtn'),netDot=document.getElementById('netDot'),statusText=document.getElementById('statusText');
+    function openTab(btn){tabs.forEach(t=>t.classList.remove('active'));btn.classList.add('active');const file=btn.dataset.file;loader.classList.remove('hide');barTitle.textContent=btn.dataset.title;openLink.href=file;frame.src=file;history.replaceState(null,'','#'+file.replace('pages/','').replace('.html',''))}
+    tabs.forEach(btn=>btn.addEventListener('click',()=>openTab(btn)));frame.addEventListener('load',()=>loader.classList.add('hide'));reloadBtn.addEventListener('click',()=>{loader.classList.remove('hide');try{frame.contentWindow.location.reload()}catch(e){frame.src=frame.src}});
+    const hash=decodeURIComponent(location.hash.replace('#',''));const found=tabs.find(t=>t.dataset.file.includes(hash));if(found)openTab(found);
+    function updateOnline(){const on=navigator.onLine;netDot.classList.toggle('off',!on);statusText.textContent=on?'Có thể cài app và dùng offline sau lần tải đầu':'Đang offline - app vẫn mở bằng cache nếu đã tải trước đó'};window.addEventListener('online',updateOnline);window.addEventListener('offline',updateOnline);updateOnline();
+    if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}
+    let deferredPrompt=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;installBtn.classList.add('show')});installBtn.addEventListener('click',async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;installBtn.classList.remove('show')});window.addEventListener('appinstalled',()=>installBtn.classList.remove('show'));
+  </script>
+</body>
+</html>
