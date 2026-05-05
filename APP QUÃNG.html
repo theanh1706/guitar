@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bài học: Quãng trong Guitar</title>
+  <style>
+    :root {
+      --bg: #f7f5ef;
+      --paper: #ffffff;
+      --ink: #1f2933;
+      --muted: #667085;
+      --primary: #8b5e34;
+      --primary-dark: #5f3d20;
+      --accent: #f4c542;
+      --soft: #fff7dc;
+      --line: #e5e0d5;
+      --code-bg: #1f2933;
+      --code-text: #f8fafc;
+      --good: #15803d;
+      --bad: #b91c1c;
+      --blue-soft: #eff6ff;
+      --green-soft: #ecfdf5;
+      --red-soft: #fef2f2;
+      --shadow: 0 12px 28px rgba(31, 41, 51, 0.08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: radial-gradient(circle at top left, #fff3c4, transparent 28%), var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+
+    a {
+      color: var(--primary-dark);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #2b2118 0%, #5f3d20 55%, #a46d35 100%);
+      color: white;
+      padding: 56px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "♪";
+      position: absolute;
+      right: 8%;
+      top: 12%;
+      font-size: 170px;
+      opacity: 0.11;
+      transform: rotate(-12deg);
+    }
+
+    .hero-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(32px, 5vw, 56px);
+      line-height: 1.1;
+      max-width: 900px;
+    }
+
+    .hero p {
+      max-width: 760px;
+      font-size: 18px;
+      opacity: 0.94;
+      margin-top: 18px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #22190e;
+      box-shadow: 0 10px 20px rgba(244, 197, 66, 0.24);
+    }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.12);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .layout {
+      max-width: 1180px;
+      margin: 28px auto 72px;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 24px;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 16px;
+      height: fit-content;
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    .sidebar h2 {
+      font-size: 18px;
+      margin: 0 0 12px;
+    }
+
+    .sidebar nav {
+      display: grid;
+      gap: 6px;
+    }
+
+    .sidebar a {
+      padding: 9px 10px;
+      border-radius: 10px;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .sidebar a:hover {
+      background: var(--soft);
+      text-decoration: none;
+    }
+
+    .content {
+      display: grid;
+      gap: 22px;
+    }
+
+    section, .card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(20px, 3vw, 34px);
+    }
+
+    h2 {
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.2;
+      margin: 0 0 14px;
+      color: #342314;
+    }
+
+    h3 {
+      font-size: 22px;
+      margin: 26px 0 10px;
+      color: #4a2f18;
+    }
+
+    h4 {
+      font-size: 18px;
+      margin: 18px 0 8px;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    .lead {
+      font-size: 18px;
+      color: #374151;
+    }
+
+    .note, .warning, .tip, .formula {
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin: 16px 0;
+      border: 1px solid transparent;
+    }
+
+    .note {
+      background: var(--blue-soft);
+      border-color: #bfdbfe;
+    }
+
+    .tip {
+      background: var(--green-soft);
+      border-color: #bbf7d0;
+    }
+
+    .warning {
+      background: var(--red-soft);
+      border-color: #fecaca;
+    }
+
+    .formula {
+      background: var(--soft);
+      border-color: #fde68a;
+      font-weight: 700;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin: 16px 0;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin: 16px 0;
+    }
+
+    .mini-card {
+      background: #fffbf1;
+      border: 1px solid #f1dfaa;
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .mini-card strong {
+      color: var(--primary-dark);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      overflow: hidden;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: white;
+    }
+
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8edd7;
+      color: #33200e;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 14px;
+    }
+
+    .tab, pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 16px;
+      border-radius: 14px;
+      overflow-x: auto;
+      font-family: Consolas, Monaco, 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.55;
+      margin: 14px 0;
+    }
+
+    .kbd {
+      display: inline-block;
+      background: #1f2933;
+      color: #fff;
+      border-radius: 6px;
+      padding: 1px 7px;
+      font-size: 13px;
+      font-family: Consolas, Monaco, 'Courier New', monospace;
+    }
+
+    .highlight {
+      color: var(--primary-dark);
+      font-weight: 800;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0 0;
+    }
+
+    .pill {
+      border: 1px solid #ead39f;
+      background: #fff8e6;
+      color: #4a2f18;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .fretboard {
+      width: 100%;
+      border: 1px solid #d6c4aa;
+      border-radius: 16px;
+      overflow-x: auto;
+      background: #3d2917;
+      padding: 14px;
+      margin: 16px 0;
+    }
+
+    .fret-grid {
+      min-width: 740px;
+      display: grid;
+      grid-template-columns: 50px repeat(13, 1fr);
+      gap: 0;
+      color: #fff;
+      font-size: 13px;
+    }
+
+    .string-label, .fret-cell, .fret-num {
+      min-height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid rgba(255, 255, 255, 0.24);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      position: relative;
+    }
+
+    .string-label {
+      background: rgba(255, 255, 255, 0.08);
+      font-weight: 700;
+      color: #fde68a;
+    }
+
+    .fret-num {
+      min-height: 26px;
+      background: rgba(0, 0, 0, 0.16);
+      color: #f8fafc;
+      font-size: 12px;
+    }
+
+    .note-dot {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #f4c542;
+      color: #1f2933;
+      font-weight: 800;
+      font-size: 12px;
+    }
+
+    .root-dot {
+      background: #f97316;
+      color: white;
+    }
+
+    .interval-dot {
+      background: #38bdf8;
+      color: #082f49;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    label {
+      font-weight: 700;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    select, input, textarea {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid #d6c4aa;
+      border-radius: 12px;
+      background: #fffdf8;
+      font-size: 15px;
+      color: var(--ink);
+    }
+
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .result-box {
+      padding: 16px;
+      border-radius: 14px;
+      background: #f9fafb;
+      border: 1px dashed #cbd5e1;
+      margin-top: 12px;
+    }
+
+    .exercise {
+      border: 1px solid #e7d4a1;
+      background: #fffaf0;
+      border-radius: 16px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+
+    .exercise button, .small-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 999px;
+      padding: 9px 13px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .exercise button:hover, .small-btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .answer {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #ecfdf5;
+      color: #14532d;
+    }
+
+    .checklist {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .checklist li {
+      margin: 9px 0;
+      padding-left: 30px;
+      position: relative;
+    }
+
+    .checklist li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--good);
+      font-weight: 900;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 36px 20px 56px;
+    }
+
+    .print-note {
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .grid-2, .grid-3, .controls {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      .hero, .sidebar, .hero-actions, .small-btn, .exercise button {
+        display: none !important;
+      }
+
+      .layout {
+        display: block;
+        margin: 0;
+        padding: 0;
+      }
+
+      section, .card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+        break-inside: avoid;
+        margin-bottom: 16px;
+      }
+
+      .print-note {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="eyebrow">Guitar Theory Foundation</span>
+      <h1>Quãng trong Guitar: Bài học đầy đủ từ cơ bản đến ứng dụng</h1>
+      <p>
+        Bài học này giúp người học hiểu quãng là gì, cách tính quãng trên cần đàn, cách dùng quãng để xây hợp âm, gam, solo, riff và cách luyện tai nghe.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#bat-dau">Bắt đầu học</a>
+        <a class="btn btn-ghost" href="#may-tinh-quang">Tra quãng nhanh</a>
+        <a class="btn btn-ghost" href="#bai-tap">Luyện tập</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <h2>Mục lục</h2>
+      <nav>
+        <a href="#bat-dau">1. Quãng là gì?</a>
+        <a href="#cong-thuc">2. Công thức nền tảng</a>
+        <a href="#bang-quang">3. Bảng quãng</a>
+        <a href="#ten-quang">4. Cách gọi tên quãng</a>
+        <a href="#tren-can-dan">5. Quãng trên cần đàn</a>
+        <a href="#khac-day">6. Tính quãng khác dây</a>
+        <a href="#hop-am">7. Quãng và hợp âm</a>
+        <a href="#gam">8. Quãng và gam</a>
+        <a href="#mau-sac">9. Màu sắc âm thanh</a>
+        <a href="#fretboard-demo">10. Sơ đồ cần đàn</a>
+        <a href="#may-tinh-quang">11. Máy tính quãng</a>
+        <a href="#luyen-tai">12. Luyện tai nghe</a>
+        <a href="#bai-tap">13. Bài tập</a>
+        <a href="#tong-ket">14. Tổng kết</a>
+      </nav>
+    </aside>
+
+    <div class="content">
+      <section id="bat-dau">
+        <h2>1. Quãng trong guitar là gì?</h2>
+        <p class="lead">
+          <strong>Quãng</strong> là khoảng cách cao độ giữa hai nốt nhạc. Trong guitar, quãng có thể được hiểu rất trực quan bằng khoảng cách giữa các ô phím trên cần đàn.
+        </p>
+
+        <div class="formula">
+          Quãng = khoảng cách âm thanh giữa 2 nốt.
+        </div>
+
+        <p>Ví dụ:</p>
+        <ul>
+          <li>Từ <strong>C đến D</strong> là một quãng.</li>
+          <li>Từ <strong>C đến E</strong> là một quãng.</li>
+          <li>Từ <strong>C đến G</strong> là một quãng.</li>
+          <li>Từ <strong>dây A ô 3</strong> đến <strong>dây D ô 5</strong> cũng là một quãng.</li>
+        </ul>
+
+        <div class="tip">
+          <strong>Mẹo học nhanh:</strong> Khi chơi guitar, đừng chỉ nhớ tên nốt. Hãy nhớ cả <strong>hình dạng quãng</strong>. Cùng một hình dạng di chuyển đến đâu thì quan hệ quãng vẫn giữ nguyên.
+        </div>
+
+        <div class="grid-3">
+          <div class="mini-card">
+            <strong>Quãng giúp hiểu hợp âm</strong>
+            <p>Hợp âm trưởng, thứ, sus, 7 đều được xây từ các quãng.</p>
+          </div>
+          <div class="mini-card">
+            <strong>Quãng giúp hiểu gam</strong>
+            <p>Gam trưởng, gam thứ, pentatonic đều có công thức quãng riêng.</p>
+          </div>
+          <div class="mini-card">
+            <strong>Quãng giúp solo tốt hơn</strong>
+            <p>Khi biết nốt nào là 3, 5, b7, bạn sẽ solo có mục tiêu hơn.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="cong-thuc">
+        <h2>2. Công thức nền tảng cần nhớ</h2>
+
+        <h3>2.1. Một ô phím bằng một nửa cung</h3>
+        <div class="formula">
+          Trên guitar: 1 ô phím = 1 semitone = 1 nửa cung.
+        </div>
+
+        <p>Ví dụ trên dây A:</p>
+        <pre>A|---0---1---2---3---4---5---
+    A   A#  B   C   C#  D</pre>
+
+        <p>Từ ô 3 đến ô 5:</p>
+        <pre>C → C# → D</pre>
+        <p>Đi qua 2 ô, nên khoảng cách là <strong>2 nửa cung</strong>. Vì vậy:</p>
+        <div class="note">C đến D = 2 nửa cung = quãng 2 trưởng.</div>
+
+        <h3>2.2. Công thức tính trên cùng một dây</h3>
+        <div class="formula">
+          Số nửa cung = ô đích - ô gốc.
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Ví dụ</th>
+                <th>Phép tính</th>
+                <th>Kết quả</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Dây A ô 3 C đến dây A ô 5 D</td>
+                <td>5 - 3 = 2</td>
+                <td>Quãng 2 trưởng</td>
+              </tr>
+              <tr>
+                <td>Dây A ô 3 C đến dây A ô 6 Eb</td>
+                <td>6 - 3 = 3</td>
+                <td>Quãng 3 thứ</td>
+              </tr>
+              <tr>
+                <td>Dây A ô 3 C đến dây A ô 7 E</td>
+                <td>7 - 3 = 4</td>
+                <td>Quãng 3 trưởng</td>
+              </tr>
+              <tr>
+                <td>Dây A ô 3 C đến dây A ô 10 G</td>
+                <td>10 - 3 = 7</td>
+                <td>Quãng 5 đúng</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>2.3. Hai cách nhìn quãng</h3>
+        <div class="grid-2">
+          <div class="mini-card">
+            <strong>Cách 1: Đếm số nửa cung</strong>
+            <p>Dùng số ô phím để biết khoảng cách thực tế.</p>
+          </div>
+          <div class="mini-card">
+            <strong>Cách 2: Đếm tên nốt</strong>
+            <p>Dùng tên nốt để biết đó là quãng mấy: quãng 2, 3, 4, 5...</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="bang-quang">
+        <h2>3. Bảng quãng cơ bản</h2>
+        <p>Lấy nốt gốc là <strong>C</strong> làm ví dụ.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Số nửa cung</th>
+                <th>Tên quãng</th>
+                <th>Ký hiệu</th>
+                <th>Ví dụ từ C</th>
+                <th>Cảm giác thường gặp</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>0</td><td>Quãng 1 đúng</td><td>P1</td><td>C → C</td><td>Ổn định, cùng nốt</td></tr>
+              <tr><td>1</td><td>Quãng 2 thứ</td><td>m2</td><td>C → Db / C#</td><td>Căng, sát nhau</td></tr>
+              <tr><td>2</td><td>Quãng 2 trưởng</td><td>M2</td><td>C → D</td><td>Chuyển động tự nhiên</td></tr>
+              <tr><td>3</td><td>Quãng 3 thứ</td><td>m3</td><td>C → Eb</td><td>Buồn, blues</td></tr>
+              <tr><td>4</td><td>Quãng 3 trưởng</td><td>M3</td><td>C → E</td><td>Sáng, vui</td></tr>
+              <tr><td>5</td><td>Quãng 4 đúng</td><td>P4</td><td>C → F</td><td>Treo, mở</td></tr>
+              <tr><td>6</td><td>Quãng 4 tăng / 5 giảm</td><td>#4 / b5</td><td>C → F# / Gb</td><td>Căng, bí ẩn</td></tr>
+              <tr><td>7</td><td>Quãng 5 đúng</td><td>P5</td><td>C → G</td><td>Mạnh, chắc</td></tr>
+              <tr><td>8</td><td>Quãng 6 thứ</td><td>m6</td><td>C → Ab</td><td>Buồn, rộng</td></tr>
+              <tr><td>9</td><td>Quãng 6 trưởng</td><td>M6</td><td>C → A</td><td>Sáng, tình cảm</td></tr>
+              <tr><td>10</td><td>Quãng 7 thứ</td><td>m7</td><td>C → Bb</td><td>Blues, dominant</td></tr>
+              <tr><td>11</td><td>Quãng 7 trưởng</td><td>M7</td><td>C → B</td><td>Jazz, sang, căng nhẹ</td></tr>
+              <tr><td>12</td><td>Quãng 8 đúng</td><td>P8</td><td>C → C cao hơn</td><td>Cùng nốt, cao hơn</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="ten-quang">
+        <h2>4. Cách gọi tên quãng</h2>
+        <p>Tên quãng gồm hai phần:</p>
+        <div class="formula">
+          Tên quãng = số quãng + tính chất quãng.
+        </div>
+
+        <h3>4.1. Số quãng</h3>
+        <p>Số quãng được tính theo tên nốt, không tính theo số ô đàn.</p>
+
+        <p>Ví dụ C đến E:</p>
+        <pre>C - D - E
+1   2   3</pre>
+        <p>Vậy C đến E là <strong>quãng 3</strong>.</p>
+
+        <p>Ví dụ C đến G:</p>
+        <pre>C - D - E - F - G
+1   2   3   4   5</pre>
+        <p>Vậy C đến G là <strong>quãng 5</strong>.</p>
+
+        <h3>4.2. Tính chất quãng</h3>
+        <p>Sau khi biết quãng mấy, ta xem khoảng cách đó có bao nhiêu nửa cung.</p>
+
+        <div class="grid-2">
+          <div class="mini-card">
+            <strong>C đến E</strong>
+            <pre>C → C# → D → D# → E</pre>
+            <p>Cách nhau 4 nửa cung, nên là <strong>quãng 3 trưởng</strong>.</p>
+          </div>
+          <div class="mini-card">
+            <strong>C đến Eb</strong>
+            <pre>C → C# → D → Eb</pre>
+            <p>Cách nhau 3 nửa cung, nên là <strong>quãng 3 thứ</strong>.</p>
+          </div>
+        </div>
+
+        <div class="warning">
+          <strong>Lưu ý:</strong> C đến D# và C đến Eb đều cách nhau 3 nửa cung về âm thanh, nhưng tên lý thuyết khác nhau. C đến Eb là quãng 3 thứ, còn C đến D# là quãng 2 tăng. Khi học guitar phổ thông, trước hết có thể ưu tiên hiểu âm thanh và vị trí; khi học hòa âm sâu hơn thì cần gọi tên đúng theo ngữ cảnh.
+        </div>
+      </section>
+
+      <section id="tren-can-dan">
+        <h2>5. Ví dụ quãng trực tiếp trên cần đàn</h2>
+        <p>Lấy nốt gốc là <strong>C ở dây A ô 3</strong>.</p>
+
+        <pre>e|----------------
+B|----------------
+G|----------------
+D|----------------
+A|---3------------
+E|----------------
+     C</pre>
+
+        <h3>5.1. Quãng 2 trưởng: C đến D</h3>
+        <pre>e|----------------
+B|----------------
+G|----------------
+D|----------------
+A|---3---5--------
+E|----------------
+     C   D</pre>
+        <p>Cách nhau 2 ô, nên C đến D = <strong>quãng 2 trưởng</strong>.</p>
+
+        <h3>5.2. Quãng 3 thứ: C đến Eb</h3>
+        <pre>e|----------------
+B|----------------
+G|----------------
+D|----------------
+A|---3---6--------
+E|----------------
+     C   Eb</pre>
+        <p>Cách nhau 3 ô, nên C đến Eb = <strong>quãng 3 thứ</strong>.</p>
+
+        <h3>5.3. Quãng 3 trưởng: C đến E</h3>
+        <pre>e|----------------
+B|----------------
+G|----------------
+D|----------------
+A|---3---7--------
+E|----------------
+     C   E</pre>
+        <p>Cách nhau 4 ô, nên C đến E = <strong>quãng 3 trưởng</strong>.</p>
+
+        <h3>5.4. Quãng 4 đúng: C đến F</h3>
+        <pre>e|----------------
+B|----------------
+G|----------------
+D|---3------------
+A|---3------------
+E|----------------
+     C   F</pre>
+        <p>Dây A ô 3 là C, dây D ô 3 là F. Vậy C đến F = <strong>quãng 4 đúng</strong>.</p>
+
+        <h3>5.5. Quãng 5 đúng: C đến G</h3>
+        <pre>e|----------------
+B|----------------
+G|----------------
+D|---5------------
+A|---3------------
+E|----------------
+     C   G</pre>
+        <p>Đây là thế rất quan trọng vì nó tạo ra <strong>power chord</strong>.</p>
+        <div class="formula">Power chord = 1 - 5.</div>
+
+        <h3>5.6. Quãng 8 đúng: C đến C cao hơn</h3>
+        <pre>e|----------------
+B|----------------
+G|---5------------
+D|----------------
+A|---3------------
+E|----------------
+     C   C</pre>
+        <p>C đến C cao hơn cách nhau 12 nửa cung, gọi là <strong>quãng 8 đúng</strong> hoặc <strong>octave</strong>.</p>
+      </section>
+
+      <section id="khac-day">
+        <h2>6. Công thức tính quãng khác dây</h2>
+        <p>Guitar lên dây tiêu chuẩn:</p>
+        <pre>Dây 6: E
+Dây 5: A
+Dây 4: D
+Dây 3: G
+Dây 2: B
+Dây 1: E</pre>
+
+        <p>Khoảng cách giữa các dây liền nhau:</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Hai dây</th>
+                <th>Khoảng cách</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Dây 6 E → dây 5 A</td><td>5 nửa cung</td></tr>
+              <tr><td>Dây 5 A → dây 4 D</td><td>5 nửa cung</td></tr>
+              <tr><td>Dây 4 D → dây 3 G</td><td>5 nửa cung</td></tr>
+              <tr><td>Dây 3 G → dây 2 B</td><td>4 nửa cung</td></tr>
+              <tr><td>Dây 2 B → dây 1 E</td><td>5 nửa cung</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="formula">
+          Quãng khác dây = khoảng cách giữa dây + chênh lệch ô phím.
+        </div>
+
+        <h3>Ví dụ 1: C ở dây A ô 3 đến G ở dây D ô 5</h3>
+        <pre>D|---5--- = G
+A|---3--- = C</pre>
+        <p>Từ dây A sang dây D là +5 nửa cung. Từ ô 3 lên ô 5 là +2 nửa cung.</p>
+        <div class="note">5 + 2 = 7 nửa cung → quãng 5 đúng.</div>
+
+        <h3>Ví dụ 2: C ở dây A ô 3 đến E ở dây D ô 2</h3>
+        <pre>D|---2--- = E
+A|---3--- = C</pre>
+        <p>Từ dây A sang dây D là +5 nửa cung. Nhưng ô 2 thấp hơn ô 3 là -1 nửa cung.</p>
+        <div class="note">5 + (-1) = 4 nửa cung → quãng 3 trưởng.</div>
+
+        <div class="warning">
+          <strong>Cẩn thận dây G sang dây B:</strong> Hầu hết các cặp dây liền nhau cách nhau 5 nửa cung, riêng dây G sang dây B chỉ cách nhau 4 nửa cung. Vì vậy nhiều hình dạng quãng khi đi qua dây B phải dịch đi 1 ô.
+        </div>
+      </section>
+
+      <section id="hop-am">
+        <h2>7. Quãng tạo nên hợp âm</h2>
+        <p>Hợp âm không phải là những thế bấm rời rạc. Hợp âm được xây từ các quãng.</p>
+
+        <h3>7.1. Hợp âm trưởng</h3>
+        <div class="formula">Hợp âm trưởng = 1 - 3 - 5.</div>
+        <p>Ví dụ C trưởng:</p>
+        <pre>C - E - G
+1 - 3 - 5</pre>
+        <p>Trong đó C đến E là quãng 3 trưởng, C đến G là quãng 5 đúng. Vì có quãng 3 trưởng nên hợp âm nghe sáng, vui.</p>
+
+        <h3>7.2. Hợp âm thứ</h3>
+        <div class="formula">Hợp âm thứ = 1 - b3 - 5.</div>
+        <p>Ví dụ C thứ:</p>
+        <pre>C - Eb - G
+1 - b3 - 5</pre>
+        <p>Vì có quãng 3 thứ nên hợp âm nghe buồn hơn.</p>
+
+        <h3>7.3. So sánh trưởng và thứ</h3>
+        <pre>C major = C - E  - G
+C minor = C - Eb - G</pre>
+        <p>Chỉ khác một nốt: <strong>E hạ xuống Eb</strong>. Đây chính là sự khác nhau giữa quãng 3 trưởng và quãng 3 thứ.</p>
+
+        <h3>7.4. Power chord</h3>
+        <div class="formula">Power chord = 1 - 5.</div>
+        <pre>C5 = C - G</pre>
+        <p>Power chord không có quãng 3 nên không rõ trưởng hay thứ. Vì vậy nó nghe mạnh, chắc, phù hợp rock, punk, metal.</p>
+
+        <h3>7.5. Các công thức hợp âm thường gặp</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Loại hợp âm</th>
+                <th>Công thức</th>
+                <th>Ví dụ với C</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Major</td><td>1 - 3 - 5</td><td>C - E - G</td></tr>
+              <tr><td>Minor</td><td>1 - b3 - 5</td><td>C - Eb - G</td></tr>
+              <tr><td>Power chord</td><td>1 - 5</td><td>C - G</td></tr>
+              <tr><td>Sus2</td><td>1 - 2 - 5</td><td>C - D - G</td></tr>
+              <tr><td>Sus4</td><td>1 - 4 - 5</td><td>C - F - G</td></tr>
+              <tr><td>Dominant 7</td><td>1 - 3 - 5 - b7</td><td>C - E - G - Bb</td></tr>
+              <tr><td>Major 7</td><td>1 - 3 - 5 - 7</td><td>C - E - G - B</td></tr>
+              <tr><td>Minor 7</td><td>1 - b3 - 5 - b7</td><td>C - Eb - G - Bb</td></tr>
+              <tr><td>Diminished</td><td>1 - b3 - b5</td><td>C - Eb - Gb</td></tr>
+              <tr><td>Augmented</td><td>1 - 3 - #5</td><td>C - E - G#</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="tip">
+          <strong>Ứng dụng rất thực tế:</strong> Muốn đổi hợp âm trưởng sang thứ, chỉ cần hạ quãng 3 xuống nửa cung. Ví dụ E major có G#, E minor có G.
+        </div>
+      </section>
+
+      <section id="gam">
+        <h2>8. Quãng tạo nên gam</h2>
+        <p>Gam là tập hợp nốt được sắp xếp theo công thức quãng.</p>
+
+        <h3>8.1. Gam trưởng</h3>
+        <div class="formula">Gam trưởng = 1 - 2 - 3 - 4 - 5 - 6 - 7.</div>
+        <p>Tính bằng nửa cung:</p>
+        <pre>0 - 2 - 4 - 5 - 7 - 9 - 11</pre>
+        <p>Ví dụ C major:</p>
+        <pre>C - D - E - F - G - A - B</pre>
+
+        <h3>8.2. Gam thứ tự nhiên</h3>
+        <div class="formula">Gam thứ tự nhiên = 1 - 2 - b3 - 4 - 5 - b6 - b7.</div>
+        <p>Tính bằng nửa cung:</p>
+        <pre>0 - 2 - 3 - 5 - 7 - 8 - 10</pre>
+        <p>Ví dụ C minor:</p>
+        <pre>C - D - Eb - F - G - Ab - Bb</pre>
+
+        <h3>8.3. Pentatonic thứ</h3>
+        <div class="formula">Pentatonic thứ = 1 - b3 - 4 - 5 - b7.</div>
+        <p>Ví dụ C minor pentatonic:</p>
+        <pre>C - Eb - F - G - Bb</pre>
+
+        <h3>8.4. Blues scale</h3>
+        <div class="formula">Blues scale = 1 - b3 - 4 - b5 - 5 - b7.</div>
+        <p>Ví dụ C blues:</p>
+        <pre>C - Eb - F - Gb - G - Bb</pre>
+
+        <div class="note">
+          <strong>Điểm quan trọng:</strong> Khi bạn solo, nốt gốc chưa đủ. Bạn cần biết từng nốt trong gam đang là quãng gì so với hợp âm nền. Nốt 3, b3, 5, b7 thường tạo màu rất rõ.
+        </div>
+      </section>
+
+      <section id="mau-sac">
+        <h2>9. Màu sắc âm thanh của từng quãng</h2>
+        <p>Mỗi quãng có một cảm giác riêng. Đây là phần rất quan trọng để luyện tai nghe và tạo cảm xúc khi chơi đàn.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Quãng</th>
+                <th>Ký hiệu</th>
+                <th>Cảm giác</th>
+                <th>Ứng dụng</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Quãng 1</td><td>1</td><td>Ổn định, điểm tựa</td><td>Nốt gốc, kết câu solo</td></tr>
+              <tr><td>Quãng 2 thứ</td><td>b2</td><td>Căng, sát, hơi khó chịu</td><td>Metal, flamenco, màu Phrygian</td></tr>
+              <tr><td>Quãng 2 trưởng</td><td>2</td><td>Chuyển động nhẹ</td><td>Melody, sus2</td></tr>
+              <tr><td>Quãng 3 thứ</td><td>b3</td><td>Buồn, bluesy</td><td>Hợp âm thứ, pentatonic thứ</td></tr>
+              <tr><td>Quãng 3 trưởng</td><td>3</td><td>Sáng, vui</td><td>Hợp âm trưởng, country, pop</td></tr>
+              <tr><td>Quãng 4 đúng</td><td>4</td><td>Mở, treo</td><td>Sus4, riff, melody</td></tr>
+              <tr><td>Quãng 5 giảm</td><td>b5</td><td>Căng, bất ổn</td><td>Blues note, diminished</td></tr>
+              <tr><td>Quãng 5 đúng</td><td>5</td><td>Mạnh, chắc</td><td>Power chord, rock</td></tr>
+              <tr><td>Quãng 6 thứ</td><td>b6</td><td>Buồn, tối</td><td>Minor, harmonic color</td></tr>
+              <tr><td>Quãng 6 trưởng</td><td>6</td><td>Sáng, mềm</td><td>Major, Dorian, melody đẹp</td></tr>
+              <tr><td>Quãng 7 thứ</td><td>b7</td><td>Blues, dominant</td><td>Hợp âm 7, rock, funk</td></tr>
+              <tr><td>Quãng 7 trưởng</td><td>7</td><td>Sang, jazz, căng nhẹ</td><td>Maj7, jazz, ballad</td></tr>
+              <tr><td>Quãng 8</td><td>8</td><td>Cùng nốt, cao hơn</td><td>Octave riff, solo, funk</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="fretboard-demo">
+        <h2>10. Sơ đồ cần đàn minh họa quãng từ nốt C</h2>
+        <p>Sơ đồ dưới đây minh họa một số quãng quan trọng từ nốt <strong>C ở dây A ô 3</strong>.</p>
+
+        <div class="pill-list">
+          <span class="pill">Cam = nốt gốc C</span>
+          <span class="pill">Xanh = quãng liên quan</span>
+          <span class="pill">Vàng = cùng nốt C octave</span>
+        </div>
+
+        <div class="fretboard" aria-label="Sơ đồ cần đàn guitar">
+          <div class="fret-grid" id="fretboardGrid"></div>
+        </div>
+
+        <p>Những vị trí quan trọng cần nhớ từ C dây A ô 3:</p>
+        <pre>A3  = C  = 1
+A5  = D  = 2
+A6  = Eb = b3
+A7  = E  = 3
+D3  = F  = 4
+D5  = G  = 5
+D7  = A  = 6
+G3  = Bb = b7
+G5  = C  = 8</pre>
+      </section>
+
+      <section id="may-tinh-quang">
+        <h2>11. Máy tính quãng nhanh</h2>
+        <p>Chọn nốt gốc và nốt đích để xem khoảng cách quãng cơ bản.</p>
+
+        <div class="controls">
+          <div>
+            <label for="rootNote">Nốt gốc</label>
+            <select id="rootNote"></select>
+          </div>
+          <div>
+            <label for="targetNote">Nốt đích</label>
+            <select id="targetNote"></select>
+          </div>
+          <div>
+            <label>&nbsp;</label>
+            <button class="small-btn" onclick="calculateInterval()">Tính quãng</button>
+          </div>
+        </div>
+
+        <div class="result-box" id="intervalResult">
+          Chọn hai nốt rồi bấm “Tính quãng”.
+        </div>
+
+        <div class="warning">
+          Công cụ này tính theo khoảng cách âm thanh trong 12 nửa cung. Với lý thuyết hòa âm nâng cao, tên quãng còn phụ thuộc cách viết tên nốt, ví dụ C đến D# khác với C đến Eb về tên gọi lý thuyết.
+        </div>
+      </section>
+
+      <section id="luyen-tai">
+        <h2>12. Luyện tai nghe quãng</h2>
+        <p>Khi học quãng, không nên chỉ nhìn tab. Hãy vừa bấm vừa nghe. Mục tiêu là nghe được cảm giác của từng khoảng cách.</p>
+
+        <h3>12.1. Cách luyện đơn giản</h3>
+        <ol>
+          <li>Chọn một nốt gốc, ví dụ C ở dây A ô 3.</li>
+          <li>Đánh nốt gốc C.</li>
+          <li>Đánh nốt quãng, ví dụ E.</li>
+          <li>Nghe cảm giác giữa hai nốt.</li>
+          <li>Đánh lại nhiều lần: C → E, C → Eb, C → G, C → Bb.</li>
+        </ol>
+
+        <h3>12.2. Bảng gợi ý liên tưởng âm thanh</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Quãng</th>
+                <th>Gợi ý nghe</th>
+                <th>Thực hành</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>3 trưởng</td><td>Sáng, vui</td><td>So sánh C → E với C → Eb</td></tr>
+              <tr><td>3 thứ</td><td>Buồn, blues</td><td>Đánh C minor pentatonic</td></tr>
+              <tr><td>5 đúng</td><td>Mạnh, chắc</td><td>Đánh power chord C5</td></tr>
+              <tr><td>b5</td><td>Căng, bí ẩn</td><td>Đánh C → Gb rồi giải về G</td></tr>
+              <tr><td>b7</td><td>Blues, dominant</td><td>Đánh C7: C - E - G - Bb</td></tr>
+              <tr><td>7 trưởng</td><td>Jazz, lơ lửng</td><td>Đánh Cmaj7: C - E - G - B</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="tip">
+          <strong>Bài tập nghe nhanh:</strong> Đánh C major rồi C minor. Cảm nhận sự khác nhau giữa E và Eb. Đây là cách nhanh nhất để hiểu sức mạnh của quãng 3.
+        </div>
+      </section>
+
+      <section id="bai-tap">
+        <h2>13. Bài tập thực hành</h2>
+
+        <div class="exercise">
+          <h3>Bài 1: C đến E là quãng gì?</h3>
+          <p>Gợi ý: C → C# → D → D# → E.</p>
+          <button onclick="toggleAnswer('a1')">Xem đáp án</button>
+          <div class="answer" id="a1">C đến E cách nhau 4 nửa cung, là quãng 3 trưởng.</div>
+        </div>
+
+        <div class="exercise">
+          <h3>Bài 2: C đến Eb là quãng gì?</h3>
+          <p>Gợi ý: C → C# → D → Eb.</p>
+          <button onclick="toggleAnswer('a2')">Xem đáp án</button>
+          <div class="answer" id="a2">C đến Eb cách nhau 3 nửa cung, là quãng 3 thứ.</div>
+        </div>
+
+        <div class="exercise">
+          <h3>Bài 3: Công thức hợp âm trưởng là gì?</h3>
+          <button onclick="toggleAnswer('a3')">Xem đáp án</button>
+          <div class="answer" id="a3">Hợp âm trưởng có công thức 1 - 3 - 5.</div>
+        </div>
+
+        <div class="exercise">
+          <h3>Bài 4: Vì sao C major và C minor nghe khác nhau?</h3>
+          <button onclick="toggleAnswer('a4')">Xem đáp án</button>
+          <div class="answer" id="a4">C major có E là quãng 3 trưởng. C minor có Eb là quãng 3 thứ. Sự khác nhau ở quãng 3 làm thay đổi màu sắc hợp âm.</div>
+        </div>
+
+        <div class="exercise">
+          <h3>Bài 5: C5 gồm những nốt nào?</h3>
+          <button onclick="toggleAnswer('a5')">Xem đáp án</button>
+          <div class="answer" id="a5">C5 gồm C và G, công thức là 1 - 5.</div>
+        </div>
+
+        <h3>13.1. Bài tập tự điền</h3>
+        <p>Hãy tự điền đáp án vào ô dưới đây, sau đó so sánh với bảng quãng ở phần 3.</p>
+        <textarea placeholder="Ví dụ: D đến F# = quãng 3 trưởng vì cách nhau 4 nửa cung..."></textarea>
+
+        <ul class="checklist">
+          <li>D đến F# là quãng gì?</li>
+          <li>A đến C là quãng gì?</li>
+          <li>E đến B là quãng gì?</li>
+          <li>G đến F là quãng gì?</li>
+          <li>B đến F là quãng gì?</li>
+        </ul>
+      </section>
+
+      <section id="bo-sung">
+        <h2>14. Phần có thể bổ sung thêm cho bài học</h2>
+        <p>Giáo viên hoặc người biên soạn có thể mở rộng bài học bằng các phần sau:</p>
+
+        <div class="grid-2">
+          <div class="mini-card">
+            <strong>Thêm file âm thanh</strong>
+            <p>Chèn audio mẫu cho từng quãng: m2, M2, m3, M3, P4, P5...</p>
+          </div>
+          <div class="mini-card">
+            <strong>Thêm video minh họa</strong>
+            <p>Quay cảnh bấm quãng trên cần đàn và nghe sự khác nhau.</p>
+          </div>
+          <div class="mini-card">
+            <strong>Thêm bài tập tương tác</strong>
+            <p>Cho người học chọn đáp án, hệ thống chấm đúng sai.</p>
+          </div>
+          <div class="mini-card">
+            <strong>Thêm phần hòa âm nâng cao</strong>
+            <p>Giải thích enharmonic, quãng tăng, quãng giảm, đảo quãng.</p>
+          </div>
+        </div>
+
+        <h3>14.1. Đảo quãng</h3>
+        <p>Khi đảo vị trí hai nốt, quãng sẽ đổi tên theo quy tắc:</p>
+        <div class="formula">Tổng số quãng trước và sau khi đảo = 9.</div>
+        <p>Ví dụ:</p>
+        <ul>
+          <li>Quãng 3 đảo thành quãng 6.</li>
+          <li>Quãng 4 đảo thành quãng 5.</li>
+          <li>Quãng 2 đảo thành quãng 7.</li>
+        </ul>
+        <p>Về tính chất:</p>
+        <ul>
+          <li>Trưởng đảo thành thứ.</li>
+          <li>Thứ đảo thành trưởng.</li>
+          <li>Đúng đảo thành đúng.</li>
+          <li>Tăng đảo thành giảm.</li>
+          <li>Giảm đảo thành tăng.</li>
+        </ul>
+
+        <h3>14.2. Quãng đơn và quãng kép</h3>
+        <p><strong>Quãng đơn</strong> nằm trong phạm vi một quãng 8, ví dụ C đến G. <strong>Quãng kép</strong> vượt quá một quãng 8, ví dụ C đến D cao hơn một octave, gọi là quãng 9.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Quãng kép</th>
+                <th>Tương đương mở rộng</th>
+                <th>Ví dụ hợp âm</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>9</td><td>2 cao hơn một octave</td><td>Cadd9, C9</td></tr>
+              <tr><td>11</td><td>4 cao hơn một octave</td><td>C11</td></tr>
+              <tr><td>13</td><td>6 cao hơn một octave</td><td>C13</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>14.3. Liên hệ với hợp âm mở rộng</h3>
+        <p>Hợp âm jazz, soul, R&B thường dùng quãng mở rộng như 9, 11, 13.</p>
+        <pre>Cmaj9  = 1 - 3 - 5 - 7 - 9
+C9     = 1 - 3 - 5 - b7 - 9
+Cm11   = 1 - b3 - 5 - b7 - 9 - 11
+C13    = 1 - 3 - 5 - b7 - 9 - 13</pre>
+      </section>
+
+      <section id="tong-ket">
+        <h2>15. Tổng kết bài học</h2>
+        <p>Để hiểu quãng trong guitar, hãy nhớ các ý chính sau:</p>
+
+        <ul class="checklist">
+          <li>Quãng là khoảng cách cao độ giữa hai nốt.</li>
+          <li>Trên guitar, một ô phím bằng một nửa cung.</li>
+          <li>Quãng có thể tính bằng số nửa cung hoặc bằng hình dạng trên cần đàn.</li>
+          <li>Quãng 3 quyết định hợp âm trưởng hay thứ.</li>
+          <li>Quãng 5 tạo cảm giác mạnh, chắc, thường dùng trong power chord.</li>
+          <li>Quãng 7 tạo màu blues, dominant, jazz.</li>
+          <li>Gam và hợp âm đều được xây từ công thức quãng.</li>
+          <li>Học quãng giúp bạn hiểu bản chất âm nhạc thay vì chỉ nhớ thế bấm.</li>
+        </ul>
+
+        <div class="formula">
+          C major = C - E - G = 1 - 3 - 5<br />
+          C minor = C - Eb - G = 1 - b3 - 5<br />
+          C5 = C - G = 1 - 5
+        </div>
+
+        <p class="print-note">Bản in bài học quãng trong guitar.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>Bài học HTML: Quãng trong Guitar. Có thể chỉnh sửa, bổ sung audio, video, câu hỏi trắc nghiệm hoặc hình ảnh minh họa tùy nhu cầu giảng dạy.</p>
+  </footer>
+
+  <script>
+    const chromaticNotes = [
+      { name: 'C', value: 0 },
+      { name: 'C# / Db', value: 1 },
+      { name: 'D', value: 2 },
+      { name: 'D# / Eb', value: 3 },
+      { name: 'E', value: 4 },
+      { name: 'F', value: 5 },
+      { name: 'F# / Gb', value: 6 },
+      { name: 'G', value: 7 },
+      { name: 'G# / Ab', value: 8 },
+      { name: 'A', value: 9 },
+      { name: 'A# / Bb', value: 10 },
+      { name: 'B', value: 11 }
+    ];
+
+    const intervalMap = {
+      0: { name: 'Quãng 1 đúng', symbol: 'P1', example: 'C đến C' },
+      1: { name: 'Quãng 2 thứ', symbol: 'm2 / b2', example: 'C đến Db' },
+      2: { name: 'Quãng 2 trưởng', symbol: 'M2 / 2', example: 'C đến D' },
+      3: { name: 'Quãng 3 thứ', symbol: 'm3 / b3', example: 'C đến Eb' },
+      4: { name: 'Quãng 3 trưởng', symbol: 'M3 / 3', example: 'C đến E' },
+      5: { name: 'Quãng 4 đúng', symbol: 'P4 / 4', example: 'C đến F' },
+      6: { name: 'Quãng 4 tăng hoặc 5 giảm', symbol: '#4 / b5', example: 'C đến F# hoặc Gb' },
+      7: { name: 'Quãng 5 đúng', symbol: 'P5 / 5', example: 'C đến G' },
+      8: { name: 'Quãng 6 thứ', symbol: 'm6 / b6', example: 'C đến Ab' },
+      9: { name: 'Quãng 6 trưởng', symbol: 'M6 / 6', example: 'C đến A' },
+      10: { name: 'Quãng 7 thứ', symbol: 'm7 / b7', example: 'C đến Bb' },
+      11: { name: 'Quãng 7 trưởng', symbol: 'M7 / 7', example: 'C đến B' }
+    };
+
+    function populateSelectors() {
+      const root = document.getElementById('rootNote');
+      const target = document.getElementById('targetNote');
+      chromaticNotes.forEach(note => {
+        const optionRoot = document.createElement('option');
+        optionRoot.value = note.value;
+        optionRoot.textContent = note.name;
+        root.appendChild(optionRoot);
+
+        const optionTarget = document.createElement('option');
+        optionTarget.value = note.value;
+        optionTarget.textContent = note.name;
+        target.appendChild(optionTarget);
+      });
+      root.value = 0;
+      target.value = 4;
+    }
+
+    function calculateInterval() {
+      const root = Number(document.getElementById('rootNote').value);
+      const target = Number(document.getElementById('targetNote').value);
+      const distance = (target - root + 12) % 12;
+      const info = intervalMap[distance];
+      const rootName = chromaticNotes.find(n => n.value === root).name;
+      const targetName = chromaticNotes.find(n => n.value === target).name;
+      const result = document.getElementById('intervalResult');
+      result.innerHTML = `
+        <strong>${rootName} → ${targetName}</strong><br />
+        Khoảng cách: <strong>${distance}</strong> nửa cung.<br />
+        Tên quãng phổ thông: <strong>${info.name}</strong>.<br />
+        Ký hiệu: <strong>${info.symbol}</strong>.<br />
+        Ví dụ tương tự: ${info.example}.
+      `;
+    }
+
+    function toggleAnswer(id) {
+      const el = document.getElementById(id);
+      el.style.display = el.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function buildFretboard() {
+      const grid = document.getElementById('fretboardGrid');
+      const strings = [
+        { label: 'e', open: 4 },
+        { label: 'B', open: 11 },
+        { label: 'G', open: 7 },
+        { label: 'D', open: 2 },
+        { label: 'A', open: 9 },
+        { label: 'E', open: 4 }
+      ];
+
+      const named = {
+        'A-3': { text: 'C', cls: 'root-dot', title: 'Gốc: C' },
+        'A-5': { text: 'D', cls: 'interval-dot', title: '2' },
+        'A-6': { text: 'Eb', cls: 'interval-dot', title: 'b3' },
+        'A-7': { text: 'E', cls: 'interval-dot', title: '3' },
+        'D-3': { text: 'F', cls: 'interval-dot', title: '4' },
+        'D-5': { text: 'G', cls: 'interval-dot', title: '5' },
+        'D-7': { text: 'A', cls: 'interval-dot', title: '6' },
+        'G-3': { text: 'Bb', cls: 'interval-dot', title: 'b7' },
+        'G-5': { text: 'C', cls: 'note-dot', title: '8' }
+      };
+
+      const corner = document.createElement('div');
+      corner.className = 'fret-num';
+      corner.textContent = 'Dây / Ô';
+      grid.appendChild(corner);
+
+      for (let fret = 0; fret <= 12; fret++) {
+        const cell = document.createElement('div');
+        cell.className = 'fret-num';
+        cell.textContent = fret;
+        grid.appendChild(cell);
+      }
+
+      strings.forEach(string => {
+        const label = document.createElement('div');
+        label.className = 'string-label';
+        label.textContent = string.label;
+        grid.appendChild(label);
+
+        for (let fret = 0; fret <= 12; fret++) {
+          const cell = document.createElement('div');
+          cell.className = 'fret-cell';
+          const key = `${string.label.toUpperCase() === 'E' && string.label === 'e' ? 'e' : string.label}-${fret}`;
+          const altKey = `${string.label}-${fret}`;
+          const note = named[altKey] || named[key];
+          if (note) {
+            const dot = document.createElement('span');
+            dot.className = `note-dot ${note.cls}`;
+            dot.textContent = note.text;
+            dot.title = note.title;
+            cell.appendChild(dot);
+          }
+          grid.appendChild(cell);
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      populateSelectors();
+      calculateInterval();
+      buildFretboard();
+    });
+  </script>
+</body>
+</html>

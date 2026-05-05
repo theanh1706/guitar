@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thư viện thế bấm hợp âm Guitar</title>
+  <style>
+    :root {
+      --bg: #f6f1e8;
+      --paper: #ffffff;
+      --ink: #1f2937;
+      --muted: #667085;
+      --primary: #7c2d12;
+      --primary-2: #ea580c;
+      --accent: #fbbf24;
+      --soft: #fff7ed;
+      --soft-2: #ecfeff;
+      --soft-3: #f0fdf4;
+      --line: #e7dac8;
+      --dark: #171717;
+      --shadow: 0 14px 34px rgba(31, 41, 55, 0.09);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(251, 191, 36, 0.24), transparent 28%),
+        radial-gradient(circle at top right, rgba(234, 88, 12, 0.16), transparent 30%),
+        var(--bg);
+      line-height: 1.65;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #1c1917 0%, #7c2d12 54%, #ea580c 100%);
+      color: white;
+      padding: 56px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "CHORD LIBRARY";
+      position: absolute;
+      right: -70px;
+      top: 42px;
+      font-size: clamp(58px, 11vw, 156px);
+      font-weight: 900;
+      letter-spacing: -7px;
+      opacity: 0.08;
+      transform: rotate(-8deg);
+      white-space: nowrap;
+    }
+
+    .hero-inner {
+      max-width: 1220px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 7px 13px;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.13);
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 990px;
+      font-size: clamp(34px, 5vw, 60px);
+      line-height: 1.1;
+    }
+
+    .hero p {
+      max-width: 850px;
+      margin-top: 18px;
+      font-size: 18px;
+      opacity: 0.95;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: none;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.18s ease;
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    .btn:hover { transform: translateY(-1px); text-decoration: none; }
+    .btn-primary { background: var(--accent); color: #231307; box-shadow: 0 12px 24px rgba(251,191,36,0.25); }
+    .btn-ghost { background: rgba(255,255,255,0.13); color: white; border: 1px solid rgba(255,255,255,0.25); }
+
+    main {
+      max-width: 1220px;
+      margin: 28px auto 72px;
+      padding: 0 20px;
+    }
+
+    .panel, section {
+      background: rgba(255,255,255,0.92);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(18px, 3vw, 30px);
+      margin-bottom: 22px;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      color: var(--primary);
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.22;
+    }
+
+    h3 { color: var(--primary); margin: 24px 0 10px; }
+    p { margin: 0 0 12px; }
+
+    .lead { font-size: 18px; color: #344054; }
+
+    .note, .tip, .warning, .formula {
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin: 16px 0;
+      border: 1px solid transparent;
+    }
+
+    .note { background: var(--soft-2); border-color: #a5f3fc; }
+    .tip { background: var(--soft-3); border-color: #bbf7d0; }
+    .warning { background: var(--soft); border-color: #fed7aa; }
+    .formula { background: #fffbeb; border-color: #fde68a; font-weight: 800; color: #78350f; }
+
+    .search-panel {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      border-radius: 0 0 var(--radius) var(--radius);
+      padding-top: 18px;
+    }
+
+    .search-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .search-header h2 {
+      margin-bottom: 0;
+    }
+
+    .toggle-search-btn {
+      background: var(--primary-2);
+      color: white;
+      border: none;
+      border-radius: 999px;
+      padding: 11px 16px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(234, 88, 12, 0.18);
+    }
+
+    .toggle-search-btn:hover {
+      background: var(--primary);
+    }
+
+    .search-panel.collapsed .search-content {
+      display: none;
+    }
+
+    .search-content {
+      margin-top: 14px;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1.4fr repeat(4, minmax(130px, 1fr));
+      gap: 12px;
+      align-items: end;
+      margin-top: 16px;
+    }
+
+    label {
+      display: block;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px 13px;
+      border: 1px solid #d8cbbb;
+      border-radius: 14px;
+      background: #fffdf8;
+      color: var(--ink);
+      font-size: 15px;
+    }
+
+    .small-btn {
+      background: var(--primary-2);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 16px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .small-btn:hover { background: var(--primary); }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid #fed7aa;
+      background: #fff7ed;
+      color: #7c2d12;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .legend {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .legend-item {
+      background: #fffaf3;
+      border: 1px solid #fed7aa;
+      border-radius: 16px;
+      padding: 12px;
+      font-size: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 18px;
+      align-items: start;
+    }
+
+    .chord-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: 0 10px 24px rgba(31, 41, 55, 0.07);
+      padding: 16px;
+      transition: transform 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .chord-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 30px rgba(31, 41, 55, 0.11);
+    }
+
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .chord-name {
+      font-size: 27px;
+      line-height: 1;
+      margin: 0;
+      color: #1c1917;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      background: #ffedd5;
+      color: #9a3412;
+      white-space: nowrap;
+    }
+
+    .badge.easy { background: #dcfce7; color: #166534; }
+    .badge.mid { background: #fef3c7; color: #92400e; }
+    .badge.hard { background: #fee2e2; color: #991b1b; }
+
+    .diagram-wrap {
+      display: flex;
+      justify-content: center;
+      background: linear-gradient(180deg, #fffaf3, #ffffff);
+      border: 1px solid #f3dfc7;
+      border-radius: 18px;
+      padding: 8px 4px;
+      margin: 10px 0 12px;
+    }
+
+    .meta {
+      display: grid;
+      gap: 5px;
+      font-size: 14px;
+      color: #374151;
+    }
+
+    .meta strong { color: #1f2937; }
+
+    .tip-text {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #475467;
+      border-top: 1px dashed #e7dac8;
+      padding-top: 10px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .tag {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      color: #374151;
+      border-radius: 999px;
+      padding: 4px 8px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .diagram-title {
+      font-size: 11px;
+      fill: #44403c;
+      font-weight: 800;
+    }
+
+    .string-name {
+      font-size: 10px;
+      fill: #78716c;
+    }
+
+    .finger-text {
+      font-size: 14px;
+      fill: white;
+      font-weight: 900;
+      dominant-baseline: central;
+      text-anchor: middle;
+    }
+
+    .top-marker {
+      font-size: 15px;
+      fill: #1f2937;
+      font-weight: 900;
+      text-anchor: middle;
+    }
+
+    .fret-label {
+      font-size: 12px;
+      fill: #7c2d12;
+      font-weight: 900;
+    }
+
+    .table-wrap { overflow-x: auto; border-radius: 16px; margin: 16px 0; }
+    table { width: 100%; border-collapse: collapse; background: white; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+    th, td { padding: 12px 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #ffedd5; color: #7c2d12; }
+    tr:last-child td { border-bottom: none; }
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 34px 12px;
+      border: 1px dashed #d6c6b8;
+      border-radius: 18px;
+      background: #fffaf3;
+    }
+
+    .tone-panel {
+      background: rgba(255,255,255,0.94);
+    }
+
+    .tone-controls {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      align-items: end;
+      margin: 16px 0;
+    }
+
+    .tone-result {
+      display: grid;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .degree-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .degree-card {
+      border: 1px solid #fed7aa;
+      background: #fffaf3;
+      border-radius: 16px;
+      padding: 12px;
+    }
+
+    .degree-card .degree {
+      font-size: 13px;
+      font-weight: 900;
+      color: #9a3412;
+      margin-bottom: 4px;
+    }
+
+    .degree-card .chord {
+      font-size: 22px;
+      line-height: 1;
+      font-weight: 900;
+      color: #1c1917;
+      margin-bottom: 5px;
+    }
+
+    .degree-card .notes {
+      font-size: 13px;
+      color: #475467;
+    }
+
+    .degree-card {
+      cursor: pointer;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+    }
+
+    .degree-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(31, 41, 55, 0.08);
+      border-color: #fb923c;
+    }
+
+    .tone-voicing-section {
+      border: 1px solid #fed7aa;
+      background: #fffaf3;
+      border-radius: 18px;
+      padding: 14px;
+      margin-top: 12px;
+    }
+
+    .tone-inline-grid {
+      margin-top: 12px;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.68);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 1000;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-box {
+      width: min(1100px, 96vw);
+      max-height: 90vh;
+      overflow: auto;
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+      border: 1px solid #fed7aa;
+      padding: 20px;
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid #fed7aa;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+    }
+
+    .modal-head h2 {
+      margin: 0;
+    }
+
+    .modal-close {
+      border: none;
+      background: #7c2d12;
+      color: white;
+      border-radius: 999px;
+      padding: 9px 13px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .modal-close:hover {
+      background: #431407;
+    }
+
+    .tone-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tone-actions button {
+      border: 1px solid #fed7aa;
+      background: #fff7ed;
+      color: #7c2d12;
+      border-radius: 999px;
+      padding: 8px 11px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .tone-actions button:hover {
+      background: #ffedd5;
+    }
+
+    .quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .quick-links button {
+      border: 1px solid #fed7aa;
+      background: #fff7ed;
+      color: #7c2d12;
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .quick-links button:hover { background: #ffedd5; }
+
+    @media (max-width: 980px) {
+      .controls { grid-template-columns: 1fr 1fr; }
+      .legend { grid-template-columns: 1fr 1fr; }
+      .search-panel { position: static; }
+    }
+
+    @media (max-width: 640px) {
+      .controls { grid-template-columns: 1fr; }
+      .legend { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .hero, .search-panel, .quick-links, .small-btn { display: none !important; }
+      main { margin: 0; padding: 0; }
+      section, .panel, .chord-card { box-shadow: none; break-inside: avoid; }
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="eyebrow">Guitar Chord Library</span>
+      <h1>Thư viện thế bấm hợp âm Guitar từ căn bản đến nâng cao</h1>
+      <p>Tra nhanh hợp âm, xem sơ đồ thế bấm, số ngón tay, dây mở, dây không đánh, công thức, nốt cấu tạo và ghi chú cách bấm. Phù hợp để học đệm hát, fingerstyle, blues, jazz, R&B và nâng cao.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#thu-vien">Mở thư viện hợp âm</a>
+        <a class="btn btn-ghost" href="#huong-dan">Cách đọc sơ đồ</a>
+        <a class="btn btn-ghost" href="#bang-cong-thuc">Bảng công thức</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="huong-dan">
+      <h2>Cách đọc sơ đồ thế bấm</h2>
+      <p class="lead">Mỗi sơ đồ được nhìn như khi bạn đặt cây guitar dựng đứng trước mặt: dây 6 ở bên trái, dây 1 ở bên phải.</p>
+      <div class="legend">
+        <div class="legend-item"><strong>X</strong> = không đánh dây đó.</div>
+        <div class="legend-item"><strong>O</strong> = dây buông, đánh dây mở.</div>
+        <div class="legend-item"><strong>Số 1, 2, 3, 4</strong> = ngón trỏ, giữa, áp út, út.</div>
+        <div class="legend-item"><strong>Ô 5, ô 7...</strong> = thế bấm dịch lên cao, thường là barre chord.</div>
+      </div>
+      <div class="formula">Quy ước ngón tay: 1 = trỏ, 2 = giữa, 3 = áp út, 4 = út.</div>
+      <div class="tip"><strong>Mẹo học:</strong> Đừng chỉ nhớ hình. Hãy nhìn thêm công thức và nốt cấu tạo để hiểu vì sao hợp âm đó là trưởng, thứ, 7, maj7, m7, sus hoặc add9.</div>
+    </section>
+
+    <section class="search-panel collapsed" id="thu-vien">
+      <div class="search-header">
+        <h2>Tra cứu thế bấm hợp âm</h2>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="toggle-search-btn" id="toggleSearchBtn" type="button">Mở bộ tìm kiếm</button>
+          <button class="toggle-search-btn" id="toggleAllBtn" type="button">Hiện tất cả hợp âm</button>
+        </div>
+      </div>
+      <div class="search-content">
+      <p>Gõ tên hợp âm như <strong>C</strong>, <strong>Am</strong>, <strong>G7</strong>, <strong>Fmaj7</strong>, <strong>Bm7b5</strong>, <strong>Cadd9</strong>, <strong>E7#9</strong>. Có thể lọc theo nhóm và độ khó.</p>
+      <div class="controls">
+        <div>
+          <label for="searchInput">Tìm hợp âm</label>
+          <input id="searchInput" type="search" placeholder="Ví dụ: C, Am, G7, Fmaj7, Bm7b5..." />
+        </div>
+        <div>
+          <label for="rootFilter">Nốt gốc</label>
+          <select id="rootFilter"></select>
+        </div>
+        <div>
+          <label for="typeFilter">Nhóm hợp âm</label>
+          <select id="typeFilter"></select>
+        </div>
+        <div>
+          <label for="levelFilter">Độ khó</label>
+          <select id="levelFilter"></select>
+        </div>
+        <div>
+          <button class="small-btn" id="resetBtn">Xóa lọc</button>
+        </div>
+      </div>
+      <div class="quick-links">
+        <button data-quick="basic">Hợp âm căn bản</button>
+        <button data-quick="barre">Barre chord</button>
+        <button data-quick="7">Hợp âm 7</button>
+        <button data-quick="maj7">Maj7</button>
+        <button data-quick="m7">m7</button>
+        <button data-quick="sus">Sus / Add</button>
+        <button data-quick="advanced">Nâng cao</button>
+      </div>
+      <div class="stats" id="stats"></div>
+      </div>
+    </section>
+
+    <section class="tone-panel" id="tra-theo-tone">
+      <h2>Tra hợp âm theo Tone / Giọng</h2>
+      <p>Chọn một tone, ví dụ <strong>C trưởng</strong>, hệ thống sẽ liệt kê các hợp âm thuộc tone đó theo bậc I–VII. Bạn cũng có thể lọc thư viện để chỉ hiện các thế bấm của những hợp âm trong tone đang chọn.</p>
+      <div class="tone-controls">
+        <div>
+          <label for="toneRootSelect">Chọn nốt gốc</label>
+          <select id="toneRootSelect"></select>
+        </div>
+        <div>
+          <label for="toneModeSelect">Chọn loại tone</label>
+          <select id="toneModeSelect">
+            <option value="none">NONE / Chưa chọn tone</option>
+            <option value="major">Trưởng / Major</option>
+            <option value="naturalMinor">Thứ tự nhiên / Natural minor</option>
+            <option value="harmonicMinor">Thứ hòa âm / Harmonic minor</option>
+          </select>
+        </div>
+        <div>
+          <label for="toneNotationSelect">Cách viết nốt</label>
+          <select id="toneNotationSelect">
+            <option value="auto">Tự động</option>
+            <option value="sharp">Ưu tiên dấu thăng</option>
+            <option value="flat">Ưu tiên dấu giáng</option>
+          </select>
+        </div>
+        <div>
+          <button class="small-btn" id="buildToneBtn" type="button">Liệt kê hợp âm</button>
+        </div>
+      </div>
+      <div class="tone-result" id="toneResult"></div>
+    </section>
+
+    <div id="chordGrid" class="grid"></div>
+
+    <section id="bang-cong-thuc">
+      <h2>Bảng công thức hợp âm cần nhớ</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Nhóm</th><th>Ký hiệu</th><th>Công thức</th><th>Ví dụ với C</th><th>Màu sắc</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Triad</td><td>C</td><td>1 - 3 - 5</td><td>C - E - G</td><td>Sáng, ổn định</td></tr>
+            <tr><td>Triad</td><td>Cm</td><td>1 - b3 - 5</td><td>C - Eb - G</td><td>Buồn, mềm</td></tr>
+            <tr><td>Triad</td><td>Cdim</td><td>1 - b3 - b5</td><td>C - Eb - Gb</td><td>Căng, bất ổn</td></tr>
+            <tr><td>Triad</td><td>Caug</td><td>1 - 3 - #5</td><td>C - E - G#</td><td>Lạ, bay</td></tr>
+            <tr><td>Basic</td><td>C5</td><td>1 - 5</td><td>C - G</td><td>Mạnh, rock</td></tr>
+            <tr><td>Sus</td><td>Csus2</td><td>1 - 2 - 5</td><td>C - D - G</td><td>Treo, mở</td></tr>
+            <tr><td>Sus</td><td>Csus4</td><td>1 - 4 - 5</td><td>C - F - G</td><td>Treo, muốn giải</td></tr>
+            <tr><td>Add</td><td>Cadd9</td><td>1 - 3 - 5 - 9</td><td>C - E - G - D</td><td>Sáng, rộng</td></tr>
+            <tr><td>7th</td><td>Cmaj7</td><td>1 - 3 - 5 - 7</td><td>C - E - G - B</td><td>Sang, mơ</td></tr>
+            <tr><td>7th</td><td>C7</td><td>1 - 3 - 5 - b7</td><td>C - E - G - Bb</td><td>Blues, dominant</td></tr>
+            <tr><td>7th</td><td>Cm7</td><td>1 - b3 - 5 - b7</td><td>C - Eb - G - Bb</td><td>Mềm, soul/R&B</td></tr>
+            <tr><td>7th</td><td>Cm7b5</td><td>1 - b3 - b5 - b7</td><td>C - Eb - Gb - Bb</td><td>Căng, jazz minor</td></tr>
+            <tr><td>Extended</td><td>C9</td><td>1 - 3 - 5 - b7 - 9</td><td>C - E - G - Bb - D</td><td>Funk, blues</td></tr>
+            <tr><td>Extended</td><td>Cm9</td><td>1 - b3 - 5 - b7 - 9</td><td>C - Eb - G - Bb - D</td><td>Mềm, sâu</td></tr>
+            <tr><td>Extended</td><td>C13</td><td>1 - 3 - 5 - b7 - 9 - 11 - 13</td><td>C - E - G - Bb - D - F - A</td><td>Jazz, funk</td></tr>
+            <tr><td>Altered</td><td>C7b9</td><td>1 - 3 - 5 - b7 - b9</td><td>C - E - G - Bb - Db</td><td>Rất căng</td></tr>
+            <tr><td>Altered</td><td>C7#9</td><td>1 - 3 - 5 - b7 - #9</td><td>C - E - G - Bb - D#</td><td>Blues rock</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="warning"><strong>Lưu ý:</strong> Đây là thư viện học và tra cứu. Một hợp âm có thể có rất nhiều voicing khác nhau. File này ưu tiên các thế bấm phổ biến, dễ ứng dụng, và một số thế nâng cao dùng trong jazz/R&B.</div>
+    </section>
+  </main>
+
+  <div class="modal-backdrop" id="chordModal" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalChordTitle">
+      <div class="modal-head">
+        <h2 id="modalChordTitle">Thế bấm hợp âm</h2>
+        <button class="modal-close" id="closeChordModal" type="button">Đóng</button>
+      </div>
+      <div id="modalChordBody"></div>
+    </div>
+  </div>
+
+  <script>
+    const chordData = [
+      // Basic open major
+      {name:'C', root:'C', type:'Major', level:'Căn bản', formula:'1 - 3 - 5', notes:'C - E - G', baseFret:1, frets:[-1,3,2,0,1,0], fingers:[0,3,2,0,1,0], tags:['open','basic'], tip:'Không đánh dây 6. Ngón 3 bấm dây A ô 3, ngón 2 bấm dây D ô 2, ngón 1 bấm dây B ô 1.'},
+      {name:'D', root:'D', type:'Major', level:'Căn bản', formula:'1 - 3 - 5', notes:'D - F# - A', baseFret:1, frets:[-1,-1,0,2,3,2], fingers:[0,0,0,1,3,2], tags:['open','basic'], tip:'Không đánh dây 6 và 5. Bắt đầu đánh từ dây D mở.'},
+      {name:'E', root:'E', type:'Major', level:'Căn bản', formula:'1 - 3 - 5', notes:'E - G# - B', baseFret:1, frets:[0,2,2,1,0,0], fingers:[0,2,3,1,0,0], tags:['open','basic'], tip:'Đánh đủ 6 dây. Chú ý dây G ô 1 là G#, tạo màu trưởng.'},
+      {name:'G', root:'G', type:'Major', level:'Căn bản', formula:'1 - 3 - 5', notes:'G - B - D', baseFret:1, frets:[3,2,0,0,0,3], fingers:[3,2,0,0,0,4], tags:['open','basic'], tip:'Có thể dùng ngón 3 ở dây 6 và ngón 4 ở dây 1 để chuyển sang Cadd9/D dễ hơn.'},
+      {name:'A', root:'A', type:'Major', level:'Căn bản', formula:'1 - 3 - 5', notes:'A - C# - E', baseFret:1, frets:[-1,0,2,2,2,0], fingers:[0,0,1,2,3,0], tags:['open','basic'], tip:'Không đánh dây 6. Có thể bấm 3 ngón ở ô 2 hoặc chặn nhỏ bằng một ngón nếu quen.'},
+
+      // Basic open minor
+      {name:'Am', root:'A', type:'Minor', level:'Căn bản', formula:'1 - b3 - 5', notes:'A - C - E', baseFret:1, frets:[-1,0,2,2,1,0], fingers:[0,0,2,3,1,0], tags:['open','basic'], tip:'Không đánh dây 6. Đây là một trong các hợp âm thứ dễ nhất.'},
+      {name:'Dm', root:'D', type:'Minor', level:'Căn bản', formula:'1 - b3 - 5', notes:'D - F - A', baseFret:1, frets:[-1,-1,0,2,3,1], fingers:[0,0,0,2,3,1], tags:['open','basic'], tip:'Không đánh dây 6 và 5. Dây 1 ô 1 là F, tạo màu thứ.'},
+      {name:'Em', root:'E', type:'Minor', level:'Căn bản', formula:'1 - b3 - 5', notes:'E - G - B', baseFret:1, frets:[0,2,2,0,0,0], fingers:[0,2,3,0,0,0], tags:['open','basic'], tip:'Đánh đủ 6 dây. So với E major, dây G từ ô 1 chuyển về dây mở.'},
+
+      // Basic 7 open
+      {name:'A7', root:'A', type:'Dominant 7', level:'Căn bản', formula:'1 - 3 - 5 - b7', notes:'A - C# - E - G', baseFret:1, frets:[-1,0,2,0,2,0], fingers:[0,0,2,0,3,0], tags:['open','7'], tip:'Không đánh dây 6. Dây G mở là G, tạo b7.'},
+      {name:'B7', root:'B', type:'Dominant 7', level:'Trung cấp', formula:'1 - 3 - 5 - b7', notes:'B - D# - F# - A', baseFret:1, frets:[-1,2,1,2,0,2], fingers:[0,2,1,3,0,4], tags:['open','7'], tip:'Không đánh dây 6. Đây là thế B7 mở rất hay dùng để về Em.'},
+      {name:'C7', root:'C', type:'Dominant 7', level:'Trung cấp', formula:'1 - 3 - 5 - b7', notes:'C - E - G - Bb', baseFret:1, frets:[-1,3,2,3,1,0], fingers:[0,3,2,4,1,0], tags:['open','7'], tip:'Thêm ngón 4 vào dây G ô 3 so với C major.'},
+      {name:'D7', root:'D', type:'Dominant 7', level:'Căn bản', formula:'1 - 3 - 5 - b7', notes:'D - F# - A - C', baseFret:1, frets:[-1,-1,0,2,1,2], fingers:[0,0,0,2,1,3], tags:['open','7'], tip:'Không đánh dây 6 và 5. Thế này rất hay dùng để về G.'},
+      {name:'E7', root:'E', type:'Dominant 7', level:'Căn bản', formula:'1 - 3 - 5 - b7', notes:'E - G# - B - D', baseFret:1, frets:[0,2,0,1,0,0], fingers:[0,2,0,1,0,0], tags:['open','7'], tip:'Đánh đủ 6 dây. Dây D mở tạo b7.'},
+      {name:'G7', root:'G', type:'Dominant 7', level:'Căn bản', formula:'1 - 3 - 5 - b7', notes:'G - B - D - F', baseFret:1, frets:[3,2,0,0,0,1], fingers:[3,2,0,0,0,1], tags:['open','7'], tip:'Thường dùng để giải về C.'},
+
+      // Maj7 open/pop
+      {name:'Cmaj7', root:'C', type:'Major 7', level:'Căn bản', formula:'1 - 3 - 5 - 7', notes:'C - E - G - B', baseFret:1, frets:[-1,3,2,0,0,0], fingers:[0,3,2,0,0,0], tags:['open','maj7'], tip:'Từ C major, nhấc ngón 1 khỏi dây B để có nốt B.'},
+      {name:'Dmaj7', root:'D', type:'Major 7', level:'Trung cấp', formula:'1 - 3 - 5 - 7', notes:'D - F# - A - C#', baseFret:1, frets:[-1,-1,0,2,2,2], fingers:[0,0,0,1,2,3], tags:['open','maj7'], tip:'Không đánh dây 6 và 5. Ba dây dưới cùng đều ở ô 2.'},
+      {name:'Emaj7', root:'E', type:'Major 7', level:'Trung cấp', formula:'1 - 3 - 5 - 7', notes:'E - G# - B - D#', baseFret:1, frets:[0,2,1,1,0,0], fingers:[0,3,1,2,0,0], tags:['open','maj7'], tip:'Màu rất sáng và mơ, hợp ballad/jazz.'},
+      {name:'Amaj7', root:'A', type:'Major 7', level:'Trung cấp', formula:'1 - 3 - 5 - 7', notes:'A - C# - E - G#', baseFret:1, frets:[-1,0,2,1,2,0], fingers:[0,0,2,1,3,0], tags:['open','maj7'], tip:'Không đánh dây 6. Dây G ô 1 là G#.'},
+      {name:'Fmaj7', root:'F', type:'Major 7', level:'Căn bản', formula:'1 - 3 - 5 - 7', notes:'F - A - C - E', baseFret:1, frets:[-1,-1,3,2,1,0], fingers:[0,0,3,2,1,0], tags:['open','maj7'], tip:'Thế Fmaj7 dễ hơn F barre vì dây 1 mở là E.'},
+
+      // m7 open
+      {name:'Am7', root:'A', type:'Minor 7', level:'Căn bản', formula:'1 - b3 - 5 - b7', notes:'A - C - E - G', baseFret:1, frets:[-1,0,2,0,1,0], fingers:[0,0,2,0,1,0], tags:['open','m7'], tip:'Từ Am, nhấc ngón 3 khỏi dây G để có G mở.'},
+      {name:'Dm7', root:'D', type:'Minor 7', level:'Trung cấp', formula:'1 - b3 - 5 - b7', notes:'D - F - A - C', baseFret:1, frets:[-1,-1,0,2,1,1], fingers:[0,0,0,2,1,1], tags:['open','m7'], tip:'Ngón 1 có thể chặn nhẹ hai dây B và e ô 1.'},
+      {name:'Em7', root:'E', type:'Minor 7', level:'Căn bản', formula:'1 - b3 - 5 - b7', notes:'E - G - B - D', baseFret:1, frets:[0,2,0,0,0,0], fingers:[0,2,0,0,0,0], tags:['open','m7'], tip:'Rất dễ bấm, màu mềm hơn Em.'},
+
+      // sus add open
+      {name:'Asus2', root:'A', type:'Sus / Add', level:'Căn bản', formula:'1 - 2 - 5', notes:'A - B - E', baseFret:1, frets:[-1,0,2,2,0,0], fingers:[0,0,2,3,0,0], tags:['open','sus'], tip:'Không có quãng 3 nên nghe treo, không rõ trưởng/thứ.'},
+      {name:'Asus4', root:'A', type:'Sus / Add', level:'Căn bản', formula:'1 - 4 - 5', notes:'A - D - E', baseFret:1, frets:[-1,0,2,2,3,0], fingers:[0,0,1,2,3,0], tags:['open','sus'], tip:'Thường chuyển Asus4 → A để tạo cảm giác giải quyết.'},
+      {name:'Dsus2', root:'D', type:'Sus / Add', level:'Căn bản', formula:'1 - 2 - 5', notes:'D - E - A', baseFret:1, frets:[-1,-1,0,2,3,0], fingers:[0,0,0,1,3,0], tags:['open','sus'], tip:'Không đánh dây 6 và 5.'},
+      {name:'Dsus4', root:'D', type:'Sus / Add', level:'Căn bản', formula:'1 - 4 - 5', notes:'D - G - A', baseFret:1, frets:[-1,-1,0,2,3,3], fingers:[0,0,0,1,3,4], tags:['open','sus'], tip:'Từ D, thêm ngón 4 ở dây 1 ô 3.'},
+      {name:'Esus4', root:'E', type:'Sus / Add', level:'Căn bản', formula:'1 - 4 - 5', notes:'E - A - B', baseFret:1, frets:[0,2,2,2,0,0], fingers:[0,1,2,3,0,0], tags:['open','sus'], tip:'Thường dùng Esus4 → E.'},
+      {name:'Csus2', root:'C', type:'Sus / Add', level:'Trung cấp', formula:'1 - 2 - 5', notes:'C - D - G', baseFret:1, frets:[-1,3,0,0,1,3], fingers:[0,3,0,0,1,4], tags:['open','sus'], tip:'Không đánh dây 6. Dây 1 ô 3 là G.'},
+      {name:'Cadd9', root:'C', type:'Sus / Add', level:'Căn bản', formula:'1 - 3 - 5 - 9', notes:'C - E - G - D', baseFret:1, frets:[-1,3,2,0,3,3], fingers:[0,3,2,0,4,4], tags:['open','add9','sus'], tip:'Có thể dùng ngón 3 dây A ô 3 và ngón 4 dây B/e ô 3 tùy tay. Rất hay dùng trong pop.'},
+      {name:'Gadd9', root:'G', type:'Sus / Add', level:'Trung cấp', formula:'1 - 3 - 5 - 9', notes:'G - B - D - A', baseFret:1, frets:[3,0,0,2,0,3], fingers:[3,0,0,1,0,4], tags:['open','add9'], tip:'Màu rộng hơn G major thường.'},
+
+      // Barre E shape major/minor
+      {name:'F', root:'F', type:'Major', level:'Trung cấp', formula:'1 - 3 - 5', notes:'F - A - C', baseFret:1, frets:[1,3,3,2,1,1], fingers:[1,3,4,2,1,1], barre:[[0,5,1,1]], tags:['barre','e-shape','basic'], tip:'Dáng E major chặn ô 1. Ngón 1 chặn cả 6 dây.'},
+      {name:'F#m', root:'F#', type:'Minor', level:'Trung cấp', formula:'1 - b3 - 5', notes:'F# - A - C#', baseFret:2, frets:[2,4,4,2,2,2], fingers:[1,3,4,1,1,1], barre:[[0,5,2,1]], tags:['barre','e-shape'], tip:'Dáng Em dịch lên ô 2.'},
+      {name:'Gm', root:'G', type:'Minor', level:'Trung cấp', formula:'1 - b3 - 5', notes:'G - Bb - D', baseFret:3, frets:[3,5,5,3,3,3], fingers:[1,3,4,1,1,1], barre:[[0,5,3,1]], tags:['barre','e-shape'], tip:'Dáng Em dịch lên ô 3.'},
+      {name:'G', root:'G', type:'Major', level:'Trung cấp', formula:'1 - 3 - 5', notes:'G - B - D', baseFret:3, frets:[3,5,5,4,3,3], fingers:[1,3,4,2,1,1], barre:[[0,5,3,1]], tags:['barre','e-shape'], tip:'Dáng E major dịch lên ô 3.'},
+      {name:'A', root:'A', type:'Major', level:'Trung cấp', formula:'1 - 3 - 5', notes:'A - C# - E', baseFret:5, frets:[5,7,7,6,5,5], fingers:[1,3,4,2,1,1], barre:[[0,5,5,1]], tags:['barre','e-shape'], tip:'Dáng E major dịch lên ô 5.'},
+      {name:'Am', root:'A', type:'Minor', level:'Trung cấp', formula:'1 - b3 - 5', notes:'A - C - E', baseFret:5, frets:[5,7,7,5,5,5], fingers:[1,3,4,1,1,1], barre:[[0,5,5,1]], tags:['barre','e-shape'], tip:'Dáng Em dịch lên ô 5.'},
+      {name:'Bb', root:'Bb', type:'Major', level:'Trung cấp', formula:'1 - 3 - 5', notes:'Bb - D - F', baseFret:6, frets:[6,8,8,7,6,6], fingers:[1,3,4,2,1,1], barre:[[0,5,6,1]], tags:['barre','e-shape'], tip:'Dáng E major dịch lên ô 6.'},
+      {name:'Bm', root:'B', type:'Minor', level:'Trung cấp', formula:'1 - b3 - 5', notes:'B - D - F#', baseFret:7, frets:[7,9,9,7,7,7], fingers:[1,3,4,1,1,1], barre:[[0,5,7,1]], tags:['barre','e-shape'], tip:'Dáng Em dịch lên ô 7.'},
+
+      // Barre A shape major/minor
+      {name:'Bb', root:'Bb', type:'Major', level:'Trung cấp', formula:'1 - 3 - 5', notes:'Bb - D - F', baseFret:1, frets:[-1,1,3,3,3,1], fingers:[0,1,2,3,4,1], barre:[[1,5,1,1]], tags:['barre','a-shape'], tip:'Dáng A major dịch lên ô 1. Có thể chỉ đánh từ dây 5.'},
+      {name:'Bm', root:'B', type:'Minor', level:'Trung cấp', formula:'1 - b3 - 5', notes:'B - D - F#', baseFret:2, frets:[-1,2,4,4,3,2], fingers:[0,1,3,4,2,1], barre:[[1,5,2,1]], tags:['barre','a-shape'], tip:'Dáng Am dịch lên ô 2.'},
+      {name:'C', root:'C', type:'Major', level:'Trung cấp', formula:'1 - 3 - 5', notes:'C - E - G', baseFret:3, frets:[-1,3,5,5,5,3], fingers:[0,1,2,3,4,1], barre:[[1,5,3,1]], tags:['barre','a-shape'], tip:'Dáng A major dịch lên ô 3.'},
+      {name:'Cm', root:'C', type:'Minor', level:'Trung cấp', formula:'1 - b3 - 5', notes:'C - Eb - G', baseFret:3, frets:[-1,3,5,5,4,3], fingers:[0,1,3,4,2,1], barre:[[1,5,3,1]], tags:['barre','a-shape'], tip:'Dáng Am dịch lên ô 3.'},
+      {name:'D', root:'D', type:'Major', level:'Trung cấp', formula:'1 - 3 - 5', notes:'D - F# - A', baseFret:5, frets:[-1,5,7,7,7,5], fingers:[0,1,2,3,4,1], barre:[[1,5,5,1]], tags:['barre','a-shape'], tip:'Dáng A major dịch lên ô 5.'},
+      {name:'Dm', root:'D', type:'Minor', level:'Trung cấp', formula:'1 - b3 - 5', notes:'D - F - A', baseFret:5, frets:[-1,5,7,7,6,5], fingers:[0,1,3,4,2,1], barre:[[1,5,5,1]], tags:['barre','a-shape'], tip:'Dáng Am dịch lên ô 5.'},
+
+      // Barre 7/m7/maj7 common
+      {name:'F7', root:'F', type:'Dominant 7', level:'Trung cấp', formula:'1 - 3 - 5 - b7', notes:'F - A - C - Eb', baseFret:1, frets:[1,3,1,2,1,1], fingers:[1,3,1,2,1,1], barre:[[0,5,1,1]], tags:['barre','7','e-shape'], tip:'Dáng E7 dịch lên ô 1.'},
+      {name:'G7', root:'G', type:'Dominant 7', level:'Trung cấp', formula:'1 - 3 - 5 - b7', notes:'G - B - D - F', baseFret:3, frets:[3,5,3,4,3,3], fingers:[1,3,1,2,1,1], barre:[[0,5,3,1]], tags:['barre','7','e-shape'], tip:'Dáng E7 dịch lên ô 3.'},
+      {name:'A7', root:'A', type:'Dominant 7', level:'Trung cấp', formula:'1 - 3 - 5 - b7', notes:'A - C# - E - G', baseFret:5, frets:[5,7,5,6,5,5], fingers:[1,3,1,2,1,1], barre:[[0,5,5,1]], tags:['barre','7','e-shape'], tip:'Dáng E7 dịch lên ô 5.'},
+      {name:'Fmaj7', root:'F', type:'Major 7', level:'Trung cấp', formula:'1 - 3 - 5 - 7', notes:'F - A - C - E', baseFret:1, frets:[1,3,2,2,1,1], fingers:[1,4,2,3,1,1], barre:[[0,5,1,1]], tags:['barre','maj7','e-shape'], tip:'Dáng Emaj7 dịch lên ô 1.'},
+      {name:'Gmaj7', root:'G', type:'Major 7', level:'Trung cấp', formula:'1 - 3 - 5 - 7', notes:'G - B - D - F#', baseFret:3, frets:[3,5,4,4,3,3], fingers:[1,4,2,3,1,1], barre:[[0,5,3,1]], tags:['barre','maj7','e-shape'], tip:'Dáng Emaj7 dịch lên ô 3.'},
+      {name:'Am7', root:'A', type:'Minor 7', level:'Trung cấp', formula:'1 - b3 - 5 - b7', notes:'A - C - E - G', baseFret:5, frets:[5,7,5,5,5,5], fingers:[1,3,1,1,1,1], barre:[[0,5,5,1]], tags:['barre','m7','e-shape'], tip:'Dáng Em7 dịch lên ô 5.'},
+      {name:'Bm7', root:'B', type:'Minor 7', level:'Trung cấp', formula:'1 - b3 - 5 - b7', notes:'B - D - F# - A', baseFret:7, frets:[7,9,7,7,7,7], fingers:[1,3,1,1,1,1], barre:[[0,5,7,1]], tags:['barre','m7','e-shape'], tip:'Dáng Em7 dịch lên ô 7.'},
+      {name:'Cm7', root:'C', type:'Minor 7', level:'Trung cấp', formula:'1 - b3 - 5 - b7', notes:'C - Eb - G - Bb', baseFret:3, frets:[-1,3,5,3,4,3], fingers:[0,1,3,1,2,1], barre:[[1,5,3,1]], tags:['barre','m7','a-shape'], tip:'Dáng Am7 dịch lên ô 3.'},
+      {name:'Dmaj7', root:'D', type:'Major 7', level:'Trung cấp', formula:'1 - 3 - 5 - 7', notes:'D - F# - A - C#', baseFret:5, frets:[-1,5,7,6,7,5], fingers:[0,1,3,2,4,1], barre:[[1,5,5,1]], tags:['barre','maj7','a-shape'], tip:'Dáng Amaj7 dịch lên ô 5.'},
+      {name:'D7', root:'D', type:'Dominant 7', level:'Trung cấp', formula:'1 - 3 - 5 - b7', notes:'D - F# - A - C', baseFret:5, frets:[-1,5,7,5,7,5], fingers:[0,1,3,1,4,1], barre:[[1,5,5,1]], tags:['barre','7','a-shape'], tip:'Dáng A7 dịch lên ô 5.'},
+
+      // Diminished/aug/half-diminished
+      {name:'Cdim', root:'C', type:'Diminished', level:'Nâng cao', formula:'1 - b3 - b5', notes:'C - Eb - Gb', baseFret:1, frets:[-1,3,4,2,4,-1], fingers:[0,2,3,1,4,0], tags:['advanced','dim'], tip:'Âm căng, thường dùng làm hợp âm chuyển.'},
+      {name:'Caug', root:'C', type:'Augmented', level:'Nâng cao', formula:'1 - 3 - #5', notes:'C - E - G#', baseFret:1, frets:[-1,3,2,1,1,0], fingers:[0,4,3,1,1,0], tags:['advanced','aug'], tip:'Màu lạ, thường dùng để tạo chuyển động nốt #5.'},
+      {name:'Bm7b5', root:'B', type:'m7b5', level:'Nâng cao', formula:'1 - b3 - b5 - b7', notes:'B - D - F - A', baseFret:1, frets:[-1,2,3,2,3,-1], fingers:[0,1,3,2,4,0], tags:['advanced','m7b5'], tip:'Còn gọi là B half-diminished. Hay dùng trong ii - V - i giọng thứ.'},
+      {name:'Em7b5', root:'E', type:'m7b5', level:'Nâng cao', formula:'1 - b3 - b5 - b7', notes:'E - G - Bb - D', baseFret:1, frets:[0,1,2,0,3,0], fingers:[0,1,2,0,3,0], tags:['advanced','m7b5'], tip:'Đánh đủ dây nếu kiểm soát được âm sạch.'},
+
+      // Extended/jazz common
+      {name:'C9', root:'C', type:'Extended', level:'Nâng cao', formula:'1 - 3 - 5 - b7 - 9', notes:'C - E - G - Bb - D', baseFret:3, frets:[-1,3,2,3,3,3], fingers:[0,2,1,3,3,3], barre:[[3,5,3,3]], tags:['advanced','9','jazz'], tip:'Thế C9 phổ biến trong funk/blues. Có thể chặn 3 dây dưới bằng ngón 3.'},
+      {name:'G9', root:'G', type:'Extended', level:'Nâng cao', formula:'1 - 3 - 5 - b7 - 9', notes:'G - B - D - F - A', baseFret:3, frets:[3,2,3,2,3,3], fingers:[2,1,3,1,4,4], tags:['advanced','9','jazz'], tip:'Màu funk/blues. Chú ý không để dây bị rè.'},
+      {name:'Am9', root:'A', type:'Extended', level:'Nâng cao', formula:'1 - b3 - 5 - b7 - 9', notes:'A - C - E - G - B', baseFret:5, frets:[5,7,5,5,5,7], fingers:[1,3,1,1,1,4], barre:[[0,4,5,1]], tags:['advanced','m9','jazz'], tip:'Minor 9 mềm, hợp R&B/neo-soul.'},
+      {name:'Dm9', root:'D', type:'Extended', level:'Nâng cao', formula:'1 - b3 - 5 - b7 - 9', notes:'D - F - A - C - E', baseFret:5, frets:[-1,5,3,5,5,5], fingers:[0,2,1,3,3,3], barre:[[3,5,5,3]], tags:['advanced','m9','jazz'], tip:'Thế Dm9 màu jazz, nên đánh từ dây 5.'},
+      {name:'Cmaj9', root:'C', type:'Extended', level:'Nâng cao', formula:'1 - 3 - 5 - 7 - 9', notes:'C - E - G - B - D', baseFret:3, frets:[-1,3,2,4,3,3], fingers:[0,2,1,4,3,3], barre:[[4,5,3,3]], tags:['advanced','maj9','jazz'], tip:'Major 9 nghe rộng và mơ hơn maj7.'},
+      {name:'Fmaj9', root:'F', type:'Extended', level:'Nâng cao', formula:'1 - 3 - 5 - 7 - 9', notes:'F - A - C - E - G', baseFret:1, frets:[1,0,2,0,1,3], fingers:[1,0,2,0,1,4], tags:['advanced','maj9','jazz'], tip:'Một voicing mở đẹp, có dây buông.'},
+      {name:'A13', root:'A', type:'Extended', level:'Nâng cao', formula:'1 - 3 - 5 - b7 - 9 - 13', notes:'A - C# - E - G - B - F#', baseFret:5, frets:[5,-1,5,6,7,7], fingers:[1,0,1,2,3,4], tags:['advanced','13','jazz'], tip:'Có thể bỏ dây 5. Giữ 3, b7 và 13 để ra màu dominant 13.'},
+      {name:'G13', root:'G', type:'Extended', level:'Nâng cao', formula:'1 - 3 - 5 - b7 - 9 - 13', notes:'G - B - D - F - A - E', baseFret:3, frets:[3,-1,3,4,5,5], fingers:[1,0,1,2,3,4], tags:['advanced','13','jazz'], tip:'Dominant 13 rất hay trong jazz/funk.'},
+      {name:'E7#9', root:'E', type:'Altered', level:'Nâng cao', formula:'1 - 3 - 5 - b7 - #9', notes:'E - G# - B - D - G', baseFret:1, frets:[0,2,0,1,3,3], fingers:[0,2,0,1,3,4], tags:['advanced','altered','7#9'], tip:'Hendrix chord. Có cả G# và màu G/#9, nghe rất blues rock.'},
+      {name:'A7b9', root:'A', type:'Altered', level:'Nâng cao', formula:'1 - 3 - 5 - b7 - b9', notes:'A - C# - E - G - Bb', baseFret:5, frets:[5,-1,5,6,5,6], fingers:[1,0,1,2,1,3], barre:[[0,4,5,1]], tags:['advanced','altered','7b9'], tip:'Dùng để kéo về Dm hoặc D.'},
+      {name:'G7#11', root:'G', type:'Altered', level:'Nâng cao', formula:'1 - 3 - 5 - b7 - #11', notes:'G - B - D - F - C#', baseFret:3, frets:[3,-1,3,4,3,2], fingers:[2,0,3,4,2,1], tags:['advanced','altered','7#11'], tip:'Màu lydian dominant, hợp jazz/fusion.'},
+
+      // Slash / inversions
+      {name:'C/E', root:'C', type:'Slash / Inversion', level:'Căn bản', formula:'C major, bass E', notes:'E - C - E - G - C - E', baseFret:1, frets:[0,3,2,0,1,0], fingers:[0,3,2,0,1,0], tags:['slash','inversion','basic'], tip:'Hợp âm C nhưng bass là E. Dùng để tạo bass đi mượt.'},
+      {name:'G/B', root:'G', type:'Slash / Inversion', level:'Căn bản', formula:'G major, bass B', notes:'B - D - G - B - D', baseFret:1, frets:[-1,2,0,0,0,3], fingers:[0,1,0,0,0,3], tags:['slash','inversion','basic'], tip:'Không đánh dây 6. Bass B giúp nối C → G/B → Am.'},
+      {name:'D/F#', root:'D', type:'Slash / Inversion', level:'Trung cấp', formula:'D major, bass F#', notes:'F# - A - D - A - D - F#', baseFret:1, frets:[2,0,0,2,3,2], fingers:[1,0,0,2,4,3], tags:['slash','inversion'], tip:'Bass F# nằm ở dây 6 ô 2.'},
+      {name:'Am/G', root:'A', type:'Slash / Inversion', level:'Trung cấp', formula:'A minor, bass G', notes:'G - A - E - A - C - E', baseFret:1, frets:[3,0,2,2,1,0], fingers:[3,0,2,3,1,0], tags:['slash','inversion'], tip:'Tạo bass đi xuống trong tiến trình Am → Am/G → F.'}
+    ];
+
+    const rootOrder = ['All','C','C#','Db','D','D#','Eb','E','F','F#','Gb','G','G#','Ab','A','A#','Bb','B'];
+    const typeOrder = ['All','Major','Minor','Power chord','Dominant 7','Major 7','Minor 7','Sus / Add','Diminished','Augmented','m7b5','Extended','Altered','Slash / Inversion'];
+    const levelOrder = ['All','Căn bản','Trung cấp','Nâng cao'];
+
+    const toneRootOptions = ['C','C#','Db','D','D#','Eb','E','F','F#','Gb','G','G#','Ab','A','A#','Bb','B'];
+    const globalNoteValues = {
+      'C':0, 'C#':1, 'Db':1, 'D':2, 'D#':3, 'Eb':3, 'E':4, 'F':5,
+      'F#':6, 'Gb':6, 'G':7, 'G#':8, 'Ab':8, 'A':9, 'A#':10, 'Bb':10, 'B':11
+    };
+    const globalSharpNotes = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+    const globalFlatNotes = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
+    let activeToneChordNames = [];
+
+    const searchInput = document.getElementById('searchInput');
+    const rootFilter = document.getElementById('rootFilter');
+    const typeFilter = document.getElementById('typeFilter');
+    const levelFilter = document.getElementById('levelFilter');
+    const chordGrid = document.getElementById('chordGrid');
+    const stats = document.getElementById('stats');
+    const resetBtn = document.getElementById('resetBtn');
+    const toggleSearchBtn = document.getElementById('toggleSearchBtn');
+    const toggleAllBtn = document.getElementById('toggleAllBtn');
+    const searchPanel = document.getElementById('thu-vien');
+    const toneRootSelect = document.getElementById('toneRootSelect');
+    const toneModeSelect = document.getElementById('toneModeSelect');
+    const toneNotationSelect = document.getElementById('toneNotationSelect');
+    const buildToneBtn = document.getElementById('buildToneBtn');
+    const toneResult = document.getElementById('toneResult');
+    const chordModal = document.getElementById('chordModal');
+    const closeChordModal = document.getElementById('closeChordModal');
+    const modalChordTitle = document.getElementById('modalChordTitle');
+    const modalChordBody = document.getElementById('modalChordBody');
+    let showAllChords = false;
+
+    function fillSelect(select, options) {
+      select.innerHTML = '';
+      options.forEach(item => {
+        const opt = document.createElement('option');
+        opt.value = item;
+        opt.textContent = item === 'All' ? 'Tất cả' : item;
+        select.appendChild(opt);
+      });
+    }
+
+    function normalizeText(str) {
+      return String(str).toLowerCase().replace(/♭/g,'b').replace(/♯/g,'#').replace(/\s+/g,'');
+    }
+
+    function levelClass(level) {
+      if (level === 'Căn bản') return 'easy';
+      if (level === 'Trung cấp') return 'mid';
+      return 'hard';
+    }
+
+    function chooseToneNoteSet(root, notation) {
+      if (notation === 'sharp') return globalSharpNotes;
+      if (notation === 'flat') return globalFlatNotes;
+      const flatKeys = ['F','Bb','Eb','Ab','Db','Gb','Cm','Gm','Dm','Fm','Bbm','Ebm','Abm'];
+      const rootLooksFlat = root.includes('b') || ['F','Bb','Eb','Ab','Db','Gb'].includes(root);
+      return rootLooksFlat || flatKeys.includes(root) ? globalFlatNotes : globalSharpNotes;
+    }
+
+    function toneNote(root, interval, notation) {
+      const notes = chooseToneNoteSet(root, notation);
+      return notes[(globalNoteValues[root] + interval + 120) % 12];
+    }
+
+    function toneNotes(root, mode, notation) {
+      const intervals = {
+        major: [0,2,4,5,7,9,11],
+        naturalMinor: [0,2,3,5,7,8,10],
+        harmonicMinor: [0,2,3,5,7,8,11]
+      }[mode];
+      return intervals.map(i => toneNote(root, i, notation));
+    }
+
+    function uniqueItems(items) {
+      return Array.from(new Set(items.filter(Boolean)));
+    }
+
+    function buildToneData(root, mode, notation) {
+      const notes = toneNotes(root, mode, notation);
+      if (mode === 'major') {
+        return {
+          title: `${root} trưởng / ${root} Major`,
+          scale: notes,
+          triads: [
+            ['I', notes[0], '', 'Major', `${notes[0]} - ${notes[2]} - ${notes[4]}`],
+            ['ii', notes[1] + 'm', 'm', 'Minor', `${notes[1]} - ${notes[3]} - ${notes[5]}`],
+            ['iii', notes[2] + 'm', 'm', 'Minor', `${notes[2]} - ${notes[4]} - ${notes[6]}`],
+            ['IV', notes[3], '', 'Major', `${notes[3]} - ${notes[5]} - ${notes[0]}`],
+            ['V', notes[4], '', 'Major', `${notes[4]} - ${notes[6]} - ${notes[1]}`],
+            ['vi', notes[5] + 'm', 'm', 'Minor', `${notes[5]} - ${notes[0]} - ${notes[2]}`],
+            ['vii°', notes[6] + 'dim', 'dim', 'Diminished', `${notes[6]} - ${notes[1]} - ${notes[3]}`]
+          ],
+          sevenths: [
+            ['Imaj7', notes[0] + 'maj7', 'maj7', 'Major 7', `${notes[0]} - ${notes[2]} - ${notes[4]} - ${notes[6]}`],
+            ['iim7', notes[1] + 'm7', 'm7', 'Minor 7', `${notes[1]} - ${notes[3]} - ${notes[5]} - ${notes[0]}`],
+            ['iiim7', notes[2] + 'm7', 'm7', 'Minor 7', `${notes[2]} - ${notes[4]} - ${notes[6]} - ${notes[1]}`],
+            ['IVmaj7', notes[3] + 'maj7', 'maj7', 'Major 7', `${notes[3]} - ${notes[5]} - ${notes[0]} - ${notes[2]}`],
+            ['V7', notes[4] + '7', '7', 'Dominant 7', `${notes[4]} - ${notes[6]} - ${notes[1]} - ${notes[3]}`],
+            ['vim7', notes[5] + 'm7', 'm7', 'Minor 7', `${notes[5]} - ${notes[0]} - ${notes[2]} - ${notes[4]}`],
+            ['viim7b5', notes[6] + 'm7b5', 'm7b5', 'm7b5', `${notes[6]} - ${notes[1]} - ${notes[3]} - ${notes[5]}`]
+          ],
+          extended: [
+            ['Imaj9', notes[0] + 'maj9'], ['I6/9', notes[0] + '6/9'], ['iim9', notes[1] + 'm9'],
+            ['IVmaj9', notes[3] + 'maj9'], ['V9', notes[4] + '9'], ['V13', notes[4] + '13'],
+            ['vi m9', notes[5] + 'm9']
+          ],
+          progressions: [
+            `I - V - vi - IV: ${notes[0]} - ${notes[4]} - ${notes[5]}m - ${notes[3]}`,
+            `ii - V - I: ${notes[1]}m7 - ${notes[4]}7 - ${notes[0]}maj7`,
+            `vi - IV - I - V: ${notes[5]}m - ${notes[3]} - ${notes[0]} - ${notes[4]}`,
+            `I - vi - ii - V: ${notes[0]} - ${notes[5]}m - ${notes[1]}m - ${notes[4]}`
+          ]
+        };
+      }
+
+      if (mode === 'naturalMinor') {
+        return {
+          title: `${root} thứ tự nhiên / ${root} Natural minor`,
+          scale: notes,
+          triads: [
+            ['i', notes[0] + 'm', 'm', 'Minor', `${notes[0]} - ${notes[2]} - ${notes[4]}`],
+            ['ii°', notes[1] + 'dim', 'dim', 'Diminished', `${notes[1]} - ${notes[3]} - ${notes[5]}`],
+            ['III', notes[2], '', 'Major', `${notes[2]} - ${notes[4]} - ${notes[6]}`],
+            ['iv', notes[3] + 'm', 'm', 'Minor', `${notes[3]} - ${notes[5]} - ${notes[0]}`],
+            ['v', notes[4] + 'm', 'm', 'Minor', `${notes[4]} - ${notes[6]} - ${notes[1]}`],
+            ['VI', notes[5], '', 'Major', `${notes[5]} - ${notes[0]} - ${notes[2]}`],
+            ['VII', notes[6], '', 'Major', `${notes[6]} - ${notes[1]} - ${notes[3]}`]
+          ],
+          sevenths: [
+            ['im7', notes[0] + 'm7', 'm7', 'Minor 7', `${notes[0]} - ${notes[2]} - ${notes[4]} - ${notes[6]}`],
+            ['iim7b5', notes[1] + 'm7b5', 'm7b5', 'm7b5', `${notes[1]} - ${notes[3]} - ${notes[5]} - ${notes[0]}`],
+            ['IIImaj7', notes[2] + 'maj7', 'maj7', 'Major 7', `${notes[2]} - ${notes[4]} - ${notes[6]} - ${notes[1]}`],
+            ['ivm7', notes[3] + 'm7', 'm7', 'Minor 7', `${notes[3]} - ${notes[5]} - ${notes[0]} - ${notes[2]}`],
+            ['vm7', notes[4] + 'm7', 'm7', 'Minor 7', `${notes[4]} - ${notes[6]} - ${notes[1]} - ${notes[3]}`],
+            ['VImaj7', notes[5] + 'maj7', 'maj7', 'Major 7', `${notes[5]} - ${notes[0]} - ${notes[2]} - ${notes[4]}`],
+            ['VII7', notes[6] + '7', '7', 'Dominant 7', `${notes[6]} - ${notes[1]} - ${notes[3]} - ${notes[5]}`]
+          ],
+          extended: [
+            ['im9', notes[0] + 'm9'], ['ivm9', notes[3] + 'm9'], ['VImaj9', notes[5] + 'maj9'],
+            ['VII9', notes[6] + '9'], ['iim7b5', notes[1] + 'm7b5']
+          ],
+          progressions: [
+            `i - VI - III - VII: ${notes[0]}m - ${notes[5]} - ${notes[2]} - ${notes[6]}`,
+            `i - iv - VII - III: ${notes[0]}m - ${notes[3]}m - ${notes[6]} - ${notes[2]}`,
+            `i - VII - VI - VII: ${notes[0]}m - ${notes[6]} - ${notes[5]} - ${notes[6]}`,
+            `i - iv - v - i: ${notes[0]}m - ${notes[3]}m - ${notes[4]}m - ${notes[0]}m`
+          ]
+        };
+      }
+
+      return {
+        title: `${root} thứ hòa âm / ${root} Harmonic minor`,
+        scale: notes,
+        triads: [
+          ['i', notes[0] + 'm', 'm', 'Minor', `${notes[0]} - ${notes[2]} - ${notes[4]}`],
+          ['ii°', notes[1] + 'dim', 'dim', 'Diminished', `${notes[1]} - ${notes[3]} - ${notes[5]}`],
+          ['III+', notes[2] + 'aug', 'aug', 'Augmented', `${notes[2]} - ${notes[4]} - ${notes[6]}`],
+          ['iv', notes[3] + 'm', 'm', 'Minor', `${notes[3]} - ${notes[5]} - ${notes[0]}`],
+          ['V', notes[4], '', 'Major', `${notes[4]} - ${notes[6]} - ${notes[1]}`],
+          ['VI', notes[5], '', 'Major', `${notes[5]} - ${notes[0]} - ${notes[2]}`],
+          ['vii°', notes[6] + 'dim', 'dim', 'Diminished', `${notes[6]} - ${notes[1]} - ${notes[3]}`]
+        ],
+        sevenths: [
+          ['i mMaj7', notes[0] + 'mMaj7', 'mMaj7', 'Minor major 7', `${notes[0]} - ${notes[2]} - ${notes[4]} - ${notes[6]}`],
+          ['iim7b5', notes[1] + 'm7b5', 'm7b5', 'm7b5', `${notes[1]} - ${notes[3]} - ${notes[5]} - ${notes[0]}`],
+          ['IIImaj7#5', notes[2] + 'maj7#5', 'maj7#5', 'Major 7 #5', `${notes[2]} - ${notes[4]} - ${notes[6]} - ${notes[1]}`],
+          ['ivm7', notes[3] + 'm7', 'm7', 'Minor 7', `${notes[3]} - ${notes[5]} - ${notes[0]} - ${notes[2]}`],
+          ['V7', notes[4] + '7', '7', 'Dominant 7', `${notes[4]} - ${notes[6]} - ${notes[1]} - ${notes[3]}`],
+          ['VImaj7', notes[5] + 'maj7', 'maj7', 'Major 7', `${notes[5]} - ${notes[0]} - ${notes[2]} - ${notes[4]}`],
+          ['vii°7', notes[6] + 'dim7', 'dim7', 'Diminished 7', `${notes[6]} - ${notes[1]} - ${notes[3]} - ${notes[5]}`]
+        ],
+        extended: [
+          ['V7b9', notes[4] + '7b9'], ['V7alt', notes[4] + '7alt'], ['i mMaj7', notes[0] + 'mMaj7'],
+          ['ivm9', notes[3] + 'm9'], ['vii°7', notes[6] + 'dim7']
+        ],
+        progressions: [
+          `i - iv - V7 - i: ${notes[0]}m - ${notes[3]}m - ${notes[4]}7 - ${notes[0]}m`,
+          `iiø - V7 - i: ${notes[1]}m7b5 - ${notes[4]}7 - ${notes[0]}m`,
+          `i - VI - V7 - i: ${notes[0]}m - ${notes[5]} - ${notes[4]}7 - ${notes[0]}m`,
+          `V7b9 - i: ${notes[4]}7b9 - ${notes[0]}m`
+        ]
+      };
+    }
+
+    function renderDegreeCards(title, items) {
+      return `
+        <div>
+          <h3>${title}</h3>
+          <div class="degree-grid">
+            ${items.map(item => `
+              <div class="degree-card">
+                <div class="degree">${escapeHTML(item[0])}</div>
+                <div class="chord">${escapeHTML(item[1])}</div>
+                <div class="notes">${escapeHTML(item[3])}</div>
+                <div class="notes"><strong>Nốt:</strong> ${escapeHTML(item[4] || '')}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function chordMiniCardHTML(chord) {
+      return `
+        <article class="chord-card">
+          <div class="card-head">
+            <div>
+              <h3 class="chord-name">${escapeHTML(chord.name)}</h3>
+              <div style="color:#667085;font-size:14px;margin-top:4px;">${escapeHTML(chord.type)}</div>
+            </div>
+            <span class="badge ${levelClass(chord.level)}">${escapeHTML(chord.level)}</span>
+          </div>
+          <div class="diagram-wrap">${renderDiagram(chord)}</div>
+          <div class="meta">
+            <div><strong>Công thức:</strong> ${escapeHTML(chord.formula)}</div>
+            <div><strong>Nốt:</strong> ${escapeHTML(chord.notes)}</div>
+            <div><strong>Ô bắt đầu:</strong> ${chord.baseFret || 1}</div>
+          </div>
+          <div class="tip-text"><strong>Cách bấm:</strong> ${escapeHTML(chord.tip)}</div>
+          <div class="tags">${chord.tags.map(t => `<span class="tag">${escapeHTML(t)}</span>`).join('')}</div>
+        </article>
+      `;
+    }
+
+    function findVoicingsByChordName(chordName) {
+      const normalized = normalizeText(chordName);
+      return chordData.filter(chord => normalizeText(chord.name) === normalized);
+    }
+
+    function openChordModal(chordName) {
+      const voicings = findVoicingsByChordName(chordName);
+      modalChordTitle.textContent = `Thế bấm hợp âm ${chordName}`;
+      if (!voicings.length) {
+        modalChordBody.innerHTML = `<div class="empty">Chưa có thế bấm ${escapeHTML(chordName)} trong thư viện hiện tại.</div>`;
+      } else {
+        modalChordBody.innerHTML = `<div class="grid">${voicings.map(chordMiniCardHTML).join('')}</div>`;
+      }
+      chordModal.classList.add('open');
+      chordModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeModal() {
+      chordModal.classList.remove('open');
+      chordModal.setAttribute('aria-hidden', 'true');
+    }
+
+    function bindToneChordClicks() {
+      toneResult.querySelectorAll('.degree-card').forEach(card => {
+        const chordEl = card.querySelector('.chord');
+        if (!chordEl) return;
+        card.addEventListener('click', () => openChordModal(chordEl.textContent.trim()));
+      });
+    }
+
+    function renderToneInlineVoicings(chordNames) {
+      const container = document.getElementById('toneInlineVoicings');
+      if (!container) return;
+      const normalized = chordNames.map(normalizeText);
+      const voicings = chordData.filter(chord => normalized.includes(normalizeText(chord.name)));
+      if (!voicings.length) {
+        container.innerHTML = `<div class="empty">Chưa có thế bấm tương ứng trong thư viện cho nhóm hợp âm này.</div>`;
+        return;
+      }
+      container.innerHTML = voicings.map(chordMiniCardHTML).join('');
+    }
+
+    function renderTone() {
+      const root = toneRootSelect.value;
+      const mode = toneModeSelect.value;
+      const notation = toneNotationSelect.value;
+
+      if (mode === 'none') {
+        activeToneChordNames = [];
+        toneResult.innerHTML = `
+          <div class="note">
+            <strong>Chưa chọn tone.</strong><br>
+            Hãy chọn <strong>Trưởng / Major</strong>, <strong>Thứ tự nhiên / Natural minor</strong> hoặc <strong>Thứ hòa âm / Harmonic minor</strong>, rồi hệ thống sẽ liệt kê hợp âm trong tone đó.
+          </div>
+        `;
+        return;
+      }
+
+      const data = buildToneData(root, mode, notation);
+      const toneChordNames = uniqueItems([
+        ...data.triads.map(x => x[1]),
+        ...data.sevenths.map(x => x[1]),
+        ...data.extended.map(x => x[1])
+      ]);
+      activeToneChordNames = toneChordNames;
+
+      toneResult.innerHTML = `
+        <div class="formula">Tone đang chọn: ${escapeHTML(data.title)}<br>Âm giai: ${escapeHTML(data.scale.join(' - '))}</div>
+        ${renderDegreeCards('Hợp âm 3 nốt trong tone', data.triads)}
+        ${renderDegreeCards('Hợp âm 7 trong tone', data.sevenths)}
+        <div>
+          <h3>Hợp âm mở rộng thường dùng trong tone</h3>
+          <div class="degree-grid">
+            ${data.extended.map(item => `
+              <div class="degree-card">
+                <div class="degree">${escapeHTML(item[0])}</div>
+                <div class="chord">${escapeHTML(item[1])}</div>
+                <div class="notes">Mở rộng từ hợp âm cùng bậc.</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        <div>
+          <h3>Tiến trình gợi ý</h3>
+          <div class="table-wrap">
+            <table>
+              <tbody>${data.progressions.map(p => `<tr><td>${escapeHTML(p)}</td></tr>`).join('')}</tbody>
+            </table>
+          </div>
+        </div>
+        <div class="tone-voicing-section">
+          <h3>Tab: Thế bấm trong tone đang chọn</h3>
+          <p>Bấm trực tiếp vào từng hợp âm ở bảng trên để mở popup xem nhanh, hoặc dùng các nút dưới đây để hiện thế bấm theo nhóm ngay tại đây.</p>
+          <div class="tone-actions">
+            <button type="button" data-tone-voicing="triads">Thế bấm hợp âm 3 nốt</button>
+            <button type="button" data-tone-voicing="sevenths">Thế bấm hợp âm 7</button>
+            <button type="button" data-tone-voicing="extended">Thế bấm hợp âm mở rộng</button>
+            <button type="button" data-tone-voicing="all">Tất cả trong tone</button>
+          </div>
+          <div id="toneInlineVoicings" class="grid tone-inline-grid"></div>
+        </div>
+        <div class="tone-actions">
+          <button type="button" id="filterToneChordsBtn">Chỉ hiện thế bấm hợp âm trong tone này ở thư viện chính</button>
+          <button type="button" id="showAllFromToneBtn">Hiện toàn bộ thư viện</button>
+        </div>
+      `;
+
+      bindToneChordClicks();
+      renderToneInlineVoicings(data.triads.map(x => x[1]));
+      toneResult.querySelectorAll('[data-tone-voicing]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const mode = btn.getAttribute('data-tone-voicing');
+          if (mode === 'triads') renderToneInlineVoicings(data.triads.map(x => x[1]));
+          if (mode === 'sevenths') renderToneInlineVoicings(data.sevenths.map(x => x[1]));
+          if (mode === 'extended') renderToneInlineVoicings(data.extended.map(x => x[1]));
+          if (mode === 'all') renderToneInlineVoicings(activeToneChordNames);
+        });
+      });
+
+      document.getElementById('filterToneChordsBtn').addEventListener('click', () => {
+        showAllChords = true;
+        activeQuick = '';
+        searchInput.value = '';
+        rootFilter.value = 'All';
+        typeFilter.value = 'All';
+        levelFilter.value = 'All';
+        toggleAllBtn.textContent = 'Chỉ hiện hợp âm phổ biến';
+        renderCardsByTone(activeToneChordNames);
+        document.getElementById('chordGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      document.getElementById('showAllFromToneBtn').addEventListener('click', () => {
+        showAllChords = true;
+        toggleAllBtn.textContent = 'Chỉ hiện hợp âm phổ biến';
+        renderCards();
+      });
+    }
+
+    function renderCardsByTone(chordNames) {
+      const normalizedNames = chordNames.map(normalizeText);
+      const filtered = chordData.filter(chord => normalizedNames.includes(normalizeText(chord.name)));
+      stats.innerHTML = `
+        <span class="pill">Đang lọc theo tone: ${filtered.length} thế bấm</span>
+        <span class="pill">Số hợp âm trong tone: ${chordNames.length}</span>
+        <span class="pill">Tổng thư viện: ${chordData.length} thế bấm</span>
+      `;
+      if (filtered.length === 0) {
+        chordGrid.innerHTML = `<div class="empty">Chưa có thế bấm tương ứng trong thư viện cho các hợp âm này. Hãy bấm “Hiện toàn bộ thư viện” hoặc thử tone khác.</div>`;
+        return;
+      }
+      chordGrid.innerHTML = filtered.map(chord => `
+        <article class="chord-card">
+          <div class="card-head">
+            <div>
+              <h3 class="chord-name">${escapeHTML(chord.name)}</h3>
+              <div style="color:#667085;font-size:14px;margin-top:4px;">${escapeHTML(chord.type)}</div>
+            </div>
+            <span class="badge ${levelClass(chord.level)}">${escapeHTML(chord.level)}</span>
+          </div>
+          <div class="diagram-wrap">${renderDiagram(chord)}</div>
+          <div class="meta">
+            <div><strong>Công thức:</strong> ${escapeHTML(chord.formula)}</div>
+            <div><strong>Nốt:</strong> ${escapeHTML(chord.notes)}</div>
+            <div><strong>Ô bắt đầu:</strong> ${chord.baseFret || 1}</div>
+          </div>
+          <div class="tip-text"><strong>Cách bấm:</strong> ${escapeHTML(chord.tip)}</div>
+          <div class="tags">${chord.tags.map(t => `<span class="tag">${escapeHTML(t)}</span>`).join('')}</div>
+        </article>
+      `).join('');
+    }
+
+    function chordMatchesQuick(chord, quick) {
+      if (!quick) return true;
+      if (quick === 'basic') return chord.tags.includes('basic') || chord.tags.includes('open');
+      if (quick === 'barre') return chord.tags.includes('barre');
+      if (quick === '7') return chord.tags.includes('7') || chord.type === 'Dominant 7';
+      if (quick === 'maj7') return chord.tags.includes('maj7') || chord.type === 'Major 7';
+      if (quick === 'm7') return chord.tags.includes('m7') || chord.type === 'Minor 7';
+      if (quick === 'sus') return chord.tags.includes('sus') || chord.tags.includes('add9');
+      if (quick === 'advanced') return chord.level === 'Nâng cao';
+      return true;
+    }
+
+    let activeQuick = '';
+
+    function filterChords() {
+      const query = normalizeText(searchInput.value);
+      const root = rootFilter.value;
+      const type = typeFilter.value;
+      const level = levelFilter.value;
+
+      return chordData.filter(chord => {
+        const haystack = normalizeText([chord.name, chord.root, chord.type, chord.formula, chord.notes, chord.tags.join(' '), chord.tip].join(' '));
+        const matchQuery = !query || haystack.includes(query);
+        const matchRoot = root === 'All' || chord.root === root;
+        const matchType = type === 'All' || chord.type === type;
+        const matchLevel = level === 'All' || chord.level === level;
+        const matchQuick = chordMatchesQuick(chord, activeQuick);
+        return matchQuery && matchRoot && matchType && matchLevel && matchQuick;
+      });
+    }
+
+    function renderDiagram(chord) {
+      const width = 190;
+      const height = 230;
+      const topY = 44;
+      const fretH = 28;
+      const leftX = 25;
+      const stringGap = 26;
+      const strings = ['E','A','D','G','B','e'];
+      const maxFretRows = 5;
+      const base = chord.baseFret || 1;
+      let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="${chord.name} chord diagram">`;
+
+      svg += `<text x="${width/2}" y="12" class="diagram-title">${escapeHTML(chord.name)} chord</text>`;
+      if (base > 1) svg += `<text x="6" y="${topY + 17}" class="fret-label">${base}fr</text>`;
+
+      // Top markers X/O
+      strings.forEach((s, i) => {
+        const x = leftX + i * stringGap;
+        const fret = chord.frets[i];
+        const marker = fret === -1 ? 'X' : fret === 0 ? 'O' : '';
+        svg += `<text x="${x}" y="31" class="top-marker">${marker}</text>`;
+        svg += `<text x="${x}" y="${height - 8}" class="string-name" text-anchor="middle">${s}</text>`;
+      });
+
+      // Strings
+      for (let i = 0; i < 6; i++) {
+        const x = leftX + i * stringGap;
+        svg += `<line x1="${x}" y1="${topY}" x2="${x}" y2="${topY + maxFretRows * fretH}" stroke="#78716c" stroke-width="1.4" />`;
+      }
+
+      // Frets
+      for (let r = 0; r <= maxFretRows; r++) {
+        const y = topY + r * fretH;
+        const thick = r === 0 && base === 1 ? 5 : 1.4;
+        svg += `<line x1="${leftX}" y1="${y}" x2="${leftX + 5 * stringGap}" y2="${y}" stroke="#44403c" stroke-width="${thick}" stroke-linecap="round" />`;
+      }
+
+      // Barre lines
+      if (Array.isArray(chord.barre)) {
+        chord.barre.forEach(b => {
+          const [fromString, toString, fret, finger] = b;
+          const y = topY + (fret - base + 0.5) * fretH;
+          const x1 = leftX + fromString * stringGap;
+          const x2 = leftX + toString * stringGap;
+          if (y >= topY && y <= topY + maxFretRows * fretH) {
+            svg += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#7c2d12" stroke-width="18" stroke-linecap="round" opacity="0.78" />`;
+            svg += `<text x="${(x1+x2)/2}" y="${y}" class="finger-text">${finger}</text>`;
+          }
+        });
+      }
+
+      // Dots
+      chord.frets.forEach((fret, i) => {
+        if (fret > 0) {
+          const isPartOfBarre = Array.isArray(chord.barre) && chord.barre.some(b => i >= b[0] && i <= b[1] && fret === b[2]);
+          if (isPartOfBarre) return;
+          const x = leftX + i * stringGap;
+          const y = topY + (fret - base + 0.5) * fretH;
+          if (y >= topY && y <= topY + maxFretRows * fretH) {
+            const finger = chord.fingers[i] || '';
+            svg += `<circle cx="${x}" cy="${y}" r="11" fill="#7c2d12" />`;
+            svg += `<text x="${x}" y="${y}" class="finger-text">${finger}</text>`;
+          }
+        }
+      });
+
+      svg += `</svg>`;
+      return svg;
+    }
+
+    function escapeHTML(str) {
+      return String(str).replace(/[&<>'"]/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[char]));
+    }
+
+    function renderCards() {
+      const rawFiltered = filterChords();
+      const hasManualFilter = Boolean(
+        searchInput.value.trim() ||
+        rootFilter.value !== 'All' ||
+        typeFilter.value !== 'All' ||
+        levelFilter.value !== 'All' ||
+        activeQuick
+      );
+      let filtered = rawFiltered;
+      if (!showAllChords && !hasManualFilter) {
+        filtered = rawFiltered
+          .filter(chord => chord.tags.includes('open') || chord.tags.includes('basic'))
+          .slice(0, 84);
+      }
+
+      stats.innerHTML = `
+        <span class="pill">Đang hiển thị: ${filtered.length} hợp âm</span>
+        <span class="pill">Tổng thư viện: ${chordData.length} thế bấm</span>
+        ${!showAllChords && !hasManualFilter ? '<span class="pill">Chế độ mặc định: chỉ hiện hợp âm phổ biến</span>' : ''}
+        ${showAllChords ? '<span class="pill">Đang hiện toàn bộ thư viện</span>' : ''}
+        ${activeQuick ? `<span class="pill">Bộ lọc nhanh: ${activeQuick}</span>` : ''}
+      `;
+
+      if (filtered.length === 0) {
+        chordGrid.innerHTML = `<div class="empty">Không tìm thấy hợp âm phù hợp. Thử gõ ngắn hơn, ví dụ “C”, “m7”, “maj7”, “sus”, “9”, “barre”.</div>`;
+        return;
+      }
+
+      chordGrid.innerHTML = filtered.map(chord => `
+        <article class="chord-card">
+          <div class="card-head">
+            <div>
+              <h3 class="chord-name">${escapeHTML(chord.name)}</h3>
+              <div style="color:#667085;font-size:14px;margin-top:4px;">${escapeHTML(chord.type)}</div>
+            </div>
+            <span class="badge ${levelClass(chord.level)}">${escapeHTML(chord.level)}</span>
+          </div>
+          <div class="diagram-wrap">${renderDiagram(chord)}</div>
+          <div class="meta">
+            <div><strong>Công thức:</strong> ${escapeHTML(chord.formula)}</div>
+            <div><strong>Nốt:</strong> ${escapeHTML(chord.notes)}</div>
+            <div><strong>Ô bắt đầu:</strong> ${chord.baseFret || 1}</div>
+          </div>
+          <div class="tip-text"><strong>Cách bấm:</strong> ${escapeHTML(chord.tip)}</div>
+          <div class="tags">${chord.tags.map(t => `<span class="tag">${escapeHTML(t)}</span>`).join('')}</div>
+        </article>
+      `).join('');
+    }
+
+    function resetFilters() {
+      searchInput.value = '';
+      rootFilter.value = 'All';
+      typeFilter.value = 'All';
+      levelFilter.value = 'All';
+      activeQuick = '';
+      renderTone();
+      renderCards();
+    }
+
+    function addGeneratedChordLibrary() {
+      const noteValues = {
+        'C':0, 'C#':1, 'Db':1, 'D':2, 'D#':3, 'Eb':3, 'E':4, 'F':5,
+        'F#':6, 'Gb':6, 'G':7, 'G#':8, 'Ab':8, 'A':9, 'A#':10, 'Bb':10, 'B':11
+      };
+
+      const sharpByValue = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+      const flatByValue = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
+      const commonRoots = ['C','C#','Db','D','D#','Eb','E','F','F#','Gb','G','G#','Ab','A','A#','Bb','B'];
+      const naturalAndFlatRoots = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
+
+      function preferFlat(root) {
+        return root.includes('b') || ['F','Bb','Eb','Ab','Db','Gb'].includes(root);
+      }
+
+      function noteName(root, interval) {
+        const value = (noteValues[root] + interval + 120) % 12;
+        return preferFlat(root) ? flatByValue[value] : sharpByValue[value];
+      }
+
+      function notesFrom(root, intervals) {
+        return intervals.map(i => noteName(root, i)).join(' - ');
+      }
+
+      function existsSimilar(name, fretsKey) {
+        return chordData.some(c => c.name === name && c.frets.join(',') === fretsKey);
+      }
+
+      function pushChord(item) {
+        const key = item.frets.join(',');
+        if (!existsSimilar(item.name, key)) chordData.push(item);
+      }
+
+      function eRootFret(root) {
+        const value = noteValues[root];
+        let fret = (value - noteValues.E + 12) % 12;
+        if (fret === 0) fret = 12;
+        return fret;
+      }
+
+      function aRootFret(root) {
+        const value = noteValues[root];
+        let fret = (value - noteValues.A + 12) % 12;
+        if (fret === 0) fret = 12;
+        return fret;
+      }
+
+      function addEShape(root, suffix, type, formula, intervals, shape, fingers, tags, level, tipExtra) {
+        const f = eRootFret(root);
+        const name = `${root}${suffix}`;
+        pushChord({
+          name, root, type, level, formula, notes: notesFrom(root, intervals),
+          baseFret: f,
+          frets: shape.map(v => v === -1 ? -1 : f + v),
+          fingers,
+          barre: [[0,5,f,1]],
+          tags: ['generated','movable','e-shape',...tags],
+          tip: `Dáng E${suffix || ' major'} di động, nốt gốc ở dây 6 ô ${f}. ${tipExtra || ''}`
+        });
+      }
+
+      function addAShape(root, suffix, type, formula, intervals, shape, fingers, tags, level, tipExtra) {
+        const f = aRootFret(root);
+        const name = `${root}${suffix}`;
+        pushChord({
+          name, root, type, level, formula, notes: notesFrom(root, intervals),
+          baseFret: f,
+          frets: shape.map(v => v === -1 ? -1 : f + v),
+          fingers,
+          barre: [[1,5,f,1]],
+          tags: ['generated','movable','a-shape',...tags],
+          tip: `Dáng A${suffix || ' major'} di động, nốt gốc ở dây 5 ô ${f}. ${tipExtra || ''}`
+        });
+      }
+
+      function addCompact(root, suffix, type, formula, intervals, baseFret, frets, fingers, tags, level, tip) {
+        pushChord({
+          name: `${root}${suffix}`, root, type, level, formula, notes: notesFrom(root, intervals),
+          baseFret, frets, fingers, tags: ['generated','compact',...tags], tip
+        });
+      }
+
+      // Bộ di động dây 6: đủ 12 nốt gốc cho các nhóm quan trọng.
+      commonRoots.forEach(root => {
+        addEShape(root, '', 'Major', '1 - 3 - 5', [0,4,7], [0,2,2,1,0,0], [1,3,4,2,1,1], ['barre','basic'], 'Trung cấp', 'Có thể dùng thay cho hợp âm mở khi cần đổi tông.');
+        addEShape(root, 'm', 'Minor', '1 - b3 - 5', [0,3,7], [0,2,2,0,0,0], [1,3,4,1,1,1], ['barre'], 'Trung cấp', 'Dáng Em di động.');
+        addEShape(root, '5', 'Power chord', '1 - 5 - 8', [0,7,12], [0,2,2,-1,-1,-1], [1,3,4,0,0,0], ['power','rock'], 'Căn bản', 'Chỉ đánh 3 dây thấp, phù hợp rock/metal.');
+        addEShape(root, '7', 'Dominant 7', '1 - 3 - 5 - b7', [0,4,7,10], [0,2,0,1,0,0], [1,3,1,2,1,1], ['7','barre'], 'Trung cấp', 'Dáng E7 di động.');
+        addEShape(root, 'm7', 'Minor 7', '1 - b3 - 5 - b7', [0,3,7,10], [0,2,0,0,0,0], [1,3,1,1,1,1], ['m7','barre'], 'Trung cấp', 'Dáng Em7 di động.');
+        addEShape(root, 'maj7', 'Major 7', '1 - 3 - 5 - 7', [0,4,7,11], [0,2,1,1,0,0], [1,4,2,3,1,1], ['maj7','barre'], 'Trung cấp', 'Dáng Emaj7 di động.');
+        addEShape(root, 'sus4', 'Sus / Add', '1 - 4 - 5', [0,5,7], [0,2,2,2,0,0], [1,2,3,4,1,1], ['sus','barre'], 'Trung cấp', 'Dáng Esus4 di động, hay giải về major.');
+        addEShape(root, '6', 'Extended', '1 - 3 - 5 - 6', [0,4,7,9], [0,2,2,1,2,0], [1,3,4,2,3,1], ['6','barre'], 'Nâng cao', 'Màu sáng, hợp swing/pop/jazz.');
+        addEShape(root, 'm6', 'Extended', '1 - b3 - 5 - 6', [0,3,7,9], [0,2,2,0,2,0], [1,3,4,1,3,1], ['m6','barre'], 'Nâng cao', 'Minor có bậc 6 trưởng, màu jazz.');
+      });
+
+      // Bộ di động dây 5: thêm nhiều voicing phổ biến.
+      commonRoots.forEach(root => {
+        addAShape(root, '', 'Major', '1 - 3 - 5', [0,4,7], [-1,0,2,2,2,0], [0,1,2,3,4,1], ['barre','basic'], 'Trung cấp', 'Dáng A major di động. Chỉ đánh từ dây 5.');
+        addAShape(root, 'm', 'Minor', '1 - b3 - 5', [0,3,7], [-1,0,2,2,1,0], [0,1,3,4,2,1], ['barre'], 'Trung cấp', 'Dáng Am di động.');
+        addAShape(root, '5', 'Power chord', '1 - 5 - 8', [0,7,12], [-1,0,2,2,-1,-1], [0,1,3,4,0,0], ['power','rock'], 'Căn bản', 'Power chord gốc dây 5.');
+        addAShape(root, '7', 'Dominant 7', '1 - 3 - 5 - b7', [0,4,7,10], [-1,0,2,0,2,0], [0,1,3,1,4,1], ['7','barre'], 'Trung cấp', 'Dáng A7 di động.');
+        addAShape(root, 'm7', 'Minor 7', '1 - b3 - 5 - b7', [0,3,7,10], [-1,0,2,0,1,0], [0,1,3,1,2,1], ['m7','barre'], 'Trung cấp', 'Dáng Am7 di động.');
+        addAShape(root, 'maj7', 'Major 7', '1 - 3 - 5 - 7', [0,4,7,11], [-1,0,2,1,2,0], [0,1,3,2,4,1], ['maj7','barre'], 'Trung cấp', 'Dáng Amaj7 di động.');
+        addAShape(root, 'sus2', 'Sus / Add', '1 - 2 - 5', [0,2,7], [-1,0,2,2,0,0], [0,1,3,4,1,1], ['sus','barre'], 'Trung cấp', 'Dáng Asus2 di động.');
+        addAShape(root, 'sus4', 'Sus / Add', '1 - 4 - 5', [0,5,7], [-1,0,2,2,3,0], [0,1,2,3,4,1], ['sus','barre'], 'Trung cấp', 'Dáng Asus4 di động.');
+        addAShape(root, 'add9', 'Sus / Add', '1 - 3 - 5 - 9', [0,4,7,2], [-1,0,2,4,2,0], [0,1,2,4,3,1], ['add9','barre'], 'Nâng cao', 'Add9 giữ quãng 3 và thêm bậc 9.');
+      });
+
+      // Dạng compact nâng cao theo các root phổ biến, dễ dùng trong jazz/R&B/funk.
+      naturalAndFlatRoots.forEach(root => {
+        const f6 = eRootFret(root);
+        const f5 = aRootFret(root);
+
+        // Root dây 6, voicing 7b9 / 7#9 / 13 compact.
+        addCompact(root, '7b9', 'Altered', '1 - 3 - b7 - b9', [0,4,10,1], f6, [f6,-1,f6,f6+1,f6,f6+1], [1,0,1,2,1,3], ['altered','7b9','jazz'], 'Nâng cao', `Voicing ${root}7b9 gốc dây 6, thường dùng để kéo về hợp âm cách quãng 4 lên.`);
+        addCompact(root, '7#9', 'Altered', '1 - 3 - b7 - #9', [0,4,10,3], f6, [f6,-1,f6,f6+1,f6+2,f6+2], [1,0,1,2,3,4], ['altered','7#9','blues'], 'Nâng cao', `Voicing ${root}7#9 kiểu blues/rock, còn gọi là Hendrix color.`);
+        addCompact(root, '13', 'Extended', '1 - b7 - 3 - 13', [0,10,4,9], f6, [f6,-1,f6,f6+1,f6+2,f6+2], [1,0,1,2,3,4], ['13','jazz','funk'], 'Nâng cao', `Voicing ${root}13 rút gọn, ưu tiên 3, b7 và 13.`);
+
+        // Root dây 5, voicing 9 / maj9 / m9 / m7b5 / dim7.
+        addCompact(root, '9', 'Extended', '1 - 3 - b7 - 9', [0,4,10,2], f5, [-1,f5,f5-1,f5,f5,f5], [0,2,1,3,3,3], ['9','jazz','funk'], 'Nâng cao', `Voicing ${root}9 gốc dây 5, hợp funk/blues/jazz.`);
+        addCompact(root, 'maj9', 'Extended', '1 - 3 - 7 - 9', [0,4,11,2], f5, [-1,f5,f5-1,f5+1,f5,f5], [0,2,1,4,3,3], ['maj9','jazz'], 'Nâng cao', `Voicing ${root}maj9, màu sáng và rộng.`);
+        addCompact(root, 'm9', 'Extended', '1 - b3 - b7 - 9', [0,3,10,2], f5, [-1,f5,f5-2,f5,f5,f5], [0,2,1,3,3,3], ['m9','jazz','rnb'], 'Nâng cao', `Voicing ${root}m9 mềm, hợp R&B/neo-soul.`);
+        addCompact(root, 'm7b5', 'm7b5', '1 - b3 - b5 - b7', [0,3,6,10], f5, [-1,f5,f5+1,f5,f5+1,-1], [0,1,3,2,4,0], ['m7b5','jazz'], 'Nâng cao', `Voicing ${root}m7b5, dùng nhiều trong ii - V - i giọng thứ.`);
+        addCompact(root, 'dim7', 'Diminished', '1 - b3 - b5 - bb7', [0,3,6,9], f5, [-1,f5,f5+1,f5-1,f5+1,-1], [0,2,3,1,4,0], ['dim7','jazz'], 'Nâng cao', `Voicing ${root}dim7 đối xứng, dùng làm hợp âm chuyển.`);
+        addCompact(root, 'aug', 'Augmented', '1 - 3 - #5', [0,4,8], f5, [-1,f5,f5+1,f5+1,f5,-1], [0,1,3,4,2,0], ['aug'], 'Nâng cao', `Voicing ${root}aug, màu tăng và bất ổn.`);
+        addCompact(root, 'dim', 'Diminished', '1 - b3 - b5', [0,3,6], f5, [-1,f5,f5+1,f5-1,f5+1,-1], [0,2,3,1,4,0], ['dim'], 'Nâng cao', `Voicing ${root}dim, âm căng, hay dùng đi qua.`);
+      });
+    }
+
+    function addCompletePracticalChordLibrary() {
+      const noteValues = {
+        'C':0, 'C#':1, 'Db':1, 'D':2, 'D#':3, 'Eb':3, 'E':4, 'F':5,
+        'F#':6, 'Gb':6, 'G':7, 'G#':8, 'Ab':8, 'A':9, 'A#':10, 'Bb':10, 'B':11
+      };
+      const sharpByValue = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+      const flatByValue = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
+      const fullRoots = ['C','C#','Db','D','D#','Eb','E','F','F#','Gb','G','G#','Ab','A','A#','Bb','B'];
+
+      function preferFlat(root) {
+        return root.includes('b') || ['F','Bb','Eb','Ab','Db','Gb'].includes(root);
+      }
+      function noteName(root, interval) {
+        const value = (noteValues[root] + interval + 120) % 12;
+        return preferFlat(root) ? flatByValue[value] : sharpByValue[value];
+      }
+      function notesFrom(root, intervals) {
+        return intervals.map(i => noteName(root, i)).join(' - ');
+      }
+      function existsSimilar(name, fretsKey) {
+        return chordData.some(c => c.name === name && c.frets.join(',') === fretsKey);
+      }
+      function pushChord(item) {
+        const key = item.frets.join(',');
+        if (!existsSimilar(item.name, key)) chordData.push(item);
+      }
+      function fretOnString(root, openNote) {
+        let fret = (noteValues[root] - noteValues[openNote] + 12) % 12;
+        if (fret === 0) fret = 12;
+        return fret;
+      }
+      function make(root, suffix, type, formula, intervals, baseFret, frets, fingers, tags, level, tip, barre) {
+        pushChord({
+          name: `${root}${suffix}`,
+          root,
+          type,
+          level,
+          formula,
+          notes: notesFrom(root, intervals),
+          baseFret,
+          frets,
+          fingers,
+          barre,
+          tags: ['complete','systematic',...tags],
+          tip
+        });
+      }
+      function eShape(root, suffix, type, formula, intervals, relFrets, fingers, tags, level, tip) {
+        const f = fretOnString(root, 'E');
+        make(root, suffix, type, formula, intervals, f, relFrets.map(v => v < 0 ? -1 : f + v), fingers, ['e-shape','movable',...tags], level, `${tip} Nốt gốc ở dây 6 ô ${f}.`, [[0,5,f,1]]);
+      }
+      function aShape(root, suffix, type, formula, intervals, relFrets, fingers, tags, level, tip) {
+        const f = fretOnString(root, 'A');
+        make(root, suffix, type, formula, intervals, f, relFrets.map(v => v < 0 ? -1 : f + v), fingers, ['a-shape','movable',...tags], level, `${tip} Nốt gốc ở dây 5 ô ${f}.`, [[1,5,f,1]]);
+      }
+      function dShape(root, suffix, type, formula, intervals, relFrets, fingers, tags, level, tip) {
+        const f = fretOnString(root, 'D');
+        make(root, suffix, type, formula, intervals, f, relFrets.map(v => v < 0 ? -1 : f + v), fingers, ['d-shape','top-strings','movable',...tags], level, `${tip} Dáng dây 4, hợp để chơi triad/voicing cao. Nốt gốc ở dây 4 ô ${f}.`, [[2,5,f,1]]);
+      }
+
+      const eTemplates = [
+        ['', 'Major', '1 - 3 - 5', [0,4,7], [0,2,2,1,0,0], [1,3,4,2,1,1], ['basic','barre'], 'Trung cấp', 'Dáng E major di động.'],
+        ['m', 'Minor', '1 - b3 - 5', [0,3,7], [0,2,2,0,0,0], [1,3,4,1,1,1], ['barre'], 'Trung cấp', 'Dáng Em di động.'],
+        ['5', 'Power chord', '1 - 5 - 8', [0,7,12], [0,2,2,-1,-1,-1], [1,3,4,0,0,0], ['power','rock'], 'Căn bản', 'Power chord gốc dây 6.'],
+        ['sus2', 'Sus / Add', '1 - 2 - 5', [0,2,7], [0,2,4,4,0,0], [1,2,4,4,1,1], ['sus'], 'Trung cấp', 'Sus2 gốc dây 6.'],
+        ['sus4', 'Sus / Add', '1 - 4 - 5', [0,5,7], [0,2,2,2,0,0], [1,2,3,4,1,1], ['sus'], 'Trung cấp', 'Sus4 gốc dây 6.'],
+        ['add9', 'Sus / Add', '1 - 3 - 5 - 9', [0,4,7,2], [0,2,4,1,0,0], [1,3,4,2,1,1], ['add9'], 'Nâng cao', 'Add9 gốc dây 6, vẫn giữ quãng 3.'],
+        ['madd9', 'Sus / Add', '1 - b3 - 5 - 9', [0,3,7,2], [0,2,4,0,0,0], [1,3,4,1,1,1], ['madd9'], 'Nâng cao', 'Minor add9 gốc dây 6.'],
+        ['6', 'Extended', '1 - 3 - 5 - 6', [0,4,7,9], [0,2,2,1,2,0], [1,3,4,2,4,1], ['6'], 'Nâng cao', 'Major 6 gốc dây 6.'],
+        ['m6', 'Extended', '1 - b3 - 5 - 6', [0,3,7,9], [0,2,2,0,2,0], [1,3,4,1,4,1], ['m6'], 'Nâng cao', 'Minor 6 gốc dây 6.'],
+        ['6/9', 'Extended', '1 - 3 - 5 - 6 - 9', [0,4,7,9,2], [0,2,2,1,2,2], [1,2,3,1,4,4], ['6/9','jazz'], 'Nâng cao', 'Major 6/9 gốc dây 6.'],
+        ['maj7', 'Major 7', '1 - 3 - 5 - 7', [0,4,7,11], [0,2,1,1,0,0], [1,4,2,3,1,1], ['maj7'], 'Trung cấp', 'Major 7 gốc dây 6.'],
+        ['7', 'Dominant 7', '1 - 3 - 5 - b7', [0,4,7,10], [0,2,0,1,0,0], [1,3,1,2,1,1], ['7'], 'Trung cấp', 'Dominant 7 gốc dây 6.'],
+        ['m7', 'Minor 7', '1 - b3 - 5 - b7', [0,3,7,10], [0,2,0,0,0,0], [1,3,1,1,1,1], ['m7'], 'Trung cấp', 'Minor 7 gốc dây 6.'],
+        ['mMaj7', 'Minor 7', '1 - b3 - 5 - 7', [0,3,7,11], [0,2,1,0,0,0], [1,3,2,1,1,1], ['mMaj7'], 'Nâng cao', 'Minor major 7 gốc dây 6.'],
+        ['9', 'Extended', '1 - 3 - 5 - b7 - 9', [0,4,7,10,2], [0,2,0,1,0,2], [1,3,1,2,1,4], ['9'], 'Nâng cao', 'Dominant 9 gốc dây 6.'],
+        ['m9', 'Extended', '1 - b3 - 5 - b7 - 9', [0,3,7,10,2], [0,2,0,0,0,2], [1,3,1,1,1,4], ['m9'], 'Nâng cao', 'Minor 9 gốc dây 6.'],
+        ['maj9', 'Extended', '1 - 3 - 5 - 7 - 9', [0,4,7,11,2], [0,2,1,1,0,2], [1,4,2,3,1,4], ['maj9'], 'Nâng cao', 'Major 9 gốc dây 6.'],
+        ['m11', 'Extended', '1 - b3 - 5 - b7 - 9 - 11', [0,3,7,10,2,5], [0,0,0,0,0,0], [1,1,1,1,1,1], ['m11'], 'Nâng cao', 'Minor 11 gốc dây 6, dạng chặn rộng.'],
+        ['13', 'Extended', '1 - 3 - 5 - b7 - 13', [0,4,7,10,9], [0,2,0,1,2,0], [1,3,1,2,4,1], ['13'], 'Nâng cao', 'Dominant 13 gốc dây 6.'],
+        ['dim', 'Diminished', '1 - b3 - b5', [0,3,6], [0,1,2,0,-1,-1], [1,2,3,1,0,0], ['dim'], 'Nâng cao', 'Diminished triad gốc dây 6.'],
+        ['aug', 'Augmented', '1 - 3 - #5', [0,4,8], [0,3,2,1,1,0], [1,4,3,2,2,1], ['aug'], 'Nâng cao', 'Augmented triad gốc dây 6.'],
+        ['7b9', 'Altered', '1 - 3 - 5 - b7 - b9', [0,4,7,10,1], [0,2,0,1,0,1], [1,3,1,2,1,4], ['7b9','altered'], 'Nâng cao', 'Dominant 7b9 gốc dây 6.'],
+        ['7#9', 'Altered', '1 - 3 - 5 - b7 - #9', [0,4,7,10,3], [0,2,0,1,3,3], [1,2,1,1,3,4], ['7#9','altered'], 'Nâng cao', 'Dominant 7#9 gốc dây 6.'],
+        ['7b5', 'Altered', '1 - 3 - b5 - b7', [0,4,6,10], [0,1,0,1,0,0], [1,2,1,3,1,1], ['7b5','altered'], 'Nâng cao', 'Dominant 7b5 gốc dây 6.'],
+        ['7#5', 'Altered', '1 - 3 - #5 - b7', [0,4,8,10], [0,3,0,1,1,0], [1,4,1,2,3,1], ['7#5','altered'], 'Nâng cao', 'Dominant 7#5 gốc dây 6.']
+      ];
+
+      const aTemplates = [
+        ['', 'Major', '1 - 3 - 5', [0,4,7], [-1,0,2,2,2,0], [0,1,2,3,4,1], ['basic','barre'], 'Trung cấp', 'Dáng A major di động.'],
+        ['m', 'Minor', '1 - b3 - 5', [0,3,7], [-1,0,2,2,1,0], [0,1,3,4,2,1], ['barre'], 'Trung cấp', 'Dáng Am di động.'],
+        ['5', 'Power chord', '1 - 5 - 8', [0,7,12], [-1,0,2,2,-1,-1], [0,1,3,4,0,0], ['power','rock'], 'Căn bản', 'Power chord gốc dây 5.'],
+        ['sus2', 'Sus / Add', '1 - 2 - 5', [0,2,7], [-1,0,2,2,0,0], [0,1,3,4,1,1], ['sus'], 'Trung cấp', 'Sus2 gốc dây 5.'],
+        ['sus4', 'Sus / Add', '1 - 4 - 5', [0,5,7], [-1,0,2,2,3,0], [0,1,2,3,4,1], ['sus'], 'Trung cấp', 'Sus4 gốc dây 5.'],
+        ['add9', 'Sus / Add', '1 - 3 - 5 - 9', [0,4,7,2], [-1,0,2,4,2,0], [0,1,2,4,3,1], ['add9'], 'Nâng cao', 'Add9 gốc dây 5.'],
+        ['madd9', 'Sus / Add', '1 - b3 - 5 - 9', [0,3,7,2], [-1,0,2,4,1,0], [0,1,3,4,2,1], ['madd9'], 'Nâng cao', 'Minor add9 gốc dây 5.'],
+        ['6', 'Extended', '1 - 3 - 5 - 6', [0,4,7,9], [-1,0,2,2,2,2], [0,1,2,2,2,2], ['6'], 'Nâng cao', 'Major 6 gốc dây 5.'],
+        ['m6', 'Extended', '1 - b3 - 5 - 6', [0,3,7,9], [-1,0,2,2,1,2], [0,1,3,4,2,4], ['m6'], 'Nâng cao', 'Minor 6 gốc dây 5.'],
+        ['maj7', 'Major 7', '1 - 3 - 5 - 7', [0,4,7,11], [-1,0,2,1,2,0], [0,1,3,2,4,1], ['maj7'], 'Trung cấp', 'Major 7 gốc dây 5.'],
+        ['7', 'Dominant 7', '1 - 3 - 5 - b7', [0,4,7,10], [-1,0,2,0,2,0], [0,1,3,1,4,1], ['7'], 'Trung cấp', 'Dominant 7 gốc dây 5.'],
+        ['m7', 'Minor 7', '1 - b3 - 5 - b7', [0,3,7,10], [-1,0,2,0,1,0], [0,1,3,1,2,1], ['m7'], 'Trung cấp', 'Minor 7 gốc dây 5.'],
+        ['9', 'Extended', '1 - 3 - b7 - 9', [0,4,10,2], [-1,0,-1,0,0,0], [0,2,0,1,1,1], ['9'], 'Nâng cao', 'Dominant 9 rút gọn gốc dây 5.'],
+        ['m9', 'Extended', '1 - b3 - b7 - 9', [0,3,10,2], [-1,0,-2,0,0,0], [0,2,1,3,3,3], ['m9'], 'Nâng cao', 'Minor 9 rút gọn gốc dây 5.'],
+        ['maj9', 'Extended', '1 - 3 - 7 - 9', [0,4,11,2], [-1,0,-1,1,0,0], [0,2,1,4,3,3], ['maj9'], 'Nâng cao', 'Major 9 rút gọn gốc dây 5.'],
+        ['m7b5', 'm7b5', '1 - b3 - b5 - b7', [0,3,6,10], [-1,0,1,0,1,-1], [0,1,3,2,4,0], ['m7b5'], 'Nâng cao', 'm7b5 gốc dây 5.'],
+        ['dim7', 'Diminished', '1 - b3 - b5 - bb7', [0,3,6,9], [-1,0,1,-1,1,-1], [0,2,3,1,4,0], ['dim7'], 'Nâng cao', 'Diminished 7 gốc dây 5.'],
+        ['aug', 'Augmented', '1 - 3 - #5', [0,4,8], [-1,0,1,1,0,-1], [0,1,3,4,2,0], ['aug'], 'Nâng cao', 'Augmented gốc dây 5.']
+      ];
+
+      const dTemplates = [
+        ['', 'Major', '1 - 3 - 5', [0,4,7], [-1,-1,0,2,3,2], [0,0,1,2,4,3], ['triad','top'], 'Trung cấp', 'Dáng D major di động.'],
+        ['m', 'Minor', '1 - b3 - 5', [0,3,7], [-1,-1,0,2,3,1], [0,0,1,3,4,2], ['triad','top'], 'Trung cấp', 'Dáng Dm di động.'],
+        ['sus2', 'Sus / Add', '1 - 2 - 5', [0,2,7], [-1,-1,0,2,3,0], [0,0,1,2,3,1], ['sus','top'], 'Trung cấp', 'Dáng Dsus2 di động.'],
+        ['sus4', 'Sus / Add', '1 - 4 - 5', [0,5,7], [-1,-1,0,2,3,3], [0,0,1,2,3,4], ['sus','top'], 'Trung cấp', 'Dáng Dsus4 di động.'],
+        ['7', 'Dominant 7', '1 - 3 - 5 - b7', [0,4,7,10], [-1,-1,0,2,1,2], [0,0,1,3,2,4], ['7','top'], 'Trung cấp', 'D7 top-string di động.'],
+        ['maj7', 'Major 7', '1 - 3 - 5 - 7', [0,4,7,11], [-1,-1,0,2,2,2], [0,0,1,2,3,4], ['maj7','top'], 'Trung cấp', 'Dmaj7 top-string di động.'],
+        ['m7', 'Minor 7', '1 - b3 - 5 - b7', [0,3,7,10], [-1,-1,0,2,1,1], [0,0,1,3,2,2], ['m7','top'], 'Trung cấp', 'Dm7 top-string di động.'],
+        ['add9', 'Sus / Add', '1 - 3 - 5 - 9', [0,4,7,2], [-1,-1,0,2,3,0], [0,0,1,2,3,1], ['add9','top'], 'Trung cấp', 'Add9 dạng dây cao.'],
+        ['dim', 'Diminished', '1 - b3 - b5', [0,3,6], [-1,-1,0,1,0,1], [0,0,1,2,1,3], ['dim','top'], 'Nâng cao', 'Diminished triad dây cao.'],
+        ['aug', 'Augmented', '1 - 3 - #5', [0,4,8], [-1,-1,0,3,3,2], [0,0,1,3,4,2], ['aug','top'], 'Nâng cao', 'Augmented triad dây cao.']
+      ];
+
+      fullRoots.forEach(root => {
+        eTemplates.forEach(t => eShape(root, ...t));
+        aTemplates.forEach(t => aShape(root, ...t));
+        dTemplates.forEach(t => dShape(root, ...t));
+      });
+    }
+
+    function addMoreChordLibrary() {
+      const noteValues = {
+        'C':0, 'C#':1, 'Db':1, 'D':2, 'D#':3, 'Eb':3, 'E':4, 'F':5,
+        'F#':6, 'Gb':6, 'G':7, 'G#':8, 'Ab':8, 'A':9, 'A#':10, 'Bb':10, 'B':11
+      };
+      const sharpByValue = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+      const flatByValue = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
+      const roots = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
+
+      function preferFlat(root) {
+        return root.includes('b') || ['F','Bb','Eb','Ab','Db','Gb'].includes(root);
+      }
+
+      function noteName(root, interval) {
+        const value = (noteValues[root] + interval + 120) % 12;
+        return preferFlat(root) ? flatByValue[value] : sharpByValue[value];
+      }
+
+      function notesFrom(root, intervals) {
+        return intervals.map(i => noteName(root, i)).join(' - ');
+      }
+
+      function existsSimilar(name, fretsKey) {
+        return chordData.some(c => c.name === name && c.frets.join(',') === fretsKey);
+      }
+
+      function pushChord(item) {
+        const key = item.frets.join(',');
+        if (!existsSimilar(item.name, key)) chordData.push(item);
+      }
+
+      function eRootFret(root) {
+        let fret = (noteValues[root] - noteValues.E + 12) % 12;
+        if (fret === 0) fret = 12;
+        return fret;
+      }
+
+      function aRootFret(root) {
+        let fret = (noteValues[root] - noteValues.A + 12) % 12;
+        if (fret === 0) fret = 12;
+        return fret;
+      }
+
+      function compact(root, suffix, type, formula, intervals, baseFret, frets, fingers, tags, level, tip) {
+        pushChord({
+          name: `${root}${suffix}`, root, type, level, formula, notes: notesFrom(root, intervals),
+          baseFret, frets, fingers, tags: ['generated-extra','compact',...tags], tip
+        });
+      }
+
+      roots.forEach(root => {
+        const f6 = eRootFret(root);
+        const f5 = aRootFret(root);
+
+        compact(root, '7sus4', 'Sus / Add', '1 - 4 - 5 - b7', [0,5,7,10], f6, [f6,-1,f6,f6,f6+1,f6], [1,0,1,1,2,1], ['7sus4','sus','jazz'], 'Nâng cao', `${root}7sus4: dominant treo, hay dùng trong funk/gospel trước khi giải về ${root}7.`);
+        compact(root, '9sus4', 'Sus / Add', '1 - 4 - 5 - b7 - 9', [0,5,7,10,2], f6, [f6,-1,f6,f6,f6+1,f6+2], [1,0,1,1,2,4], ['9sus4','sus','gospel'], 'Nâng cao', `${root}9sus4: màu gospel/R&B, không có quãng 3 nên nghe mở.`);
+        compact(root, 'm11', 'Extended', '1 - b3 - 5 - b7 - 9 - 11', [0,3,7,10,2,5], f6, [f6,-1,f6,f6,f6,f6], [1,0,1,1,1,1], ['m11','rnb','jazz'], 'Nâng cao', `${root}m11: voicing tối giản, mềm và rộng, hợp neo-soul/R&B.`);
+        compact(root, 'maj13', 'Extended', '1 - 3 - 7 - 9 - 13', [0,4,11,2,9], f6, [f6,-1,f6+1,f6+1,f6+2,f6+2], [1,0,2,2,3,4], ['maj13','jazz'], 'Nâng cao', `${root}maj13: major mở rộng, ưu tiên 3, 7, 9, 13.`);
+        compact(root, '6/9', 'Extended', '1 - 3 - 5 - 6 - 9', [0,4,7,9,2], f6, [f6,-1,f6-1,f6-1,f6,f6], [2,0,1,1,3,4], ['6/9','jazz','rnb'], 'Nâng cao', `${root}6/9: màu sáng, mềm, dùng nhiều trong jazz, bossa, R&B.`);
+        compact(root, 'm6/9', 'Extended', '1 - b3 - 5 - 6 - 9', [0,3,7,9,2], f6, [f6,-1,f6-2,f6-1,f6,f6], [3,0,1,2,4,4], ['m6/9','jazz'], 'Nâng cao', `${root}m6/9: minor giàu màu, hợp jazz/bossa.`);
+        compact(root, '7b5', 'Altered', '1 - 3 - b5 - b7', [0,4,6,10], f6, [f6,-1,f6,f6+1,f6+1,-1], [1,0,1,2,3,0], ['7b5','altered'], 'Nâng cao', `${root}7b5: dominant có b5, tạo độ căng.`);
+        compact(root, '7#5', 'Altered', '1 - 3 - #5 - b7', [0,4,8,10], f6, [f6,-1,f6,f6+1,f6+1,f6], [1,0,1,2,3,1], ['7#5','altered'], 'Nâng cao', `${root}7#5: dominant tăng, thường giải về hợp âm I hoặc minor.`);
+        compact(root, '7alt', 'Altered', '1 - 3 - b7 + b9/#9/b5/#5', [0,4,10,1,3,6,8], f6, [f6,-1,f6,f6+1,f6+1,f6+2], [1,0,1,2,3,4], ['7alt','altered','jazz'], 'Nâng cao', `${root}7alt: màu altered rất căng, dùng trước hợp âm đích cách quãng 4 lên.`);
+        compact(root, '7b9b13', 'Altered', '1 - 3 - b7 - b9 - b13', [0,4,10,1,8], f6, [f6,-1,f6,f6+1,f6,f6+1], [1,0,1,2,1,3], ['7b9','b13','altered'], 'Nâng cao', `${root}7b9b13: dominant cực căng, rất hay trong jazz minor.`);
+        compact(root, 'mMaj7', 'Minor 7', '1 - b3 - 5 - 7', [0,3,7,11], f6, [f6,-1,f6+1,f6,f6,f6], [1,0,3,1,1,1], ['mMaj7','jazz'], 'Nâng cao', `${root}mMaj7: minor ma mị, thường đến từ harmonic/melodic minor.`);
+
+        compact(root, 'add11', 'Sus / Add', '1 - 3 - 5 - 11', [0,4,7,5], f5, [-1,f5,f5+2,f5+2,f5+1,f5], [0,1,3,4,2,1], ['add11'], 'Nâng cao', `${root}add11: vẫn có quãng 3, thêm bậc 11 nên khác sus4.`);
+        compact(root, 'madd9', 'Sus / Add', '1 - b3 - 5 - 9', [0,3,7,2], f5, [-1,f5,f5+2,f5+2,f5,f5], [0,1,3,4,1,1], ['madd9','rnb'], 'Nâng cao', `${root}madd9: minor thêm 9, rất đẹp trong ballad/R&B.`);
+        compact(root, '11', 'Extended', '1 - 3 - 5 - b7 - 9 - 11', [0,4,7,10,2,5], f5, [-1,f5,f5-1,f5,f5-1,f5], [0,2,1,3,1,4], ['11','jazz'], 'Nâng cao', `${root}11: dominant 11, có màu treo; đôi khi bỏ bớt 3 để đỡ đục.`);
+      });
+    }
+
+    function init() {
+      addGeneratedChordLibrary();
+      addCompletePracticalChordLibrary();
+      addMoreChordLibrary();
+      fillSelect(rootFilter, rootOrder);
+      fillSelect(typeFilter, typeOrder);
+      fillSelect(levelFilter, levelOrder);
+      fillSelect(toneRootSelect, toneRootOptions);
+      toneRootSelect.value = 'C';
+      toneModeSelect.value = 'none';
+      searchInput.addEventListener('input', () => { activeQuick = ''; renderCards(); });
+      rootFilter.addEventListener('change', () => { activeQuick = ''; renderCards(); });
+      typeFilter.addEventListener('change', () => { activeQuick = ''; renderCards(); });
+      levelFilter.addEventListener('change', () => { activeQuick = ''; renderCards(); });
+      resetBtn.addEventListener('click', resetFilters);
+      buildToneBtn.addEventListener('click', renderTone);
+      toneRootSelect.addEventListener('change', renderTone);
+      toneModeSelect.addEventListener('change', renderTone);
+      toneNotationSelect.addEventListener('change', renderTone);
+      toggleSearchBtn.addEventListener('click', () => {
+        searchPanel.classList.toggle('collapsed');
+        const isCollapsed = searchPanel.classList.contains('collapsed');
+        toggleSearchBtn.textContent = isCollapsed ? 'Mở bộ tìm kiếm' : 'Ẩn bộ tìm kiếm';
+      });
+      toggleAllBtn.addEventListener('click', () => {
+        showAllChords = !showAllChords;
+        toggleAllBtn.textContent = showAllChords ? 'Chỉ hiện hợp âm phổ biến' : 'Hiện tất cả hợp âm';
+        renderCards();
+      });
+      closeChordModal.addEventListener('click', closeModal);
+      chordModal.addEventListener('click', (event) => {
+        if (event.target === chordModal) closeModal();
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeModal();
+      });
+      document.querySelectorAll('[data-quick]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeQuick = btn.getAttribute('data-quick');
+          searchInput.value = '';
+          rootFilter.value = 'All';
+          typeFilter.value = 'All';
+          levelFilter.value = 'All';
+          renderCards();
+        });
+      });
+      renderCards();
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
