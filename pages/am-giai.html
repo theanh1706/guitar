@@ -1,0 +1,162 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Bài học Âm giai trong Guitar</title><style>:root{--bg:#f4f0e8;--paper:#ffffff;--ink:#1f2933;--muted:#667085;--primary:#7c3aed;--primary-dark:#4c1d95;--accent:#f59e0b;--soft:#f5f3ff;--soft-2:#fff7ed;--line:#e7ded0;--code-bg:#151923;--code-text:#f8fafc;--good:#15803d;--bad:#b91c1c;--blue:#0284c7;--shadow:0 14px 32px rgba(31,41,51,0.08);--radius:20px}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:radial-gradient(circle at top left,rgba(124,58,237,0.18),transparent 30%),radial-gradient(circle at top right,rgba(245,158,11,0.16),transparent 28%),var(--bg);line-height:1.7}a{color:var(--primary-dark);text-decoration:none}a:hover{text-decoration:underline}.hero{background:linear-gradient(135deg,#1e1b4b 0%,#4c1d95 50%,#7c3aed 100%);color:white;padding:58px 24px;position:relative;overflow:hidden}.hero::after{content:"SCALE";position:absolute;right:-30px;top:38px;font-size:clamp(70px,13vw,180px);font-weight:900;letter-spacing:-8px;opacity:0.08;transform:rotate(-8deg)}.hero-inner{max-width:1180px;margin:0 auto;position:relative;z-index:1}.eyebrow{display:inline-block;padding:7px 13px;border:1px solid rgba(255,255,255,0.24);border-radius:999px;background:rgba(255,255,255,0.13);font-size:14px;margin-bottom:14px}h1{margin:0;max-width:930px;font-size:clamp(34px,5vw,58px);line-height:1.1}.hero p{margin-top:18px;max-width:820px;font-size:18px;opacity:0.94}.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:999px;border:none;font-weight:800;cursor:pointer;transition:0.18s ease;text-decoration:none;font-size:15px}.btn:hover{transform:translateY(-1px);text-decoration:none}.btn-primary{background:var(--accent);color:#221406;box-shadow:0 12px 24px rgba(245,158,11,0.25)}.btn-ghost{background:rgba(255,255,255,0.13);color:white;border:1px solid rgba(255,255,255,0.25)}.layout{max-width:1180px;margin:28px auto 72px;padding:0 20px;display:grid;grid-template-columns:285px minmax(0,1fr);gap:24px}.sidebar{position:sticky;top:16px;height:fit-content;background:rgba(255,255,255,0.86);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}.sidebar h2{font-size:18px;margin:0 0 12px}.sidebar nav{display:grid;gap:6px}.sidebar a{color:var(--ink);padding:8px 10px;border-radius:11px;font-size:14px}.sidebar a:hover{background:var(--soft);text-decoration:none}.content{display:grid;gap:22px}section,.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:clamp(20px,3vw,34px)}h2{margin:0 0 14px;color:#2e1065;font-size:clamp(24px,3vw,34px);line-height:1.22}h3{margin:26px 0 10px;color:#4c1d95;font-size:22px}h4{margin:18px 0 8px;font-size:18px}p{margin:0 0 12px}.lead{font-size:18px;color:#344054}.formula,.note,.tip,.warning{border-radius:16px;padding:15px 16px;margin:16px 0;border:1px solid transparent}.formula{background:var(--soft);border-color:#ddd6fe;font-weight:800;color:#2e1065}.note{background:#eff6ff;border-color:#bfdbfe}.tip{background:#ecfdf5;border-color:#bbf7d0}.warning{background:#fff7ed;border-color:#fed7aa}.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:16px 0}.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:16px 0}.mini-card{background:#fbfaff;border:1px solid #e9d5ff;border-radius:17px;padding:16px}.mini-card strong{color:var(--primary-dark)}.table-wrap{overflow-x:auto;border-radius:16px;margin:16px 0}table{width:100%;border-collapse:collapse;background:white;border:1px solid var(--line);border-radius:16px;overflow:hidden}th,td{padding:12px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#ede9fe;color:#2e1065}tr:last-child td{border-bottom:none}pre,.tab{background:var(--code-bg);color:var(--code-text);padding:16px;border-radius:16px;overflow-x:auto;font-family:Consolas,Monaco,'Courier New',monospace;font-size:14px;line-height:1.55;margin:14px 0}.pill-list{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}.pill{display:inline-block;border:1px solid #ddd6fe;background:#f5f3ff;color:#3b0764;border-radius:999px;padding:6px 10px;font-weight:800;font-size:14px}label{display:block;font-weight:800;margin-bottom:6px;color:#2e1065}select,input,textarea{width:100%;padding:11px 12px;border:1px solid #d8cbbb;border-radius:13px;background:#fffdf8;color:var(--ink);font-size:15px}textarea{min-height:135px;resize:vertical}.controls{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0;align-items:end}.small-btn{background:var(--primary);color:white;border:none;border-radius:999px;padding:11px 14px;font-weight:800;cursor:pointer}.small-btn:hover{background:var(--primary-dark)}.result-box{background:#f9fafb;border:1px dashed #cbd5e1;border-radius:16px;padding:16px;margin-top:12px}.scale-output{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px}.note-chip{display:inline-flex;align-items:center;justify-content:center;min-width:44px;padding:8px 10px;border-radius:999px;background:#ede9fe;color:#2e1065;font-weight:900;border:1px solid #ddd6fe}.root-chip{background:#f59e0b;border-color:#f59e0b;color:#111827}.fretboard{width:100%;overflow-x:auto;background:#3b2416;border-radius:18px;padding:14px;border:1px solid #c7a27a;margin:16px 0}.fret-grid{min-width:820px;display:grid;grid-template-columns:54px repeat(13,1fr);color:white;font-size:13px}.string-label,.fret-cell,.fret-num{min-height:34px;display:flex;align-items:center;justify-content:center;border-right:1px solid rgba(255,255,255,0.22);border-bottom:1px solid rgba(255,255,255,0.13)}.string-label{font-weight:900;color:#fef3c7;background:rgba(255,255,255,0.08)}.fret-num{min-height:26px;background:rgba(0,0,0,0.18);color:#f8fafc;font-size:12px}.dot{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;font-size:12px;font-weight:900;color:#111827;background:#fde68a}.root-dot{background:#fb923c;color:white}.scale-dot{background:#38bdf8;color:#082f49}.exercise{border:1px solid #e9d5ff;background:#fbfaff;border-radius:17px;padding:16px;margin:14px 0}.exercise button{background:var(--primary);color:white;border:none;border-radius:999px;padding:9px 13px;font-weight:800;cursor:pointer}.answer{display:none;margin-top:11px;padding:11px 12px;border-radius:13px;background:#ecfdf5;color:#14532d;border:1px solid #bbf7d0}.checklist{list-style:none;padding-left:0}.checklist li{position:relative;padding-left:30px;margin:9px 0}.checklist li::before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:900}.footer{text-align:center;padding:36px 20px 58px;color:var(--muted)}.print-note{display:none}@media (max-width:960px){.layout{grid-template-columns:1fr}.sidebar{position:static}.grid-2,.grid-3,.controls{grid-template-columns:1fr}}@media print{body{background:white}.hero,.sidebar,.hero-actions,.small-btn,.exercise button{display:none !important}.layout{display:block;margin:0;padding:0}section,.card{box-shadow:none;break-inside:avoid;margin-bottom:16px}.print-note{display:block}}</style></head><body><header class="hero"><div class="hero-inner"><span class="eyebrow">Guitar Theory Lesson</span><h1>Âm giai trong Guitar: từ cơ bản đến nâng cao</h1><p>Bài học giúp bạn hiểu âm giai là gì, công thức xây âm giai, cách áp dụng trên cần đàn, cách chọn âm giai để solo và cách liên hệ âm giai với hợp âm.</p><div class="hero-actions"><a class="btn btn-primary" href="#khai-niem">Bắt đầu học</a><a class="btn btn-ghost" href="#tao-am-giai">Máy tạo âm giai</a><a class="btn btn-ghost" href="#bai-tap">Bài tập</a></div></div></header><main class="layout"><aside class="sidebar"><h2>Mục lục</h2><nav><a href="#khai-niem">1. Âm giai là gì?</a><a href="#nen-tang">2. Cung và nửa cung</a><a href="#chromatic">3. Chromatic scale</a><a href="#major">4. Âm giai trưởng</a><a href="#minor">5. Âm giai thứ</a><a href="#relative">6. Relative major/minor</a><a href="#pentatonic">7. Pentatonic</a><a href="#blues">8. Blues scale</a><a href="#harmonic-melodic">9. Harmonic & melodic minor</a><a href="#modes">10. Modes</a><a href="#chord-scale">11. Chọn scale để solo</a><a href="#progression">12. Scale và hợp âm</a><a href="#fretboard">13. Sơ đồ cần đàn</a><a href="#tao-am-giai">14. Máy tạo âm giai</a><a href="#luyen-tap">15. Cách luyện</a><a href="#bai-tap">16. Bài tập</a><a href="#tong-ket">17. Tổng kết</a></nav></aside><div class="content"><section id="khai-niem"><h2>1. Âm giai là gì?</h2><p class="lead"><strong>Âm giai</strong>, tiếng Anh là <strong>scale</strong>, là một tập hợp các nốt được sắp xếp theo thứ tự cao độ. Âm giai là bộ nốt dùng để tạo giai điệu, solo, riff, hợp âm và màu sắc của bài nhạc.</p><div class="formula">Âm giai = nốt gốc + công thức quãng.</div><p>Ví dụ âm giai C trưởng:</p><pre>C - D - E - F - G - A - B - C</pre><p>Trong đó C cuối là C cao hơn một quãng 8. Khi hiểu âm giai, bạn sẽ biết nên dùng nốt nào để solo, vì sao một bài hát nghe vui hoặc buồn, và vì sao hợp âm này đi với hợp âm kia.</p><div class="grid-3"><div class="mini-card"><strong>Âm giai giúp solo</strong><p>Biết bài ở tông nào, hợp âm nào thì chọn bộ nốt phù hợp.</p></div><div class="mini-card"><strong>Âm giai giúp hiểu hợp âm</strong><p>Hợp âm được lấy từ các bậc trong âm giai.</p></div><div class="mini-card"><strong>Âm giai tạo màu sắc</strong><p>Major sáng, minor buồn, blues có độ căng, harmonic minor cổ điển.</p></div></div></section><section id="nen-tang"><h2>2. Nền tảng: cung và nửa cung</h2><p>Trên guitar, khoảng cách giữa hai ô phím liền nhau là một nửa cung.</p><div class="formula">1 ô phím = 1 nửa cung = 1 semitone = H.</div><div class="formula">2 ô phím = 1 nguyên cung = 1 whole step = W.</div><pre>A|---3---4---5---
+C   C#  D</pre><ul><li>C đến C# = 1 nửa cung = H.</li><li>C đến D = 2 nửa cung = W.</li></ul><div class="tip">2 ô phím = 1 nguyên cung = 1 whole step = W.</div><pre>A|---3---4---5---
+C   C#  D</pre><ul><li>C đến C# = 1 nửa cung = H.</li"><strong>Mẹo:</strong> Khi thấy công thức W - W - H, hãy hiểu là đi 2 ô, 2 ô, rồi 1 ô.</div></section><section id="chromatic"><h2>3. Âm giai chromatic: gốc của tất cả âm giai</h2><p><strong>Chromatic scale</strong> gồm đầy đủ 12 nốt trong hệ thống âm nhạc phương Tây.</p><pre>C - C# - D - D# - E - F - F# - G - G# - A - A# - B - C</pre><p>Viết theo dấu giáng:</p><pre>C - Db - D - Eb - E - F - Gb - G - Ab - A - Bb - B - C</pre><p>Trên cùng một dây guitar:</p><pre>A|---3---4---5---6---7---8---9---10---11---12---13---14---15---
+C   C#  D   D#  E   F   F#  G    G#   A    A#   B    C</pre><div class="note">Tất cả âm giai khác đều là việc chọn một số nốt từ chromatic scale theo công thức nhất định.</div></section><section id="major"><h2>4. Âm giai trưởng</h2><p>Âm giai trưởng, tiếng Anh là <strong>major scale</strong>, thường tạo cảm giác sáng, rõ, ổn định.</p><h3>4.1. Công thức âm giai trưởng</h3><div class="formula">Major scale = W - W - H - W - W - W - H.</div><div class="formula">Theo bậc: 1 - 2 - 3 - 4 - 5 - 6 - 7 - 8.</div><div class="formula">Theo nửa cung: 0 - 2 - 4 - 5 - 7 - 9 - 11 - 12.</div><h3>4.2. Ví dụ C major</h3><pre>C → D → E → F → G → A → B → C</pre><p>Phân tích:</p><pre>C đến D = W
+D đến E = W
+E đến F = H
+F đến G = W
+G đến A = W
+A đến B = W
+B đến C = H</pre><p>Vậy:</p><pre>C major = C - D - E - F - G - A - B - C</pre><h3>4.3. Tab C major trên guitar</h3><pre>e|-------------------------0--1--
+B|-------------------0--1--3-----
+G|-------------0--2---------------
+D|-------0--2--3------------------
+A|-3--5---------------------------
+E|--------------------------------
+C  D  E  F  G  A  B  C  D  E  F</pre><h3>4.4. Ví dụ G major</h3><p>Dùng cùng công thức major, bắt đầu từ G:</p><pre>G - A - B - C - D - E - F# - G</pre><p>G major có F# vì cần giữ đúng công thức W - W - H - W - W - W - H.</p></section><section id="minor"><h2>5. Âm giai thứ tự nhiên</h2><p>Âm giai thứ tự nhiên, tiếng Anh là <strong>natural minor scale</strong>, thường tạo cảm giác buồn, mềm hoặc tối hơn major.</p><h3>5.1. Công thức natural minor</h3><div class="formula">Natural minor = W - H - W - W - H - W - W.</div><div class="formula">Theo bậc: 1 - 2 - b3 - 4 - 5 - b6 - b7 - 8.</div><div class="formula">Theo nửa cung: 0 - 2 - 3 - 5 - 7 - 8 - 10 - 12.</div><h3>5.2. Ví dụ A natural minor</h3><pre>A - B - C - D - E - F - G - A
+1 - 2 - b3 - 4 - 5 - b6 - b7 - 8</pre><h3>5.3. Tab A natural minor</h3><pre>e|-------------------------0--1--3--
+B|-------------------0--1--3--------
+G|-------------0--2-----------------
+D|-------0--2--3--------------------
+A|-0--2--3--------------------------
+E|----------------------------------
+A  B  C  D  E  F  G  A  B  C  D  E  F  G</pre><h3>5.4. So sánh C major và C minor</h3><pre>C major:         C - D - E  - F - G - A  - B
+C natural minor: C - D - Eb - F - G - Ab - Bb</pre><div class="note">Từ major sang natural minor: hạ bậc 3, bậc 6 và bậc 7.</div></section><section id="relative"><h2>6. Relative major và relative minor</h2><p><strong>Relative major/minor</strong> là hai âm giai dùng cùng bộ nốt nhưng khác nốt gốc.</p><h3>6.1. C major và A minor</h3><pre>C major:        C - D - E - F - G - A - B
+A natural minor: A - B - C - D - E - F - G</pre><p>Hai âm giai này dùng cùng các nốt tự nhiên, nhưng C major lấy C làm trung tâm, còn A minor lấy A làm trung tâm.</p><div class="formula">Tìm relative minor: từ major đi xuống 3 nửa cung.</div><pre>C xuống 3 nửa cung = A
+Vậy relative minor của C major là A minor.</pre><div class="formula">Tìm relative major: từ minor đi lên 3 nửa cung.</div><pre>A lên 3 nửa cung = C
+Vậy relative major của A minor là C major.</pre></section><section id="pentatonic"><h2>7. Âm giai pentatonic</h2><p><strong>Pentatonic</strong> là âm giai có 5 nốt. Đây là âm giai cực kỳ quan trọng trong guitar, đặc biệt cho rock, blues, pop, country, funk và metal.</p><h3>7.1. Major pentatonic</h3><div class="formula">Major pentatonic = 1 - 2 - 3 - 5 - 6.</div><p>Ví dụ C major pentatonic:</p><pre>C - D - E - G - A</pre><p>Nó lấy từ C major nhưng bỏ bậc 4 và bậc 7:</p><pre>C major:            C - D - E - F - G - A - B
+C major pentatonic: C - D - E     - G - A</pre><h3>7.2. Minor pentatonic</h3><div class="formula">Minor pentatonic = 1 - b3 - 4 - 5 - b7.</div><p>Ví dụ A minor pentatonic:</p><pre>A - C - D - E - G</pre><h3>7.3. Tab A minor pentatonic mẫu 1</h3><pre>e|---------------------5--8--
+B|-----------------5--8------
+G|-------------5--7----------
+D|---------5--7--------------
+A|-----5--7------------------
+E|-5--8----------------------
+A  C  D  E  G  A  C  D  E  G  A  C</pre><div class="tip"><strong>Ứng dụng:</strong> Nếu bạn mới học solo guitar, hãy học minor pentatonic trước. Đây là âm giai dễ dùng, ít bị chênh, phù hợp rất nhiều thể loại.</div></section><section id="blues"><h2>8. Âm giai blues</h2><p>Âm giai blues được tạo từ minor pentatonic và thêm một nốt gọi là <strong>blue note</strong>.</p><div class="formula">Blues scale = 1 - b3 - 4 - b5 - 5 - b7.</div><p>Ví dụ A blues scale:</p><pre>A - C - D - Eb - E - G</pre><p>So với A minor pentatonic:</p><pre>A minor pentatonic: A - C - D - E  - G
+A blues scale:      A - C - D - Eb - E - G</pre><p>Nốt thêm là Eb, tức b5.</p><h3>8.1. Tab A blues scale</h3><pre>e|-------------------------5--8--
+B|---------------------5--8------
+G|---------------5--7--8---------
+D|---------5--6--7---------------
+A|-----5--6--7-------------------
+E|-5--8--------------------------
+A  C  D  Eb E  G  A  C  D Eb E  G A C</pre><div class="note">Blue note thường tạo cảm giác căng, sau đó giải về nốt gần đó như E hoặc D để nghe “ra chất blues”.</div></section><section id="harmonic-melodic"><h2>9. Harmonic minor và melodic minor</h2><h3>9.1. Harmonic minor</h3><p>Harmonic minor là biến thể của natural minor, trong đó bậc b7 được nâng lên thành 7.</p><div class="formula">Harmonic minor = 1 - 2 - b3 - 4 - 5 - b6 - 7.</div><p>Ví dụ A harmonic minor:</p><pre>A natural minor:  A - B - C - D - E - F - G
+A harmonic minor: A - B - C - D - E - F - G#</pre><p>Âm giai này thường có màu cổ điển, Tây Ban Nha, Trung Đông, neo-classical metal.</p><h4>Tab A harmonic minor</h4><pre>e|--------------------------4--5--
+B|--------------------5--6--------
+G|--------------4--5--------------
+D|--------3--5--7-----------------
+A|--3--5--7-----------------------
+E|--5-----------------------------
+A  B  C  D  E  F  G# A</pre><h3>9.2. Melodic minor</h3><p>Melodic minor hiện đại thường dùng trong jazz, fusion và metal hiện đại.</p><div class="formula">Melodic minor = 1 - 2 - b3 - 4 - 5 - 6 - 7.</div><p>Ví dụ A melodic minor:</p><pre>A - B - C - D - E - F# - G# - A</pre><p>Nó vừa có màu minor vì có b3, vừa sáng vì có 6 và 7 trưởng.</p></section><section id="modes"><h2>10. Modes: 7 màu của âm giai trưởng</h2><p><strong>Modes</strong> là các chế độ âm giai. Có thể hiểu đơn giản: dùng cùng một bộ nốt của major scale nhưng chọn nốt gốc khác nhau.</p><p>Ví dụ C major có các nốt:</p><pre>C - D - E - F - G - A - B</pre><p>Nếu bắt đầu từ C là C Ionian. Nếu bắt đầu từ D là D Dorian. Nếu bắt đầu từ E là E Phrygian.</p><div class="table-wrap"><table><thead><tr><th>Mode</th><th>Công thức</th><th>Ví dụ trong C major</th><th>Màu sắc</th></tr></thead><tbody><tr><td>Ionian</td><td>1 2 3 4 5 6 7</td><td>C D E F G A B</td><td>Trưởng, sáng</td></tr><tr><td>Dorian</td><td>1 2 b3 4 5 6 b7</td><td>D E F G A B C</td><td>Thứ nhưng sáng</td></tr><tr><td>Phrygian</td><td>1 b2 b3 4 5 b6 b7</td><td>E F G A B C D</td><td>Tối, Tây Ban Nha</td></tr><tr><td>Lydian</td><td>1 2 3 #4 5 6 7</td><td>F G A B C D E</td><td>Sáng, bay, mơ</td></tr><tr><td>Mixolydian</td><td>1 2 3 4 5 6 b7</td><td>G A B C D E F</td><td>Trưởng blues/funk</td></tr><tr><td>Aeolian</td><td>1 2 b3 4 5 b6 b7</td><td>A B C D E F G</td><td>Thứ tự nhiên</td></tr><tr><td>Locrian</td><td>1 b2 b3 4 b5 b6 b7</td><td>B C D E F G A</td><td>Rất căng, bất ổn</td></tr></tbody></table></div><h3>10.1. Modes theo cùng nốt gốc C</h3><div class="table-wrap"><table><thead><tr><th>Mode</th><th>Nốt</th><th>Nốt đặc trưng</th><th>Dùng trên hợp âm</th></tr></thead><tbody><tr><td>C Ionian</td><td>C D E F G A B</td><td>3, 7</td><td>C, Cmaj7</td></tr><tr><td>C Dorian</td><td>C D Eb F G A Bb</td><td>6</td><td>Cm7</td></tr><tr><td>C Phrygian</td><td>C Db Eb F G Ab Bb</td><td>b2</td><td>Cm, Cm7</td></tr><tr><td>C Lydian</td><td>C D E F# G A B</td><td>#4</td><td>Cmaj7, Cmaj7#11</td></tr><tr><td>C Mixolydian</td><td>C D E F G A Bb</td><td>b7</td><td>C7</td></tr><tr><td>C Aeolian</td><td>C D Eb F G Ab Bb</td><td>b6</td><td>Cm, Cm7</td></tr><tr><td>C Locrian</td><td>C Db Eb F Gb Ab Bb</td><td>b5</td><td>Cm7b5</td></tr></tbody></table></div></section><section id="chord-scale"><h2>11. Cách chọn âm giai để solo theo hợp âm</h2><p>Khi solo, bạn không chỉ hỏi “bài này tông gì?”, mà còn nên hỏi “hợp âm hiện tại là gì?”.</p><div class="grid-2"><div class="mini-card"><strong>Gặp hợp âm major</strong><p>Ví dụ C hoặc Cmaj7. Có thể dùng C major, C major pentatonic, C Ionian, C Lydian.</p></div><div class="mini-card"><strong>Gặp hợp âm minor</strong><p>Ví dụ Am hoặc Am7. Có thể dùng A natural minor, A minor pentatonic, A blues, A Dorian.</p></div><div class="mini-card"><strong>Gặp dominant 7</strong><p>Ví dụ G7. Có thể dùng G Mixolydian, G blues, G major pentatonic.</p></div><div class="mini-card"><strong>Gặp minor 7 flat 5</strong><p>Ví dụ Bm7b5. Có thể dùng B Locrian.</p></div></div><h3>11.1. Ví dụ G7</h3><p>G7 gồm:</p><pre>G - B - D - F
+1 - 3 - 5 - b7</pre><p>G Mixolydian gồm:</p><pre>G - A - B - C - D - E - F
+1 - 2 - 3 - 4 - 5 - 6 - b7</pre><p>Vì G Mixolydian có đầy đủ các nốt của G7 nên rất hợp để solo trên G7.</p></section><section id="progression"><h2>12. Âm giai và tiến trình hợp âm</h2><h3>12.1. Hợp âm trong major scale</h3><p>Từ C major:</p><pre>C - D - E - F - G - A - B</pre><p>Xây hợp âm 3 nốt trên từng bậc:</p><div class="table-wrap"><table><thead><tr><th>Bậc</th><th>Nốt gốc</th><th>Hợp âm</th><th>Ký hiệu</th></tr></thead><tbody><tr><td>I</td><td>C</td><td>C major</td><td>C</td></tr><tr><td>ii</td><td>D</td><td>D minor</td><td>Dm</td></tr><tr><td>iii</td><td>E</td><td>E minor</td><td>Em</td></tr><tr><td>IV</td><td>F</td><td>F major</td><td>F</td></tr><tr><td>V</td><td>G</td><td>G major</td><td>G</td></tr><tr><td>vi</td><td>A</td><td>A minor</td><td>Am</td></tr><tr><td>vii°</td><td>B</td><td>B diminished</td><td>Bdim</td></tr></tbody></table></div><div class="formula">Công thức hợp âm trong major scale: I - ii - iii - IV - V - vi - vii°.</div><p>Ví dụ tiến trình phổ biến:</p><pre>C - G - Am - F
+I - V - vi - IV</pre><h3>12.2. Hợp âm trong natural minor</h3><p>A natural minor:</p><pre>A - B - C - D - E - F - G</pre><p>Hợp âm:</p><pre>Am - Bdim - C - Dm - Em - F - G</pre><div class="formula">Công thức hợp âm trong natural minor: i - ii° - III - iv - v - VI - VII.</div></section><section id="fretboard"><h2>13. Sơ đồ cần đàn: A minor pentatonic</h2><p>Sơ đồ minh họa A minor pentatonic ở vùng ô 5. Nốt cam là nốt gốc A, nốt xanh là các nốt trong âm giai.</p><div class="pill-list"><span class="pill">A = nốt gốc</span><span class="pill">C = b3</span><span class="pill">D = 4</span><span class="pill">E = 5</span><span class="pill">G = b7</span></div><div class="fretboard"><div class="fret-grid" id="fretboardGrid"></div></div></section><section id="tao-am-giai"><h2>14. Máy tạo âm giai nhanh</h2><p>Chọn nốt gốc và loại âm giai để tạo danh sách nốt. Công cụ này hỗ trợ luyện công thức rất nhanh.</p><div class="controls"><div><label for="rootSelect">Nốt gốc</label><select id="rootSelect"></select></div><div><label for="scaleSelect">Loại âm giai</label><select id="scaleSelect"></select></div><div><label for="notationSelect">Cách viết</label><select id="notationSelect"><option value="sharp">Dấu thăng</option><option value="flat">Dấu giáng</option></select></div><div><button class="small-btn" onclick="generateScale()">Tạo âm giai</button></div></div><div class="result-box" id="scaleResult">Chọn thông tin rồi bấm “Tạo âm giai”.</div></section><section id="luyen-tap"><h2>15. Cách luyện âm giai đúng trên guitar</h2><p>Nhiều người học scale chỉ chạy lên xuống như bài tập ngón tay. Cách đó có ích, nhưng chưa đủ. Hãy luyện theo 4 lớp sau.</p><div class="grid-2"><div class="mini-card"><strong>1. Luyện hình dạng</strong><p>Biết pattern nằm ở đâu trên cần đàn.</p></div><div class="mini-card"><strong>2. Đọc tên nốt</strong><p>Vừa bấm vừa đọc: A, C, D, E, G...</p></div><div class="mini-card"><strong>3. Đọc bậc âm</strong><p>Biết nốt nào là 1, b3, 4, 5, b7.</p></div><div class="mini-card"><strong>4. Tạo câu nhạc</strong><p>Không chỉ chạy scale, hãy tạo câu có điểm dừng.</p></div></div><h3>15.1. Nhấn vào chord tones</h3><p>Nếu hợp âm nền là C major:</p><pre>C major chord = C - E - G
+Bậc:            1 - 3 - 5</pre><p>Khi solo, dừng câu ở C, E hoặc G thường nghe ổn định hơn.</p><p>Ví dụ câu đơn giản:</p><pre>C - D - E - G - E - C</pre><h3>15.2. Dời hình âm giai sang tông khác</h3><p>A minor pentatonic bắt đầu ở dây E ô 5. Nếu dời nguyên hình lên dây E ô 7, nó thành B minor pentatonic.</p><div class="formula">Giữ nguyên hình, đổi vị trí nốt gốc, âm giai sẽ đổi tông.</div></section><section id="bai-tap"><h2>16. Bài tập thực hành</h2><div class="exercise"><h3>Bài 1: Công thức major scale là gì?</h3><button onclick="toggleAnswer('ans1')">Xem đáp án</button><div class="answer" id="ans1">Major scale = W - W - H - W - W - W - H, hoặc 1 - 2 - 3 - 4 - 5 - 6 - 7.</div></div><div class="exercise"><h3>Bài 2: G major gồm những nốt nào?</h3><button onclick="toggleAnswer('ans2')">Xem đáp án</button><div class="answer" id="ans2">G major = G - A - B - C - D - E - F# - G.</div></div><div class="exercise"><h3>Bài 3: A minor pentatonic gồm những nốt nào?</h3><button onclick="toggleAnswer('ans3')">Xem đáp án</button><div class="answer" id="ans3">A minor pentatonic = A - C - D - E - G.</div></div><div class="exercise"><h3>Bài 4: Blues scale khác minor pentatonic ở điểm nào?</h3><button onclick="toggleAnswer('ans4')">Xem đáp án</button><div class="answer" id="ans4">Blues scale thêm b5, gọi là blue note. Ví dụ A blues thêm Eb vào A minor pentatonic.</div></div><div class="exercise"><h3>Bài 5: C major và A minor có quan hệ gì?</h3><button onclick="toggleAnswer('ans5')">Xem đáp án</button><div class="answer" id="ans5">C major và A minor là relative major/minor. Chúng dùng cùng bộ nốt nhưng khác nốt gốc.</div></div><h3>16.1. Bài tự làm</h3><textarea placeholder="Tự viết đáp án: D major, E natural minor, C blues, G Mixolydian..."></textarea><ul class="checklist"><li>Viết âm giai D major.</li><li>Viết âm giai E natural minor.</li><li>Viết âm giai C blues.</li><li>Viết âm giai G Mixolydian.</li><li>Tìm hợp âm trong G major.</li></ul></section><section id="mo-rong"><h2>17. Mở rộng nâng cao</h2><h3>17.1. Phrygian dominant</h3><p>Phrygian dominant thường dùng trong metal, flamenco, neo-classical và màu Trung Đông.</p><div class="formula">Phrygian dominant = 1 - b2 - 3 - 4 - 5 - b6 - b7.</div><p>Ví dụ E Phrygian dominant:</p><pre>E - F - G# - A - B - C - D</pre><h3>17.2. Altered scale</h3><p>Altered scale thường dùng trong jazz trên dominant 7 altered chord, ví dụ G7alt.</p><div class="formula">Altered scale = 1 - b2 - #2 - 3 - b5 - #5 - b7.</div><p>Ví dụ G altered:</p><pre>G - Ab - Bb - B - Db - Eb - F</pre><h3>17.3. Diminished scale</h3><p>Diminished scale tạo cảm giác căng, đối xứng, hay dùng trong jazz và metal.</p><div class="formula">Half-whole diminished = H - W - H - W - H - W - H - W.</div></section><section id="tong-ket"><h2>18. Tổng kết bài học</h2><p>Âm giai là bộ nốt được xây từ công thức quãng. Trên guitar, hiểu âm giai giúp bạn solo, viết riff, hiểu hợp âm và di chuyển trên cần đàn tốt hơn.</p><div class="table-wrap"><table><thead><tr><th>Âm giai</th><th>Công thức</th><th>Ví dụ với C</th></tr></thead><tbody><tr><td>Major</td><td>1 2 3 4 5 6 7</td><td>C D E F G A B</td></tr><tr><td>Natural minor</td><td>1 2 b3 4 5 b6 b7</td><td>C D Eb F G Ab Bb</td></tr><tr><td>Harmonic minor</td><td>1 2 b3 4 5 b6 7</td><td>C D Eb F G Ab B</td></tr><tr><td>Melodic minor</td><td>1 2 b3 4 5 6 7</td><td>C D Eb F G A B</td></tr><tr><td>Major pentatonic</td><td>1 2 3 5 6</td><td>C D E G A</td></tr><tr><td>Minor pentatonic</td><td>1 b3 4 5 b7</td><td>C Eb F G Bb</td></tr><tr><td>Blues</td><td>1 b3 4 b5 5 b7</td><td>C Eb F Gb G Bb</td></tr></tbody></table></div><ul class="checklist"><li>Major scale là nền tảng quan trọng nhất.</li><li>Natural minor tạo màu buồn và là nền cho nhiều bài nhạc.</li><li>Minor pentatonic là scale solo guitar dễ dùng nhất.</li><li>Blues scale thêm b5 để tạo chất blues.</li><li>Modes giúp tạo nhiều màu sắc hơn từ cùng một bộ nốt.</li><li>Khi solo, hãy nhấn vào chord tones: 1, 3, 5, 7.</li></ul><div class="formula">Học âm giai đúng = học công thức + tên nốt + bậc âm + hình dạng trên cần đàn + cảm giác âm thanh.</div><p class="print-note">Bản in bài học Âm giai trong Guitar.</p></section></div></main><footer class="footer"><p>Bài học HTML: Âm giai trong Guitar. Có thể bổ sung thêm audio, video, hình ảnh minh họa hoặc bài kiểm tra trắc nghiệm.</p></footer><script>
+const sharpNotes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+const flatNotes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
+const scales = {
+'Major': { formula: [0,2,4,5,7,9,11], degrees: '1 - 2 - 3 - 4 - 5 - 6 - 7', desc: 'Âm giai trưởng, sáng và ổn định.' },
+'Natural minor': { formula: [0,2,3,5,7,8,10], degrees: '1 - 2 - b3 - 4 - 5 - b6 - b7', desc: 'Âm giai thứ tự nhiên, buồn và mềm hơn major.' },
+'Harmonic minor': { formula: [0,2,3,5,7,8,11], degrees: '1 - 2 - b3 - 4 - 5 - b6 - 7', desc: 'Màu cổ điển, Tây Ban Nha, neo-classical.' },
+'Melodic minor': { formula: [0,2,3,5,7,9,11], degrees: '1 - 2 - b3 - 4 - 5 - 6 - 7', desc: 'Minor hiện đại, sáng hơn natural minor.' },
+'Major pentatonic': { formula: [0,2,4,7,9], degrees: '1 - 2 - 3 - 5 - 6', desc: 'Pentatonic trưởng, dễ nghe, hợp pop/country.' },
+'Minor pentatonic': { formula: [0,3,5,7,10], degrees: '1 - b3 - 4 - 5 - b7', desc: 'Pentatonic thứ, rất phổ biến trong rock/blues.' },
+'Blues': { formula: [0,3,5,6,7,10], degrees: '1 - b3 - 4 - b5 - 5 - b7', desc: 'Minor pentatonic thêm blue note b5.' },
+'Dorian': { formula: [0,2,3,5,7,9,10], degrees: '1 - 2 - b3 - 4 - 5 - 6 - b7', desc: 'Minor nhưng sáng, có bậc 6 trưởng.' },
+'Phrygian': { formula: [0,1,3,5,7,8,10], degrees: '1 - b2 - b3 - 4 - 5 - b6 - b7', desc: 'Tối, căng, có màu Tây Ban Nha/metal.' },
+'Lydian': { formula: [0,2,4,6,7,9,11], degrees: '1 - 2 - 3 - #4 - 5 - 6 - 7', desc: 'Major bay bổng, có #4.' },
+'Mixolydian': { formula: [0,2,4,5,7,9,10], degrees: '1 - 2 - 3 - 4 - 5 - 6 - b7', desc: 'Major có b7, hợp dominant 7.' },
+'Aeolian': { formula: [0,2,3,5,7,8,10], degrees: '1 - 2 - b3 - 4 - 5 - b6 - b7', desc: 'Tên mode của natural minor.' },
+'Locrian': { formula: [0,1,3,5,6,8,10], degrees: '1 - b2 - b3 - 4 - b5 - b6 - b7', desc: 'Rất căng, hợp m7b5.' },
+'Phrygian dominant': { formula: [0,1,4,5,7,8,10], degrees: '1 - b2 - 3 - 4 - 5 - b6 - b7', desc: 'Màu flamenco, Trung Đông, metal.' }
+};
+function initSelectors() {
+const rootSelect = document.getElementById('rootSelect');
+const scaleSelect = document.getElementById('scaleSelect');
+sharpNotes.forEach((note, index) => {
+const opt = document.createElement('option');
+opt.value = index;
+opt.textContent = note;
+rootSelect.appendChild(opt);
+});
+Object.keys(scales).forEach(name => {
+const opt = document.createElement('option');
+opt.value = name;
+opt.textContent = name;
+scaleSelect.appendChild(opt);
+});
+rootSelect.value = 0;
+scaleSelect.value = 'Major';
+}
+function generateScale() {
+const root = Number(document.getElementById('rootSelect').value);
+const scaleName = document.getElementById('scaleSelect').value;
+const notation = document.getElementById('notationSelect').value;
+const notes = notation === 'flat' ? flatNotes : sharpNotes;
+const scale = scales[scaleName];
+const generated = scale.formula.map(step => notes[(root + step) % 12]);
+const result = document.getElementById('scaleResult');
+result.innerHTML = `
+<strong>${notes[root]} ${scaleName}</strong><br />
+Công thức: <strong>${scale.degrees}</strong><br />
+Mô tả: ${scale.desc}
+<div class="scale-output">
+${generated.map((n, i) => `<span class="note-chip ${i === 0 ? 'root-chip' : ''}">${n}</span>`).join('')}
+<span class="note-chip root-chip">${notes[root]}</span></div>
+`;
+}
+function toggleAnswer(id) {
+const el = document.getElementById(id);
+el.style.display = el.style.display === 'block' ? 'none' : 'block';
+}
+function buildFretboard() {
+const grid = document.getElementById('fretboardGrid');
+const strings = ['e', 'B', 'G', 'D', 'A', 'E'];
+const highlighted = {
+'E-5': { note: 'A', root: true },
+'E-8': { note: 'C' },
+'A-5': { note: 'D' },
+'A-7': { note: 'E' },
+'D-5': { note: 'G' },
+'D-7': { note: 'A', root: true },
+'G-5': { note: 'C' },
+'G-7': { note: 'D' },
+'B-5': { note: 'E' },
+'B-8': { note: 'G' },
+'e-5': { note: 'A', root: true },
+'e-8': { note: 'C' }
+};
+const corner = document.createElement('div');
+corner.className = 'fret-num';
+corner.textContent = 'Dây / Ô';
+grid.appendChild(corner);
+for (let fret = 0; fret <= 12; fret++) {
+const cell = document.createElement('div');
+cell.className = 'fret-num';
+cell.textContent = fret;
+grid.appendChild(cell);
+}
+strings.forEach(s => {
+const label = document.createElement('div');
+label.className = 'string-label';
+label.textContent = s;
+grid.appendChild(label);
+for (let fret = 0; fret <= 12; fret++) {
+const cell = document.createElement('div');
+cell.className = 'fret-cell';
+const key = `${s}-${fret}`;
+const info = highlighted[key];
+if (info) {
+const dot = document.createElement('span');
+dot.className = `dot ${info.root ? 'root-dot' : 'scale-dot'}`;
+dot.textContent = info.note;
+cell.appendChild(dot);
+}
+grid.appendChild(cell);
+}
+});
+}
+document.addEventListener('DOMContentLoaded', () => {
+initSelectors();
+generateScale();
+buildFretboard();
+});
+</script></body></html>
